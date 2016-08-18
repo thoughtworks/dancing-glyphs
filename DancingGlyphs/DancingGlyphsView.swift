@@ -24,7 +24,7 @@ import ScreenSaver
 // configuration (at some point we should add a configure sheet)
 
 // whether to draw on a light or dark background
-let DARKMODE = true
+let DARKMODE = false
 
 // the size of the glyphs in relation to the screen
 // at a certain size, depending on resolution and CPU, the framerate will
