@@ -26,7 +26,6 @@ class DancingGlyphsView : ScreenSaverView
     var now: Double = 1
     var lastCheckpoint: Double = 0
     var frames: Int = 0
-    var fps: Int = 0
     
     override init?(frame: NSRect, isPreview: Bool)
     {
@@ -147,15 +146,14 @@ class DancingGlyphsView : ScreenSaverView
     func showFrameCount()
     {
         if (now - lastCheckpoint) > 1.0 {
-            fps = frames
+            if frames < 30 || true {
+                NSColor.TWGrayColor().lighter(0.1).setFill()
+                NSRectFill(NSMakeRect(0, 0, 100, 14))
+                let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(0)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
+                NSAttributedString(string: String(format:"%d fps", frames), attributes:attr).drawAtPoint(NSMakePoint(0, 0))
+            }
             lastCheckpoint = now
             frames = 0
-        }
-        if fps < 30 || true { // { NSEvent.modifierFlags().contains(.ShiftKeyMask) {
-            NSColor.TWGrayColor().lighter(0.1).setFill()
-            NSRectFill(NSMakeRect(0, 0, 100, 14))
-            let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(0)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
-            NSAttributedString(string: String(format:"%d fps", fps), attributes:attr).drawAtPoint(NSMakePoint(0, 0))
         }
     }
     
