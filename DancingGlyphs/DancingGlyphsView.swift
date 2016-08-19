@@ -14,50 +14,15 @@
  *  under the License.
  */
 
-
 // see http://www.raywenderlich.com/74438/swift-tutorial-a-quick-start
 // see http://stackoverflow.com/questions/27852616/do-swift-screensavers-work-in-mac-os-x-before-yosemite
 
-
 import ScreenSaver
-
-// configuration (at some point we should add a configure sheet)
-
-// whether to draw on a light or dark background
-let DARKMODE = false
-
-// the size of the glyphs in relation to the screen
-// at a certain size, depending on resolution and CPU, the framerate will
-// drop below 30 (and will be shown in the lower left corner)
-let SIZE: Double = 0.32
-
-// the centre points of the glyphs are set on an equilateral triangle
-// GRTSPEED is the speed with which the triangle revolves around its centre
-// for the speed x/60 means x rotations per minute
-let GRTSPEED: Double = 2*M_PI * 1/60
-
-// the glyphs move away from the centre
-// MVMID is the middle distance, MVAMP the amplitude
-let MVMID: Double = 0.08
-let MVAMP: Double = 0.06
-let MVSPEED: Double = 2*M_PI * 11/60
-
-// the glyphs travel on a circle around their individual "ideal" centre point
-// CRRAD is the radius of that circle
-let CRRAD: Double = 0.04
-let CRSPEED: Double = 2*M_PI * 17/60
-
-// the glyphs each rotate around their centre point
-// RTMAX is the maximum angle to either side they rotate
-// if the rotation is too big (approx 12 degrees) the glyph will get clipped
-let RTMAX: Double = 2*M_PI * 8/360
-let RTSPEED1: Double = 2*M_PI * 8/60
-let RTSPEED2: Double = 2*M_PI * 7/60
-let RTSPEED3: Double = 2*M_PI * 6/60
-
 
 class DancingGlyphsView : ScreenSaverView
 {
+    var layerView: GlyphLayerView!
+    
     var now: Double = 1
     var lastCheckpoint: Double = 0
     var frames: Int = 0
@@ -73,15 +38,17 @@ class DancingGlyphsView : ScreenSaverView
     {
         super.init(coder: aDecoder)
     }
-
-
+    
+    
     override func drawRect(rect: NSRect)
     {
         super.drawRect(rect)
-        animateOneFrame()
+        //        NSColor.blackColor().setFill()
+        NSColor.TWGrayColor().lighter(0.1).setFill()
+        NSRectFill(bounds)
     }
-
-
+    
+    
     override func hasConfigureSheet() -> Bool
     {
         return false
@@ -91,42 +58,68 @@ class DancingGlyphsView : ScreenSaverView
     {
         return nil
     }
-
+    
     
     override func startAnimation()
     {
         super.startAnimation()
+        
+        // make view a bit smaller so we don't overlap the fps display (performance issues)
+        layerView = GlyphLayerView(frame: NSMakeRect(frame.origin.x, frame.origin.y + 16, frame.size.width, frame.size.height - 32))
+        layerView.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
+        addSubview(layerView)
+        
+        let i1 = createGlyphImage(NSColor.TWLightGreenColor())
+        let i2 = createGlyphImage(NSColor.TWHotPinkColor())
+        let i3 = createGlyphImage(NSColor.TWTurquoiseColor())
+        
+        //        let filter = CIFilter(name: "CILinearDodgeBlendMode")
+        //        let filter = CIFilter(name: "CIColorDodgeBlendMode")
+        let filter = CIFilter(name: "CIColorBurnBlendMode")
+        //        let filter = CIFilter(name: "CILinearBurnBlendMode")
+        //        let filter = CIFilter(name: "CISubtractBlendMode")
+        //        let filter = CIFilter(name: "CIAdditionCompositing")
+        
+        layerView.addLayersForGlyphs([i1, i2, i3], compositingFilter: filter!)
+        
         needsDisplay = true
     }
     
     override func stopAnimation()
     {
+        self.subviews[0].removeFromSuperview()
+        
         super.stopAnimation()
     }
     
-
+    
     override func animateOneFrame()
     {
-        window!.disableFlushWindow()
-
         frames += 1
         now = NSDate().timeIntervalSinceReferenceDate
-
+        
         let p1 = position(phaseOffset: 4/3*M_PI)
         let p2 = position(phaseOffset: 0/3*M_PI)
         let p3 = position(phaseOffset: 2/3*M_PI)
-
+        
         let r1 = rotation(glyphRotationSpeed: RTSPEED1, phaseOffset: -1/2*M_PI)
         let r2 = rotation(glyphRotationSpeed: RTSPEED2, phaseOffset: +1/2*M_PI)
         let r3 = rotation(glyphRotationSpeed: RTSPEED3, phaseOffset:  0/2*M_PI)
-
-        drawBackground()
-        drawGlyph(position: p1, rotation: r1, color: NSColor.TWLightGreenColor())
-        drawGlyph(position: p2, rotation: r2, color: NSColor.TWHotPinkColor())
-        drawGlyph(position: p3, rotation: r3, color: NSColor.TWTurquoiseColor())
-        showFrameCount()
         
-        window!.enableFlushWindow()
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        
+        layerView.glyphLayers[0].position = screenpos(p1)
+        layerView.glyphLayers[1].position = screenpos(p2)
+        layerView.glyphLayers[2].position = screenpos(p3)
+        
+        layerView.glyphLayers[0].transform = CATransform3DMakeRotation(CGFloat(r1), 0.0, 0.0, 1.0)
+        layerView.glyphLayers[1].transform = CATransform3DMakeRotation(CGFloat(r2), 0.0, 0.0, 1.0)
+        layerView.glyphLayers[2].transform = CATransform3DMakeRotation(CGFloat(r3), 0.0, 0.0, 1.0)
+        
+        CATransaction.commit()
+        
+        showFrameCount()
     }
     
     func position(phaseOffset phaseOffset: Double) -> (x: Double, y: Double)
@@ -136,69 +129,20 @@ class DancingGlyphsView : ScreenSaverView
         let ypos = dist * sin(now*GRTSPEED + phaseOffset) + (cos(now*CRSPEED + phaseOffset) * CRRAD)
         return (xpos, ypos)
     }
-
+    
+    func screenpos(p: (x: Double, y: Double)) -> NSPoint
+    {
+        let glyphSize = min(bounds.width, bounds.height) * CGFloat(SIZE)
+        let x = layerView.bounds.size.width/2  + CGFloat(p.x)*glyphSize
+        let y = layerView.bounds.size.height/2 + CGFloat(p.y)*glyphSize
+        return NSMakePoint(CGFloat(x), CGFloat(y))
+    }
+    
     func rotation(glyphRotationSpeed grt: Double, phaseOffset: Double) -> Double
     {
         return sin(now*grt + phaseOffset) * RTMAX
     }
-
-
-    func drawBackground()
-    {
-        let path = NSBezierPath(rect: bounds)
-        if DARKMODE {
-            NSColor.blackColor().set()
-        } else {
-            NSColor.TWGrayColor().lighter(0.3).set()
-        }
-        path.fill()
-    }
     
-    func drawGlyph(position p: (x: Double, y: Double), rotation: Double, color: NSColor)
-    {
-        let glyphSize = min(bounds.width, bounds.height) * CGFloat(SIZE)
-        let imageSize = glyphSize * 1.1
-
-        let image = NSImage(size: NSMakeSize(imageSize, imageSize))
-        image.lockFocus()
-
-#if true
-        let glyph = NSBezierPath.TWSquareGlyphPath()
-        let transform = NSAffineTransform()
-        transform.scaleXBy(glyphSize, yBy: glyphSize)
-        transform.translateXBy(0.55, yBy: 0.55)
-        transform.rotateByRadians(CGFloat(rotation))
-        transform.scaleXBy(1, yBy: -1)
-        glyph.transformUsingAffineTransform(transform)
-        color.set()
-        glyph.fill()
-#endif
-
-#if false
-        let center = NSBezierPath(ovalInRect: NSMakeRect(-3, -3, 6, 6))
-        let transform2 = NSAffineTransform()
-        transform2.translateXBy(imageSize/2, yBy: imageSize/2)
-        center.transformUsingAffineTransform(transform2)
-        NSColor.lightGrayColor().set()
-        center.fill()
-#endif
-
-#if false
-        let frame = NSBezierPath(rect: NSMakeRect(0,0, imageSize, imageSize))
-        NSColor.lightGrayColor().set()
-        frame.stroke()
-#endif
-        
-        image.unlockFocus()
-
-        let x = bounds.size.width/2  - image.size.width/2  + CGFloat(p.x)*glyphSize
-        let y = bounds.size.height/2 - image.size.height/2 + CGFloat(p.y)*glyphSize
-        if DARKMODE {
-            image.drawAtPoint(NSMakePoint(x, y), fromRect: NSZeroRect, operation: NSCompositingOperation.CompositeScreen, fraction: 1)
-        } else {
-            image.drawAtPoint(NSMakePoint(x, y), fromRect: NSZeroRect, operation: NSCompositingOperation.CompositePlusDarker, fraction: 0.6)
-        }
-    }
     
     func showFrameCount()
     {
@@ -208,9 +152,50 @@ class DancingGlyphsView : ScreenSaverView
             frames = 0
         }
         if fps < 30 || true { // { NSEvent.modifierFlags().contains(.ShiftKeyMask) {
+            NSColor.TWGrayColor().lighter(0.1).setFill()
+            NSRectFill(NSMakeRect(0, 0, 100, 14))
             let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(0)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
             NSAttributedString(string: String(format:"%d fps", fps), attributes:attr).drawAtPoint(NSMakePoint(0, 0))
         }
+    }
+    
+    
+    func createGlyphImage(color: NSColor) -> NSImage
+    {
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(SIZE))
+        let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
+        let imageSize = floor(glyphSize * (1 + overscan))
+        
+        let image = NSImage(size: NSMakeSize(imageSize, imageSize))
+        image.lockFocus()
+        
+        let glyph = NSBezierPath.TWSquareGlyphPath()
+        let transform = NSAffineTransform()
+        transform.scaleXBy(glyphSize, yBy: glyphSize)
+        transform.translateXBy(0.5 + overscan/2, yBy: 0.5 + overscan/2)
+        transform.scaleXBy(1, yBy: -1) // must be flipped on x axis
+        glyph.transformUsingAffineTransform(transform)
+        color.set()
+        glyph.fill()
+        
+        image.unlockFocus()
+        
+        return image
+    }
+    
+    func createBackgroundImage(color: NSColor) -> NSImage
+    {
+        let image = NSImage(size: self.bounds.size)
+        image.lockFocus()
+        
+        let path = NSBezierPath()
+        path.appendBezierPathWithRect(bounds)
+        color.set()
+        path.fill()
+        
+        image.unlockFocus()
+        
+        return image
     }
     
 }

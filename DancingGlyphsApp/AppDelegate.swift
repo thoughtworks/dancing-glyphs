@@ -7,7 +7,7 @@ class AppDelegate: NSObject
 {
     @IBOutlet weak var window: NSWindow!
     
-    var view: DancingGlyphsView!
+    var view: ScreenSaverView!
     
     func setupAndStartAnimation()
     {

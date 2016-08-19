@@ -2,10 +2,6 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## Finder
-
-.DS_Store
-
 ## Build generated
 build/
 DerivedData/
@@ -67,3 +63,11 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
+
+# AppCode
+#
+.idea
+
+# Finder
+#
+.DS_Store
