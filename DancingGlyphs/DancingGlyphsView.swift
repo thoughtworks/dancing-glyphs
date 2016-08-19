@@ -26,7 +26,6 @@ class DancingGlyphsView : ScreenSaverView
     var now: Double = 1
     var lastCheckpoint: Double = 0
     var frames: Int = 0
-    var fps: Int = 0
     
     override init?(frame: NSRect, isPreview: Bool)
     {
@@ -146,6 +145,7 @@ class DancingGlyphsView : ScreenSaverView
     
     func showFrameCount()
     {
+        var fps = 0
         if (now - lastCheckpoint) > 1.0 {
             fps = frames
             lastCheckpoint = now
