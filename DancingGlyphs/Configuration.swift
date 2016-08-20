@@ -15,12 +15,12 @@
  */
 
 
-import Foundation
+import Cocoa
 
 // configuration (at some point we should add a configure sheet)
 
 // whether to draw on a light or dark background
-let DARKMODE = false
+let DARKMODE = true
 
 // the size of the glyphs in relation to the screen
 let SIZE: Double = 0.32
@@ -50,3 +50,4 @@ let RTSPEED2: Double = 2*M_PI * 7/60
 let RTSPEED3: Double = 2*M_PI * 6/60
 
 
+let BGCOLOR = DARKMODE ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)

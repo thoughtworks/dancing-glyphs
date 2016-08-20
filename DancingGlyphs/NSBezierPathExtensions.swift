@@ -18,7 +18,8 @@ import Cocoa
 
 extension NSBezierPath
 {
-    class func TWSquareGlyphPath() -> NSBezierPath {
+    class func TWSquareGlyphPath() -> NSBezierPath
+    {
         let points = [
             NSMakePoint(0.23852567599158547, -0.50000000000000178),
             NSMakePoint(0.0080651445492083695, -0.50000000000000178),

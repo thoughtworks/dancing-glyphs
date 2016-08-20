@@ -9,7 +9,7 @@ This is work-in-progress. Plase note:
 
 * Currently there is no configuration sheet, all configuration must be done in `Configuration.swift`
 
-* Dark mode is currently broken
+* Probably doesn't work on retina screens at the moment
 
 * Rendering is CPU intensive, despite hardware acceleration. Better don't use this on battery power.
 
