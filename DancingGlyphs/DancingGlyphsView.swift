@@ -68,8 +68,9 @@ class DancingGlyphsView : ScreenSaverView
         // make view a bit smaller so we don't overlap the fps display (performance issues)
         layerView = GlyphLayerView(frame: NSMakeRect(frame.origin.x, frame.origin.y + 12, frame.size.width, frame.size.height - 24))
         layerView.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
-        layerView.applyAnimationState(animationState)
         addSubview(layerView)
+        layerView.addLayers()
+        layerView.applyAnimationState(animationState)
 
         needsDisplay = true
     }
@@ -99,7 +100,7 @@ class DancingGlyphsView : ScreenSaverView
     
     func displayFrameCount()
     {
-        if frames < 30 || true {
+        if frames < 30 && false {
             BGCOLOR.setFill()
             NSRectFill(NSMakeRect(0, 0, 100, 14))
             let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(10)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]

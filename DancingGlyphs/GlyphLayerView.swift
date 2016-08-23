@@ -26,7 +26,6 @@ class GlyphLayerView : NSView
         wantsLayer = true
         layerUsesCoreImageFilters = true
         glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(SIZE)) // TODO: recalc when size changes
-        addLayers()
     }
     
     required init?(coder: NSCoder) {
@@ -53,21 +52,21 @@ class GlyphLayerView : NSView
         let layer = CALayer()
         layer.bounds = self.bounds
         layer.opacity = 1
-//        layer.contents = createBackgroundImage(BGCOLOR)
-//        layer.opaque = true
         return layer
     }
 
     func createLayerForImage(image: NSImage) -> CALayer
     {
         let layer = CALayer()
-
+        
         layer.bounds = NSRect(origin:NSMakePoint(0,0), size:image.size)
-        layer.contents = image
-        layer.contentsScale = 1  // TODO: how do we get retina config in here?
+        let scale = image.recommendedLayerContentsScale(window!.backingScaleFactor)
+        layer.contents = image.layerContentsForContentsScale(scale)
+        layer.contentsScale = scale
         layer.contentsGravity = kCAGravityBottomLeft
-        layer.opacity = DARKMODE ? 0.80 : 0.94
+        layer.opacity = 0.94
         layer.compositingFilter = DARKMODE ? CIFilter(name: "CILinearDodgeBlendMode") : CIFilter(name: "CIColorBurnBlendMode")!
+        layer.actions = [ "position": NSNull(), "transform": NSNull() ]
 
         return layer
     }
@@ -76,6 +75,11 @@ class GlyphLayerView : NSView
     {
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
         let imageSize = floor(glyphSize * (1 + overscan))
+        
+//        let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSDeviceRGBColorSpace, bytesPerRow: 4*Int(imageSize), bitsPerPixel: 32)!
+//        
+//        NSGraphicsContext.saveGraphicsState()
+//        NSGraphicsContext.setCurrentContext(NSGraphicsContext(bitmapImageRep:bitmap))
 
         let image = NSImage(size: NSMakeSize(imageSize, imageSize))
         image.lockFocus()
@@ -90,6 +94,9 @@ class GlyphLayerView : NSView
         path.fill()
 
         image.unlockFocus()
+
+//        let image = NSImage(size: NSMakeSize(imageSize, imageSize))
+//        image.addRepresentation(bitmap)
 
         return image
     }
@@ -115,8 +122,8 @@ class GlyphLayerView : NSView
         let sublayers = self.layer!.sublayers!
 
         CATransaction.begin()  // TODO: check whether permanently disabling animations is more efficient
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-
+        CATransaction.setDisableActions(true)
+//
         sublayers[0].position = screenpos(state.p0)
         sublayers[1].position = screenpos(state.p1)
         sublayers[2].position = screenpos(state.p2)
