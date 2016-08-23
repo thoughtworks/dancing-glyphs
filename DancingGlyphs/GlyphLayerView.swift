@@ -73,11 +73,6 @@ class GlyphLayerView : NSView
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
         let imageSize = floor(glyphSize * (1 + overscan))
         
-//        let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSDeviceRGBColorSpace, bytesPerRow: 4*Int(imageSize), bitsPerPixel: 32)!
-//        
-//        NSGraphicsContext.saveGraphicsState()
-//        NSGraphicsContext.setCurrentContext(NSGraphicsContext(bitmapImageRep:bitmap))
-
         let image = NSImage(size: NSMakeSize(imageSize, imageSize))
         image.lockFocus()
 
@@ -92,35 +87,13 @@ class GlyphLayerView : NSView
 
         image.unlockFocus()
 
-//        let image = NSImage(size: NSMakeSize(imageSize, imageSize))
-//        image.addRepresentation(bitmap)
-
         return image
     }
-
-    func createBackgroundImage(color: NSColor) -> NSImage
-    {
-        let image = NSImage(size: self.bounds.size) // TODO: check whether image without alpha channel is faster than no image
-        image.lockFocus()
-
-        let path = NSBezierPath()
-        path.appendBezierPathWithRect(bounds)
-        color.set()
-        path.fill()
-
-        image.unlockFocus()
-
-        return image
-    }
-
 
     func applyAnimationState(state: AnimationState)
     {
         let sublayers = self.layer!.sublayers!
 
-        CATransaction.begin()  // TODO: check whether permanently disabling animations is more efficient
-        CATransaction.setDisableActions(true)
-//
         sublayers[0].position = screenpos(state.p0)
         sublayers[1].position = screenpos(state.p1)
         sublayers[2].position = screenpos(state.p2)
@@ -128,8 +101,6 @@ class GlyphLayerView : NSView
         sublayers[0].transform = CATransform3DMakeRotation(CGFloat(state.r0), 0.0, 0.0, 1.0)
         sublayers[1].transform = CATransform3DMakeRotation(CGFloat(state.r1), 0.0, 0.0, 1.0)
         sublayers[2].transform = CATransform3DMakeRotation(CGFloat(state.r2), 0.0, 0.0, 1.0)
-
-        CATransaction.commit()
     }
 
     func screenpos(p: (x: Double, y: Double)) -> NSPoint

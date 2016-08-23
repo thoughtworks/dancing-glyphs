@@ -71,8 +71,6 @@ class DancingGlyphsView : ScreenSaverView
         addSubview(layerView)
         layerView.addLayers()
         layerView.applyAnimationState(animationState)
-
-        needsDisplay = true
     }
     
     override func stopAnimation()
