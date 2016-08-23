@@ -9,8 +9,4 @@ This is work-in-progress. Plase note:
 
 * Currently there is no configuration sheet, all configuration must be done in `Configuration.swift`
 
-* Probably doesn't work on retina screens at the moment
-
-* Rendering is CPU intensive, despite hardware acceleration. Better don't use this on battery power.
-
-* Frame rate is always displayed in the bottom left corner for now.
+* Rendering is processor intensive. Maybe don't use this screen saver on battery power.

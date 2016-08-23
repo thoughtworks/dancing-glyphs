@@ -35,12 +35,9 @@ class GlyphLayerView : NSView
 
     func addLayers()
     {
-        let glyph = NSBezierPath.TWSquareGlyphPath()
-        let colors = [ NSColor.TWLightGreenColor(), NSColor.TWHotPinkColor(), NSColor.TWTurquoiseColor() ]
-
         let backgroundLayer = createBackgroundLayer()
-        for color in colors {
-            let image = createImageForGlyph(glyph, color: color)
+        for color in GLCOLORS {
+            let image = createImageForGlyph(GLYPH, color: color)
             let layer = createLayerForImage(image)
             backgroundLayer.addSublayer(layer)
         }

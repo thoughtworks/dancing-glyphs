@@ -19,6 +19,12 @@ import Cocoa
 
 // configuration (at some point we should add a configure sheet)
 
+// glyph and colors
+let GLYPH = NSBezierPath.TWSquareGlyphPath()
+let BGCOLOR = DARKMODE ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
+let GLCOLORS = [ NSColor.TWLightGreenColor(), NSColor.TWHotPinkColor(), NSColor.TWTurquoiseColor() ]
+
+
 // whether to draw on a light or dark background
 let DARKMODE = true
 
@@ -43,11 +49,9 @@ let CRSPEED: Double = 2*M_PI * 17/60
 
 // the glyphs each rotate around their centre point
 // RTMAX is the maximum angle to either side they rotate
-// if the rotation is too big (approx 12 degrees) the glyph will get clipped
 let RTMAX: Double = 2*M_PI * 8/360
 let RTSPEED1: Double = 2*M_PI * 8/60
 let RTSPEED2: Double = 2*M_PI * 7/60
 let RTSPEED3: Double = 2*M_PI * 6/60
 
 
-let BGCOLOR = DARKMODE ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
