@@ -46,13 +46,13 @@ extension NSBezierPath
             NSMakePoint(0.50000000000000178, -0.41925440724567409),
             NSMakePoint(0.37894490765993893, -0.50000000000000178),
             NSMakePoint(0.23852567599158547, -0.50000000000000178),
-            ]
-        return pathFromPoints(points)
+        ]
+        return PathBuilder(points: points).applyRatio(0.964).flip().path
     }
     
     class func TWCircleGlyphPath() -> NSBezierPath
     {
-        let points = [
+       let points = [
             NSMakePoint(-0.033596626037198263, -0.50000000000000355),
             NSMakePoint(-0.067038798326681359, -0.50000000000000355),
             NSMakePoint(-0.10089029953035578, -0.49668395544597033),
@@ -79,7 +79,8 @@ extension NSBezierPath
             NSMakePoint(0.19730581445848649, -0.50000000000000355),
             NSMakePoint(-0.033596626037198263, -0.50000000000000355)
         ]
-        return pathFromPoints(points)
+ 
+        return PathBuilder(points: points).applyRatio(0.963).flip().path
     }
     
     class func TWLozengeGlyphPath() -> NSBezierPath
@@ -117,21 +118,41 @@ extension NSBezierPath
             NSMakePoint(0.032575537787847608, -0.5),
             NSMakePoint(-0.031012314495498572, -0.5),
         ]
-        return pathFromPoints(points)
+        return PathBuilder(points: points).applyRatio(0.688).flip().path
     }
     
-    private class func pathFromPoints(points: [NSPoint]) -> NSBezierPath
+    private class PathBuilder
     {
-        let path = NSBezierPath()
+        var path: NSBezierPath
         
-        path.moveToPoint(points[0])
-        var i = 1
-        while i < points.count {
-            path.curveToPoint(points[i+2], controlPoint1: points[i+0], controlPoint2: points[i+1])
-            i += 3
+        init(points: [NSPoint])
+        {
+            path = NSBezierPath()
+            path.moveToPoint(points[0])
+            var i = 1
+            while i < points.count {
+                path.curveToPoint(points[i+2], controlPoint1: points[i+0], controlPoint2: points[i+1])
+                i += 3
+            }
+            path.closePath()
         }
-        path.closePath()
         
-        return path
+        func flip() -> PathBuilder
+        {
+            let transform = NSAffineTransform()
+            transform.scaleXBy(1, yBy: -1)
+            path.transformUsingAffineTransform(transform)
+            return self
+        }
+        
+        func applyRatio(ratio: CGFloat) -> PathBuilder
+        {
+            let transform = NSAffineTransform()
+            transform.scaleXBy(1, yBy: ratio)
+            path.transformUsingAffineTransform(transform)
+            return self
+        }
+        
     }
+    
 }

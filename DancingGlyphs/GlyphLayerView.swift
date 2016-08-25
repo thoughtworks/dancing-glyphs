@@ -64,7 +64,7 @@ class GlyphLayerView : NSView
         layer.opacity = 0.94
         layer.compositingFilter = DARKMODE ? CIFilter(name: "CILinearDodgeBlendMode") : CIFilter(name: "CIColorBurnBlendMode")!
         layer.actions = [ "position": NSNull(), "transform": NSNull() ]
-
+        
         return layer
     }
 
@@ -80,7 +80,6 @@ class GlyphLayerView : NSView
         let transform = NSAffineTransform()
         transform.scaleXBy(glyphSize, yBy: glyphSize)
         transform.translateXBy(0.5 + overscan/2, yBy: 0.5 + overscan/2)
-        transform.scaleXBy(1, yBy: -1) // must be flipped on x axis
         path.transformUsingAffineTransform(transform)
         color.set()
         path.fill()
@@ -89,6 +88,7 @@ class GlyphLayerView : NSView
 
         return image
     }
+    
 
     func applyAnimationState(state: AnimationState)
     {
@@ -110,7 +110,5 @@ class GlyphLayerView : NSView
         return NSMakePoint(CGFloat(x), CGFloat(y))
     }
 
-    
-    
 }
 
