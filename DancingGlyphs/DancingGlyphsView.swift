@@ -27,6 +27,11 @@ class DancingGlyphsView : ScreenSaverView
     var lastCheckpoint: Double = 0
     var frames: Int = 0
     
+    override class func backingStoreType() -> NSBackingStoreType
+    {
+        return NSBackingStoreType.Nonretained
+    }
+    
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
@@ -44,17 +49,6 @@ class DancingGlyphsView : ScreenSaverView
         super.drawRect(rect)
         BGCOLOR.setFill()
         NSRectFill(bounds)
-    }
-    
-    
-    override func hasConfigureSheet() -> Bool
-    {
-        return false
-    }
-    
-    override func configureSheet() -> NSWindow?
-    {
-        return nil
     }
     
     
@@ -104,6 +98,19 @@ class DancingGlyphsView : ScreenSaverView
             let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(10)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
             NSAttributedString(string: String(format:"%d fps", frames), attributes:attr).drawAtPoint(NSMakePoint(1, 1))
         }
+    }
+
+
+    override func hasConfigureSheet() -> Bool
+    {
+        return true
+    }
+    
+    override func configureSheet() -> NSWindow?
+    {
+        let controller = ConfigureSheetController.sharedInstance
+        controller.loadDefaults()
+        return controller.window
     }
 
 

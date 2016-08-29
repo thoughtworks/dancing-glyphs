@@ -25,6 +25,13 @@ class AppDelegate: NSObject
         view.animateOneFrame()
         context?.flushGraphics()
     }
+    
+    @IBAction func showPreferences(sender: NSObject!)
+    {
+        window.beginSheet(view.configureSheet()!, completionHandler: nil)
+    }
+    
+
 }
 
 

@@ -16,6 +16,10 @@
 		031494871D67C4E3005F5EB5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
 		031494891D691A62005F5EB5 /* AnimationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* AnimationState.swift */; };
 		0314948A1D691A62005F5EB5 /* AnimationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* AnimationState.swift */; };
+		0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
+		031494901D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
+		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
+		031494931D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
 		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
@@ -25,6 +29,8 @@
 		032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
+		0358FFD71D739F8100C59374 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0358FFD61D739F8100C59374 /* UserDefaults.swift */; };
+		0358FFD81D739F8100C59374 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0358FFD61D739F8100C59374 /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +39,8 @@
 		031494801D67C044005F5EB5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		031494851D67C291005F5EB5 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		031494881D691A62005F5EB5 /* AnimationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationState.swift; sourceTree = "<group>"; };
+		0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
+		031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
 		032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DancingGlyphs.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		032604971D5FBC2A0030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DancingGlyphsView.swift; sourceTree = "<group>"; };
@@ -45,6 +53,7 @@
 		032604B21D5FBCB60030AA78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		032604B41D5FBCB60030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		0358FFD61D739F8100C59374 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +101,11 @@
 				031494791D67A0DF005F5EB5 /* GlyphLayerView.swift */,
 				031494881D691A62005F5EB5 /* AnimationState.swift */,
 				031494851D67C291005F5EB5 /* Configuration.swift */,
+				0358FFD61D739F8100C59374 /* UserDefaults.swift */,
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */,
+				031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */,
+				0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */,
 				032604A01D5FBC9B0030AA78 /* thumbnail.png */,
 				032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */,
 				032604971D5FBC2A0030AA78 /* Info.plist */,
@@ -204,6 +216,7 @@
 			files = (
 				031494811D67C044005F5EB5 /* LICENSE in Resources */,
 				032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */,
+				0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
 				032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +227,7 @@
 			files = (
 				032604B01D5FBCB60030AA78 /* Assets.xcassets in Resources */,
 				032604B31D5FBCB60030AA78 /* MainMenu.xib in Resources */,
+				031494901D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +241,8 @@
 				031494861D67C291005F5EB5 /* Configuration.swift in Sources */,
 				031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				031494891D691A62005F5EB5 /* AnimationState.swift in Sources */,
+				031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
+				0358FFD71D739F8100C59374 /* UserDefaults.swift in Sources */,
 				0314947A1D67A0DF005F5EB5 /* GlyphLayerView.swift in Sources */,
 				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */,
@@ -237,10 +253,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				031494931D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
 				031494871D67C4E3005F5EB5 /* Configuration.swift in Sources */,
 				031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				0314947B1D67A0DF005F5EB5 /* GlyphLayerView.swift in Sources */,
 				0314948A1D691A62005F5EB5 /* AnimationState.swift in Sources */,
+				0358FFD81D739F8100C59374 /* UserDefaults.swift in Sources */,
 				032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */,
 				032604AE1D5FBCB60030AA78 /* AppDelegate.swift in Sources */,
