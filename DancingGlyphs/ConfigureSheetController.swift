@@ -49,28 +49,28 @@ class ConfigureSheetController : NSObject
     {
         if sender.tag == 1
         {
-            storeDefaults()
+            saveConfiguration()
         }
         window.sheetParent!.endSheet(window, returnCode: (sender.tag == 1) ? NSModalResponseOK : NSModalResponseCancel)
     }
 
 
-    func loadDefaults()
+    func loadConfiguration()
     {
-        let defaults = UserDefaults()
-        schemePopup.selectItemWithTag(defaults.scheme)
-        glyphPopup.selectItemWithTag(defaults.glyph)
-        sizePopup.selectItemWithTag(defaults.size)
-        movementPopup.selectItemWithTag(defaults.movement)
+        let config = Configuration()
+        schemePopup.selectItemWithTag(config.scheme)
+        glyphPopup.selectItemWithTag(config.glyph)
+        sizePopup.selectItemWithTag(config.size)
+        movementPopup.selectItemWithTag(config.movement)
     }
 
-    private func storeDefaults()
+    private func saveConfiguration()
     {
-        let defaults = UserDefaults()
-        defaults.scheme = schemePopup.selectedTag()
-        defaults.glyph = glyphPopup.selectedTag()
-        defaults.size = sizePopup.selectedTag()
-        defaults.movement = movementPopup.selectedTag()
+        let config = Configuration()
+        config.scheme = schemePopup.selectedTag()
+        config.glyph = glyphPopup.selectedTag()
+        config.size = sizePopup.selectedTag()
+        config.movement = movementPopup.selectedTag()
     }
 
 }

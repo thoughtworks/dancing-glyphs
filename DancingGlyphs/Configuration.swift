@@ -15,43 +15,126 @@
  */
 
 
-import Cocoa
+import ScreenSaver
 
-// configuration (at some point we should add a configure sheet)
+class Configuration
+{
+    let DGDefaultsKeyScheme = "Scheme"
+    let DGDefaultsKeyGlyph = "Glyph"
+    let DGDefaultsKeySize = "Size"
+    let DGDefaultsKeyMovement = "Movement"
+    
+    var defaults: NSUserDefaults
+    
+    init()
+    {
+        let identifier = NSBundle(forClass: Configuration.self).bundleIdentifier!
+        defaults = ScreenSaverDefaults(forModuleWithName: identifier) as NSUserDefaults!
+        defaults.registerDefaults([
+            DGDefaultsKeyScheme: 0,
+            DGDefaultsKeyGlyph: 0,
+            DGDefaultsKeySize: 1,
+            DGDefaultsKeyMovement: 1
+        ])
+    }
+   
+    
+    var scheme: Int
+    {
+        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyScheme); defaults.synchronize() }
+        get { return defaults.integerForKey(DGDefaultsKeyScheme) }
+    }
+    
+    var glyph: Int
+    {
+        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyGlyph); defaults.synchronize() }
+        get { return defaults.integerForKey(DGDefaultsKeyGlyph) }
+    }
+    
+    var size: Int
+    {
+        set { defaults.setInteger(newValue, forKey: DGDefaultsKeySize); defaults.synchronize() }
+        get { return defaults.integerForKey(DGDefaultsKeySize) }
+    }
+    
+    var movement: Int
+    {
+        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyMovement); defaults.synchronize()}
+        get { return defaults.integerForKey(DGDefaultsKeyMovement) }
+    }
 
-// glyph and colors
-let GLYPH = NSBezierPath.TWSquareGlyphPath()
-let BGCOLOR = DARKMODE ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
-let GLCOLORS = [ NSColor.TWLightGreenColor(), NSColor.TWHotPinkColor(), NSColor.TWTurquoiseColor() ]
+    
+    var viewSettings: DancingGlyphsView.Settings
+    {
+        get
+        {
+            let backgroundColor = (self.scheme == 1) ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
+            let filter = (self.scheme == 1) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
+            let glyphIndex = max(0, min(self.glyph, 2))
+            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyphIndex]
 
-// whether to draw on a light or dark background
-let DARKMODE = true
+            let glyphColors = [NSColor.TWLightGreenColor(), NSColor.TWHotPinkColor(), NSColor.TWTurquoiseColor()]
 
-// the size of the glyphs in relation to the screen
-let SIZE: Double = 0.32
+            let size: Double = (Double(self.size) + 1) * 0.16
 
-// the centre points of the glyphs are set on an equilateral triangle
-// GRTSPEED is the speed with which the triangle revolves around its centre
-// for the speed x/60 means x rotations per minute
-let GRTSPEED: Double = 2*M_PI * 1/60
+            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, size: size)
+        }
+    }
 
-// the glyphs move away from the centre
-// MVMID is the middle distance, MVAMP the amplitude
-let MVMID: Double = 0.08
-let MVAMP: Double = 0.06
-let MVSPEED: Double = 2*M_PI * 11/60
+    
+    var animationSettings: Animation.Settings
+    {
+        get
+        {
+            let animationSettings: Animation.Settings
+            switch(self.movement)
+            {
+                case 2: // wild
+                    animationSettings = Animation.Settings(
+                        GRTSPEED: 2*M_PI * 3/60,
+                        MVMID:    0.22,
+                        MVAMP:    0.16,
+                        MVSPEED:  2*M_PI * 11/60,
+                        CRRAD:    0.20,
+                        CRSPEED:  2*M_PI * 10/60,
+                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 80 : 8)/360,
+                        RTSPEED1: 2*M_PI * 8/60,
+                        RTSPEED2: 2*M_PI * 7/60,
+                        RTSPEED3: 2*M_PI * 6/60
+                        )
+                case 1: // normal
+                    animationSettings = Animation.Settings(
+                        GRTSPEED: 2*M_PI * 1/60,
+                        MVMID:    0.08,
+                        MVAMP:    0.06,
+                        MVSPEED:  2*M_PI * 11/60,
+                        CRRAD:    0.04,
+                        CRSPEED:  2*M_PI * 17/60,
+                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 80 : 8)/360,
+                        RTSPEED1: 2*M_PI * 8/60,
+                        RTSPEED2: 2*M_PI * 7/60,
+                        RTSPEED3: 2*M_PI * 6/60
+                        )
 
-// the glyphs travel on a circle around their individual "ideal" centre point
-// CRRAD is the radius of that circle
-let CRRAD: Double = 0.04
-let CRSPEED: Double = 2*M_PI * 17/60
-
-// the glyphs each rotate around their centre point
-// RTMAX is the maximum angle to either side they rotate
-let RTMAX: Double = 2*M_PI * 8/360
-let RTSPEED1: Double = 2*M_PI * 8/60
-let RTSPEED2: Double = 2*M_PI * 7/60
-let RTSPEED3: Double = 2*M_PI * 6/60
-
+                default: // tight
+                    animationSettings = Animation.Settings(
+                        GRTSPEED: 2*M_PI * 4/60,
+                        MVMID:    0.020,
+                        MVAMP:    0.006,
+                        MVSPEED:  2*M_PI * 33/60,
+                        CRRAD:    0.006,
+                        CRSPEED:  2*M_PI * 37/60,
+                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 40 : 4)/360,
+                        RTSPEED1: 2*M_PI * 16/60,
+                        RTSPEED2: 2*M_PI * 14/60,
+                        RTSPEED3: 2*M_PI * 12/60
+                    )
+            }
+            return animationSettings
+        }
+    }
+    
+    
+}
 

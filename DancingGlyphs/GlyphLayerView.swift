@@ -25,7 +25,6 @@ class GlyphLayerView : NSView
         super.init(frame: frame)
         wantsLayer = true
         layerUsesCoreImageFilters = true
-        glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(SIZE)) // TODO: recalc when size changes
     }
     
     required init?(coder: NSCoder) {
@@ -33,12 +32,14 @@ class GlyphLayerView : NSView
     }
 
 
-    func addLayers()
+    func addLayers(config: DancingGlyphsView.Settings)
     {
+        glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(config.size))
         let backgroundLayer = createBackgroundLayer()
-        for color in GLCOLORS {
-            let image = createImageForGlyph(GLYPH, color: color)
-            let layer = createLayerForImage(image)
+        for color in config.glyphColors {
+            let image = createImageForGlyph(config.glyph, color: color)
+            let filter = CIFilter(name: config.filter)!
+            let layer = createLayerForImage(image, filter: filter)
             backgroundLayer.addSublayer(layer)
         }
         self.layer = backgroundLayer
@@ -52,7 +53,7 @@ class GlyphLayerView : NSView
         return layer
     }
 
-    func createLayerForImage(image: NSImage) -> CALayer
+    func createLayerForImage(image: NSImage, filter: CIFilter) -> CALayer
     {
         let layer = CALayer()
         
@@ -62,7 +63,7 @@ class GlyphLayerView : NSView
         layer.contentsScale = scale
         layer.contentsGravity = kCAGravityBottomLeft
         layer.opacity = 0.94
-        layer.compositingFilter = DARKMODE ? CIFilter(name: "CILinearDodgeBlendMode") : CIFilter(name: "CIColorBurnBlendMode")!
+        layer.compositingFilter = filter
         layer.actions = [ "position": NSNull(), "transform": NSNull() ]
         
         return layer
@@ -90,7 +91,7 @@ class GlyphLayerView : NSView
     }
     
 
-    func applyAnimationState(state: AnimationState)
+    func applyAnimationState(state: Animation.State)
     {
         let sublayers = self.layer!.sublayers!
 

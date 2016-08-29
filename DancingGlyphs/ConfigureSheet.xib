@@ -27,13 +27,13 @@
                 <subviews>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tRF-Bl-jS4">
                         <rect key="frame" x="135" y="158" width="119" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Dark" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="9RF-c6-YLp" id="r95-0W-dvr">
+                        <popUpButtonCell key="cell" type="push" title="Dark" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="9RF-c6-YLp" id="r95-0W-dvr">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="laN-g6-5de">
                                 <items>
                                     <menuItem title="Normal" id="IZM-OE-tMs"/>
-                                    <menuItem title="Dark" state="on" id="9RF-c6-YLp"/>
+                                    <menuItem title="Dark" state="on" tag="1" id="9RF-c6-YLp"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -48,8 +48,8 @@
                                     <menuItem title="Square" state="on" id="VZ7-Mn-6Pr">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Circle" id="k4d-p1-gzS"/>
-                                    <menuItem title="Lozenge" id="sMZ-Cd-ftJ"/>
+                                    <menuItem title="Circle" tag="1" id="k4d-p1-gzS"/>
+                                    <menuItem title="Lozenge" tag="2" id="sMZ-Cd-ftJ"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -72,17 +72,17 @@
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XCI-mp-LvP">
                         <rect key="frame" x="135" y="96" width="119" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Medium" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="jp3-ho-N0L" id="sp9-2G-BUo">
+                        <popUpButtonCell key="cell" type="push" title="Medium" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="jp3-ho-N0L" id="sp9-2G-BUo">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="KTG-B5-XT7">
                                 <items>
+                                    <menuItem title="X-Large" tag="3" id="duQ-95-pwt"/>
+                                    <menuItem title="Large" tag="2" id="XhU-36-4ue"/>
+                                    <menuItem title="Medium" state="on" tag="1" id="jp3-ho-N0L"/>
                                     <menuItem title="Small" id="Zyg-aT-HDo">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Medium" state="on" id="jp3-ho-N0L"/>
-                                    <menuItem title="Large" id="XhU-36-4ue"/>
-                                    <menuItem title="X-Large" id="duQ-95-pwt"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -97,14 +97,14 @@
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RRk-gf-OoZ">
                         <rect key="frame" x="135" y="65" width="119" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ti4-AN-6w9" id="NZg-4A-uKX">
+                        <popUpButtonCell key="cell" type="push" title="Tight" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="R2s-Bz-nXY" id="NZg-4A-uKX">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="K61-ne-EEo">
                                 <items>
-                                    <menuItem title="Tight" id="R2s-Bz-nXY"/>
-                                    <menuItem title="Normal" state="on" id="Ti4-AN-6w9"/>
-                                    <menuItem title="Wild" id="6PF-pU-Qam"/>
+                                    <menuItem title="Wild" tag="2" id="6PF-pU-Qam"/>
+                                    <menuItem title="Normal" tag="1" id="Ti4-AN-6w9"/>
+                                    <menuItem title="Tight" state="on" id="R2s-Bz-nXY"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>

@@ -55,4 +55,10 @@ extension AppDelegate: NSWindowDelegate
     func windowDidResize(notification: NSNotification)
     {
     }
+    
+    func windowDidEndSheet(notification: NSNotification)
+    {
+        view.stopAnimation()
+        setupAndStartAnimation()
+    }
 }
