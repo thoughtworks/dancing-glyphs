@@ -98,9 +98,9 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.20,
                         CRSPEED:  2*M_PI * 10/60,
-                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 80 : 8)/360,
+                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
-                        RTSPEED2: 2*M_PI * 7/60,
+                        RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
                 case 1: // normal
@@ -111,9 +111,9 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.04,
                         CRSPEED:  2*M_PI * 17/60,
-                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 80 : 8)/360,
+                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
-                        RTSPEED2: 2*M_PI * 7/60,
+                        RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
 
@@ -125,10 +125,10 @@ class Configuration
                         MVSPEED:  2*M_PI * 33/60,
                         CRRAD:    0.006,
                         CRSPEED:  2*M_PI * 37/60,
-                        RTMAX:    2*M_PI * ((self.glyph == 1) ? 40 : 4)/360,
-                        RTSPEED1: 2*M_PI * 16/60,
-                        RTSPEED2: 2*M_PI * 14/60,
-                        RTSPEED3: 2*M_PI * 12/60
+                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 4/360,
+                        RTSPEED1: 2*M_PI * 4/60,
+                        RTSPEED2: 2*M_PI * -3/60,
+                        RTSPEED3: 2*M_PI * 2/60
                     )
             }
             return animationSettings
