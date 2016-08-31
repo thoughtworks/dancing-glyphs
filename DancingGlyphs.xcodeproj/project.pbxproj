@@ -141,6 +141,7 @@
 				0326048C1D5FBC2A0030AA78 /* Frameworks */,
 				0326048D1D5FBC2A0030AA78 /* Headers */,
 				0326048E1D5FBC2A0030AA78 /* Resources */,
+				039CDD801D774BBA00D4152C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -228,6 +229,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		039CDD801D774BBA00D4152C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SHA=`git rev-parse --short HEAD | tr '[a-z]' '[A-Z]'`\nsed -i \"\" \"s/#gitsha#/$SHA/\" \"${BUILT_PRODUCTS_DIR}\"/DancingGlyphs.saver/Contents/Info.plist";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0326048B1D5FBC2A0030AA78 /* Sources */ = {

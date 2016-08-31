@@ -20,7 +20,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="132" width="293" height="288"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="6JH-Tx-Nik">
                 <rect key="frame" x="0.0" y="0.0" width="293" height="288"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -120,7 +120,7 @@
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="Pv7-Me-fdY">
                         <rect key="frame" x="39" y="245" width="214" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Dancing Glyphs" id="aDg-tU-Om5">
-                            <font key="font" metaFont="system" size="20"/>
+                            <font key="font" metaFont="systemSemibold" size="20"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
