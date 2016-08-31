@@ -120,7 +120,7 @@
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="Pv7-Me-fdY">
                         <rect key="frame" x="39" y="245" width="214" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Dancing Glyphs" id="aDg-tU-Om5">
-                            <font key="font" metaFont="systemSemibold" size="20"/>
+                            <font key="font" metaFont="systemBold" size="20"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
