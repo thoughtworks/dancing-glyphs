@@ -8,7 +8,7 @@ class AppDelegate: NSObject
     @IBOutlet weak var window: NSWindow!
     
     var view: ScreenSaverView!
-    
+ 
     func setupAndStartAnimation()
     {
         view = DancingGlyphsView(frame: window.contentView!.frame, isPreview: false)
@@ -30,7 +30,6 @@ class AppDelegate: NSObject
     {
         window.beginSheet(view.configureSheet()!, completionHandler: nil)
     }
-    
 
 }
 

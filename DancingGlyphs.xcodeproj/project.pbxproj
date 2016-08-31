@@ -29,6 +29,8 @@
 		032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
+		03A3355B1D77778C00D82942 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3355A1D77778C00D82942 /* InfoView.swift */; };
+		03A3355C1D77778C00D82942 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3355A1D77778C00D82942 /* InfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,7 @@
 		032604B21D5FBCB60030AA78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		032604B41D5FBCB60030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		03A3355A1D77778C00D82942 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,7 @@
 			children = (
 				0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */,
 				031494791D67A0DF005F5EB5 /* GlyphLayerView.swift */,
+				03A3355A1D77778C00D82942 /* InfoView.swift */,
 				031494881D691A62005F5EB5 /* Animation.swift */,
 				031494851D67C291005F5EB5 /* Configuration.swift */,
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
@@ -251,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A3355B1D77778C00D82942 /* InfoView.swift in Sources */,
 				031494861D67C291005F5EB5 /* Configuration.swift in Sources */,
 				031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				031494891D691A62005F5EB5 /* Animation.swift in Sources */,
@@ -272,6 +277,7 @@
 				0314948A1D691A62005F5EB5 /* Animation.swift in Sources */,
 				032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */,
+				03A3355C1D77778C00D82942 /* InfoView.swift in Sources */,
 				032604AE1D5FBCB60030AA78 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

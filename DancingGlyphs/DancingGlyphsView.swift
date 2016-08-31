@@ -32,10 +32,8 @@ import ScreenSaver
 
     var backgroundColor: NSColor?
     var layerView: GlyphLayerView!
+    var infoView: InfoView!
     var animation: Animation!
-
-    var lastCheckpoint: Double = 0
-    var frames: Int = 0
     
     override class func backingStoreType() -> NSBackingStoreType
     {
@@ -46,7 +44,7 @@ import ScreenSaver
     {
         super.init(frame: frame, isPreview: isPreview)
         animationTimeInterval = 1/60
-    }
+   }
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -73,20 +71,26 @@ import ScreenSaver
         animation.settings = configuration.animationSettings
         animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
 
-        // make view a bit smaller so we don't overlap the fps display (performance issues)
-        layerView = GlyphLayerView(frame: NSMakeRect(frame.origin.x, frame.origin.y + 12, frame.size.width, frame.size.height - 24))
+        layerView = GlyphLayerView(frame: frame)
         layerView.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
         // layers can only be created when view is in hierarchy, because layers need scale info from window
         addSubview(layerView)
         layerView.addLayers(configuration.viewSettings)
         layerView.applyAnimationState(animation.currentState!)
         
+        infoView = InfoView(frame: frame)
+        addSubview(infoView)
+        
         self.needsDisplay = true
     }
     
     override func stopAnimation()
     {
-        self.subviews[0].removeFromSuperview()
+        layerView.removeFromSuperview()
+        layerView = nil
+        infoView.removeFromSuperview()
+        infoView = nil
+        animation = nil
         
         super.stopAnimation()
     }
@@ -95,28 +99,11 @@ import ScreenSaver
     override func animateOneFrame()
     {
         let now = NSDate().timeIntervalSinceReferenceDate
-
         animation.moveToTime(now * (self.preview ? 1.5 : 1))
         layerView.applyAnimationState(animation.currentState!)
-
-        frames += 1
-        if (now - lastCheckpoint) > 1.0 {
-            displayFrameCount()
-            lastCheckpoint = now
-            frames = 0
-        }
+        infoView.renderFrame()
     }
     
-    func displayFrameCount()
-    {
-        if frames < 30 && false {
-            backgroundColor?.setFill()
-            NSRectFill(NSMakeRect(0, 0, 100, 14))
-            let attr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(10)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
-            NSAttributedString(string: String(format:"%d fps", frames), attributes:attr).drawAtPoint(NSMakePoint(1, 1))
-        }
-    }
-
 
     override func hasConfigureSheet() -> Bool
     {

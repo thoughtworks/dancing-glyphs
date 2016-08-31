@@ -27,7 +27,8 @@ class GlyphLayerView : NSView
         layerUsesCoreImageFilters = true
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 
