@@ -65,7 +65,10 @@ class GlyphLayerView : NSView
         layer.opacity = 0.94
         layer.compositingFilter = filter
         layer.actions = [ "position": NSNull(), "transform": NSNull() ]
-        
+#if false
+        layer.borderWidth = 2
+        layer.borderColor = NSColor.lightGrayColor().CGColor
+#endif
         return layer
     }
 

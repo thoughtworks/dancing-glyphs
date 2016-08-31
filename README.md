@@ -11,4 +11,3 @@ Known TODOs:
 - link size and movement when both are set to random
 - move fps calculation and display into separate view
 - clear fps display once it goes above 30 again
-- fix full rotation for circle glyph

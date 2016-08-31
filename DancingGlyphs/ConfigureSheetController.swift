@@ -47,8 +47,7 @@ class ConfigureSheetController : NSObject
 
     @IBAction func closeConfigureSheet(sender: NSButton)
     {
-        if sender.tag == 1
-        {
+        if sender.tag == 1 {
             saveConfiguration()
         }
         window.sheetParent!.endSheet(window, returnCode: (sender.tag == 1) ? NSModalResponseOK : NSModalResponseCancel)

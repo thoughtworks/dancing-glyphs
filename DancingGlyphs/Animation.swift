@@ -83,12 +83,10 @@ class Animation
 
     private func rotation(now: Double, glyphRotationSpeed grt: Double, phaseOffset: Double) -> Double
     {
-        if settings.RTMAX >= 0
-        {
+        if settings.RTMAX >= 0 {
             return sin(now*grt + phaseOffset) * settings.RTMAX
         }
-        else
-        {
+        else {
             return (now*grt + phaseOffset)
         }
         
