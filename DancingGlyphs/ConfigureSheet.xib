@@ -20,7 +20,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="132" width="293" height="288"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="6JH-Tx-Nik">
                 <rect key="frame" x="0.0" y="0.0" width="293" height="288"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -77,7 +77,6 @@
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="KTG-B5-XT7">
                                 <items>
-                                    <menuItem title="X-Large" tag="3" id="duQ-95-pwt"/>
                                     <menuItem title="Large" tag="2" id="XhU-36-4ue"/>
                                     <menuItem title="Medium" state="on" tag="1" id="jp3-ho-N0L"/>
                                     <menuItem title="Small" id="Zyg-aT-HDo">
