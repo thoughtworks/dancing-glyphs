@@ -14,71 +14,132 @@
  *  under the License.
  */
 
-
 import ScreenSaver
 
 class Configuration
 {
-    let DGDefaultsKeyScheme = "Scheme"
-    let DGDefaultsKeyGlyph = "Glyph"
-    let DGDefaultsKeySize = "Size"
-    let DGDefaultsKeyMovement = "Movement"
+    enum Scheme: Int {
+        case Normal, Dark
+    }
     
+    enum Glyph: Int {
+        case Square, Circle, Lozenge
+    }
+    
+    enum Size: Int {
+        case Small, Medium, Large
+    }
+    
+    enum Movement: Int {
+        case Tight, Normal, Wild
+    }
+    
+
     var defaults: NSUserDefaults
+    
+    var scheme: Scheme = Scheme.Dark
+    var glyph: Glyph = Glyph.Square
+    var size: Size = Size.Medium
+    var movement: Movement = Movement.Normal
+    
     
     init()
     {
         let identifier = NSBundle(forClass: Configuration.self).bundleIdentifier!
         defaults = ScreenSaverDefaults(forModuleWithName: identifier) as NSUserDefaults!
         defaults.registerDefaults([
-            DGDefaultsKeyScheme: 0,
-            DGDefaultsKeyGlyph: 0,
-            DGDefaultsKeySize: 1,
-            DGDefaultsKeyMovement: 1
+                String(Scheme): Scheme.Dark.rawValue,
+                String(Glyph): -1,
+                String(Size): -1,
+                String(Movement): -1
         ])
-    }
-   
-    
-    var scheme: Int
-    {
-        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyScheme); defaults.synchronize() }
-        get { return defaults.integerForKey(DGDefaultsKeyScheme) }
+        update()
     }
     
-    var glyph: Int
+    
+    var schemeCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyGlyph); defaults.synchronize() }
-        get { return defaults.integerForKey(DGDefaultsKeyGlyph) }
+        set { defaults.setInteger(newValue, forKey: String(Scheme)); update() }
+        get { return defaults.integerForKey(String(Scheme)) }
     }
     
-    var size: Int
+    var glyphCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: DGDefaultsKeySize); defaults.synchronize() }
-        get { return defaults.integerForKey(DGDefaultsKeySize) }
+        set { defaults.setInteger(newValue, forKey: String(Glyph)); update() }
+        get { return defaults.integerForKey(String(Glyph)) }
     }
     
-    var movement: Int
+    var sizeCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: DGDefaultsKeyMovement); defaults.synchronize()}
-        get { return defaults.integerForKey(DGDefaultsKeyMovement) }
+        set { defaults.setInteger(newValue, forKey: String(Size)); update() }
+        get { return defaults.integerForKey(String(Size)) }
+    }
+    
+    var movementCode: Int
+    {
+        set { defaults.setInteger(newValue, forKey: String(Movement)); update()}
+        get { return defaults.integerForKey(String(Movement)) }
     }
 
     
+    private func update()
+    {
+        defaults.synchronize()
+
+        self.scheme = enumForCode(self.schemeCode, defaultCase: Scheme.Dark)
+        self.glyph = enumForCode(self.glyphCode, defaultCase: Glyph.Square)
+        self.size = enumForCode(self.sizeCode, defaultCase: Size.Medium)
+        self.movement = enumForCode(self.movementCode, defaultCase: Movement.Normal)
+
+        if sizeCode == -1 && movementCode == -1 {
+            switch(randomInt(7)) {
+                case 0: (self.size, self.movement) = (.Small  , .Normal)
+                case 1: (self.size, self.movement) = (.Small  , .Wild)
+                case 2: (self.size, self.movement) = (.Medium , .Tight)
+                case 3: (self.size, self.movement) = (.Medium , .Normal)
+                case 4: (self.size, self.movement) = (.Medium , .Wild)
+                case 5: (self.size, self.movement) = (.Large , .Tight)
+                case 6: (self.size, self.movement) = (.Large , .Normal)
+                default: break // keep compiler happy
+            }
+        }
+    }
+
+    private func enumForCode<E: RawRepresentable where E.RawValue == Int>(code :Int, defaultCase: E) -> E
+    {
+        let val: Int
+        if code == -1 {
+            var maxValue: Int = 0
+            while let _ = E(rawValue: maxValue) {
+                maxValue += 1
+            }
+            val = randomInt(maxValue)
+        } else {
+            val = code
+        }
+        return E(rawValue: val) ?? defaultCase
+    }
+    
+    private func randomInt(max: Int) -> Int
+    {
+        return Int(arc4random_uniform(UInt32(max)))
+    }
+    
+
     var viewSettings: DancingGlyphsView.Settings
     {
         get
         {
-            let backgroundColor = (self.scheme == 1) ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
-            let filter = (self.scheme == 1) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
+            let backgroundColor = (self.scheme == .Dark) ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
+            let filter = (self.scheme == .Dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
-            let glyphIndex = max(0, min(self.glyph, 2))
-            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyphIndex]
+            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyph.rawValue]
 
             let glyphColors = [NSColor.TWLightGreenColor(), NSColor.TWHotPinkColor(), NSColor.TWTurquoiseColor()]
 
-            let size: Double = (Double(self.size) + 1) * 0.16
+            let sizeValue: Double = (Double(self.size.rawValue) + 1) * 0.16
 
-            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, size: size)
+            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, size: sizeValue)
         }
     }
 
@@ -88,9 +149,9 @@ class Configuration
         get
         {
             let animationSettings: Animation.Settings
-            switch(self.movement)
+            switch(movement)
             {
-                case 2: // wild
+                case .Wild:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 3/60,
                         MVMID:    0.22,
@@ -98,12 +159,12 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.20,
                         CRSPEED:  2*M_PI * 10/60,
-                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 8/360,
+                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
                         RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
-                case 1: // normal
+                case .Normal:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 1/60,
                         MVMID:    0.08,
@@ -111,13 +172,12 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.04,
                         CRSPEED:  2*M_PI * 17/60,
-                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 8/360,
+                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
                         RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
-
-                default: // tight
+                case .Tight:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 4/60,
                         MVMID:    0.020,
@@ -125,7 +185,7 @@ class Configuration
                         MVSPEED:  2*M_PI * 33/60,
                         CRRAD:    0.006,
                         CRSPEED:  2*M_PI * 37/60,
-                        RTMAX:    (self.glyph == 1) ? -1 : 2*M_PI * 4/360,
+                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 4/360,
                         RTSPEED1: 2*M_PI * 4/60,
                         RTSPEED2: 2*M_PI * -3/60,
                         RTSPEED3: 2*M_PI * 2/60
@@ -134,7 +194,6 @@ class Configuration
             return animationSettings
         }
     }
-    
-    
+  
 }
 

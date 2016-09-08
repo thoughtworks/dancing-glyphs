@@ -65,7 +65,8 @@ import ScreenSaver
         super.startAnimation()
 
         let configuration = Configuration()
-        backgroundColor = configuration.viewSettings.backgroundColor
+        let viewSettings = configuration.viewSettings
+        backgroundColor = viewSettings.backgroundColor
 
         animation = Animation()
         animation.settings = configuration.animationSettings
@@ -75,7 +76,7 @@ import ScreenSaver
         layerView.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
         // layers can only be created when view is in hierarchy, because layers need scale info from window
         addSubview(layerView)
-        layerView.addLayers(configuration.viewSettings)
+        layerView.addLayers(viewSettings)
         layerView.applyAnimationState(animation.currentState!)
         
         infoView = InfoView(frame: frame)

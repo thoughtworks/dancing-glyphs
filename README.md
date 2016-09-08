@@ -11,5 +11,3 @@ The screen saver uses color burn and dodge effects on large bitmaps. It does use
 Known TODOs:
 - use Metal or OpenGL to avoid large data transfers to and from GPU on every frame
 - fix display of frames per second to show frames actually rendered and not only frames calculated
-- allow "random" selection for configuration options
-- link size and movement when both are set to random

@@ -34,6 +34,8 @@
                                 <items>
                                     <menuItem title="Normal" id="IZM-OE-tMs"/>
                                     <menuItem title="Dark" state="on" tag="1" id="9RF-c6-YLp"/>
+                                    <menuItem isSeparatorItem="YES" id="94E-3O-yUG"/>
+                                    <menuItem title="Random" tag="-1" id="xja-Pf-sue"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -50,6 +52,8 @@
                                     </menuItem>
                                     <menuItem title="Circle" tag="1" id="k4d-p1-gzS"/>
                                     <menuItem title="Lozenge" tag="2" id="sMZ-Cd-ftJ"/>
+                                    <menuItem isSeparatorItem="YES" id="r1Q-Sp-LmH"/>
+                                    <menuItem title="Random" tag="-1" id="0ki-KV-W9e"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -82,6 +86,8 @@
                                     <menuItem title="Small" id="Zyg-aT-HDo">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
+                                    <menuItem isSeparatorItem="YES" id="EUK-I0-ibO"/>
+                                    <menuItem title="Random" tag="-1" id="ZS7-iz-Mxi"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -96,14 +102,16 @@
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RRk-gf-OoZ">
                         <rect key="frame" x="135" y="65" width="119" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Tight" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="R2s-Bz-nXY" id="NZg-4A-uKX">
+                        <popUpButtonCell key="cell" type="push" title="Random" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="-1" imageScaling="proportionallyDown" inset="2" selectedItem="4zf-Uz-TqN" id="NZg-4A-uKX">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="K61-ne-EEo">
                                 <items>
                                     <menuItem title="Wild" tag="2" id="6PF-pU-Qam"/>
                                     <menuItem title="Normal" tag="1" id="Ti4-AN-6w9"/>
-                                    <menuItem title="Tight" state="on" id="R2s-Bz-nXY"/>
+                                    <menuItem title="Tight" id="R2s-Bz-nXY"/>
+                                    <menuItem isSeparatorItem="YES" id="RTS-zL-am5"/>
+                                    <menuItem title="Random" state="on" tag="-1" id="4zf-Uz-TqN"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>

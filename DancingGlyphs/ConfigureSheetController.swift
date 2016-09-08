@@ -57,19 +57,19 @@ class ConfigureSheetController : NSObject
     func loadConfiguration()
     {
         let config = Configuration()
-        schemePopup.selectItemWithTag(config.scheme)
-        glyphPopup.selectItemWithTag(config.glyph)
-        sizePopup.selectItemWithTag(config.size)
-        movementPopup.selectItemWithTag(config.movement)
+        schemePopup.selectItemWithTag(config.schemeCode)
+        glyphPopup.selectItemWithTag(config.glyphCode)
+        sizePopup.selectItemWithTag(config.sizeCode)
+        movementPopup.selectItemWithTag(config.movementCode)
     }
 
     private func saveConfiguration()
     {
         let config = Configuration()
-        config.scheme = schemePopup.selectedTag()
-        config.glyph = glyphPopup.selectedTag()
-        config.size = sizePopup.selectedTag()
-        config.movement = movementPopup.selectedTag()
+        config.schemeCode = schemePopup.selectedTag()
+        config.glyphCode = glyphPopup.selectedTag()
+        config.sizeCode = sizePopup.selectedTag()
+        config.movementCode = movementPopup.selectedTag()
     }
 
 }
