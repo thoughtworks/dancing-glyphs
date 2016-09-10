@@ -66,6 +66,47 @@ import Metal
         super.init(coder: aDecoder)
     }
     
+    
+    override func startAnimation()
+    {
+        super.startAnimation()
+        
+        let configuration = Configuration()
+        let viewSettings = configuration.viewSettings
+        backgroundColor = viewSettings.backgroundColor
+        
+        animation = Animation()
+        animation.settings = configuration.animationSettings
+        animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
+        
+        infoView = InfoView(frame: frame)
+        addSubview(infoView)
+        
+        renderFrame()
+    }
+    
+    override func stopAnimation()
+    {
+        infoView.removeFromSuperview()
+        infoView = nil
+        animation = nil
+        
+        super.stopAnimation()
+    }
+    
+    
+    override func animateOneFrame()
+    {
+        autoreleasepool {
+            infoView.startFrame()
+            let now = NSDate().timeIntervalSinceReferenceDate
+            animation.moveToTime(now * (self.preview ? 1.5 : 1))
+            renderFrame()
+            infoView.renderFrame()
+        }
+    }
+    
+    
     func setupMetal()
     {
         device = selectMetalDevice(MTLCopyAllDevices(), preferLowPower: true) // TODO: make low power preference a user default?
@@ -175,45 +216,6 @@ import Metal
         return imageRep
     }
 
-    
-    override func startAnimation()
-    {
-        super.startAnimation()
-
-        let configuration = Configuration()
-        let viewSettings = configuration.viewSettings
-        backgroundColor = viewSettings.backgroundColor
-
-        animation = Animation()
-        animation.settings = configuration.animationSettings
-        animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
-        
-        infoView = InfoView(frame: frame)
-        addSubview(infoView)
-
-        renderFrame()
-    }
-    
-    override func stopAnimation()
-    {
-        infoView.removeFromSuperview()
-        infoView = nil
-        animation = nil
-        
-        super.stopAnimation()
-    }
-    
-    
-    override func animateOneFrame()
-    {
-        autoreleasepool {
-            infoView.startFrame()
-            let now = NSDate().timeIntervalSinceReferenceDate
-            animation.moveToTime(now * (self.preview ? 1.5 : 1))
-            renderFrame()
-            infoView.renderFrame()
-        }
-    }
     
     func renderFrame()
     {
