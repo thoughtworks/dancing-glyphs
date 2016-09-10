@@ -58,7 +58,7 @@ class InfoView : NSView
     
     private func updateFrameCount()
     {
-        if frames > 1 && frames < 59 {
+        if frames > 1 && frames < 100 {
             let image = NSImage(size: self.bounds.size)
             image.lockFocus()
             NSAttributedString(string: String(format:"%d fps", frames), attributes:textAttr).drawAtPoint(NSMakePoint(1, 1))

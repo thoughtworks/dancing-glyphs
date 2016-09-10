@@ -17,6 +17,7 @@
 // see http://stackoverflow.com/questions/11598043/get-slightly-lighter-and-darker-color-from-uicolor
 
 import Cocoa
+import Metal
 
 extension NSColor
 {
@@ -44,5 +45,18 @@ extension NSColor
         getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         return NSColor(hue: hue, saturation: saturation, brightness: brightness*amount, alpha: alpha)
     }
+    
+    
+    func toMTLClearColor() -> MTLClearColor
+    {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        let deviceColor = self.colorUsingColorSpaceName("NSDeviceRGBColorSpace") 
+        deviceColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return MTLClearColor(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
+    }
+    
     
 }
