@@ -14,10 +14,10 @@
  *  under the License.
  */
 
-// see http://www.raywenderlich.com/74438/swift-tutorial-a-quick-start
-// see http://stackoverflow.com/questions/27852616/do-swift-screensavers-work-in-mac-os-x-before-yosemite
 // see https://www.raywenderlich.com/77488/ios-8-metal-tutorial-swift-getting-started
+// see https://www.raywenderlich.com/90592/liquidfun-tutorial-2
 // see http://stackoverflow.com/questions/27967170/rendering-quads-performance-with-metal
+// see https://github.com/nickzman/rainingcubes
 
 import ScreenSaver
 import Metal
@@ -34,11 +34,13 @@ import Metal
         var size: Double
     }
 
-    var backgroundColor: NSColor?
+    var settings: Settings!
     
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
+    
+    var uniformsBuffer: MTLBuffer!
     var vertexBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var texture: MTLTexture!
@@ -72,9 +74,8 @@ import Metal
         super.startAnimation()
         
         let configuration = Configuration()
-        let viewSettings = configuration.viewSettings
-        backgroundColor = viewSettings.backgroundColor
-        
+        settings = configuration.viewSettings
+ 
         animation = Animation()
         animation.settings = configuration.animationSettings
         animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
@@ -82,6 +83,9 @@ import Metal
         infoView = InfoView(frame: frame)
         addSubview(infoView)
         
+        createTextures()
+        updateUniformsBuffer()
+        updateVertexBuffer()
         renderFrame()
     }
     
@@ -101,6 +105,7 @@ import Metal
             infoView.startFrame()
             let now = NSDate().timeIntervalSinceReferenceDate
             animation.moveToTime(now * (self.preview ? 1.5 : 1))
+            updateVertexBuffer()
             renderFrame()
             infoView.renderFrame()
         }
@@ -116,6 +121,7 @@ import Metal
         let library = try! self.device.newLibraryWithFile(libraryPath) // TODO: do something
         
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+        pipelineStateDescriptor.sampleCount = 1
         pipelineStateDescriptor.vertexFunction = library.newFunctionWithName("vertexShader")
         pipelineStateDescriptor.fragmentFunction = library.newFunctionWithName("texturedQuadFragmentShader")
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
@@ -123,8 +129,6 @@ import Metal
         pipelineState = try! device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
 
         commandQueue = device.newCommandQueue()
-
-        createResources()
         
         metalLayer = CAMetalLayer()
         metalLayer.device = device
@@ -153,20 +157,8 @@ import Metal
         return device! // TODO: can we assume there will always be a device?
     }
     
-    func createResources()
+    func createTextures()
     {
-        let x = Float(bounds.size.height / bounds.size.width) * 0.7
-        let y = Float(0.7)
-        
-        let vertexData: [Float] = [
-            -x,  y, 0, 1, //a
-            -x, -y, 0, 1, //b
-             x, -y, 0, 1, //c
-            -x,  y, 0, 1, //a
-             x, -y, 0, 1, //c
-             x,  y, 0, 1  //d
-        ]
-
         let textureCoordData: [Float] = [
             0.0, 0.0, //a
             0.0, 1.0, //b
@@ -176,10 +168,9 @@ import Metal
             1.0, 0.0  //d
         ]
 
-        vertexBuffer = device.newBufferWithBytes(vertexData, length: sizeofArray(vertexData), options:MTLResourceOptions())
         textureCoordBuffer = device.newBufferWithBytes(textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions())
 
-        let image = createBitmapImageRepForGlyph(NSBezierPath.TWSquareGlyphPath(), color: NSColor.TWTurquoiseColor())
+        let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor())
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.RGBA8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
         texture = device.newTextureWithDescriptor(textureDescriptor)
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
@@ -190,11 +181,10 @@ import Metal
     {
         return array.count * sizeof(T)
     }
-    
-    
+
     func createBitmapImageRepForGlyph(glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
     {
-        let glyphSize = floor(min(bounds.width, bounds.height) * 0.7) // TODO: CGFloat(config.size))
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
         let imageSize = Int(floor(glyphSize * (1 + overscan)))
         
@@ -216,7 +206,65 @@ import Metal
         return imageRep
     }
 
-    
+
+    func updateUniformsBuffer()
+    {
+        let width = Float(bounds.size.width)
+        let height = Float(bounds.size.height)
+        let ndcMatrix = makeOrthographicMatrix(left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
+        let floatSize = sizeof(Float)
+        // let float4x4ByteAlignment = floatSize * 4
+        let float4x4Size = floatSize * 16
+        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
+        let uniformsStructSize = float4x4Size + paddingBytesSize
+
+        uniformsBuffer = device.newBufferWithLength(uniformsStructSize, options: MTLResourceOptions())
+        let bufferPointer = uniformsBuffer.contents()
+        memcpy(bufferPointer, ndcMatrix, float4x4Size)
+    }
+
+
+    func makeOrthographicMatrix(left left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
+    {
+        let ral = right + left
+        let rsl = right - left
+        let tab = top + bottom
+        let tsb = top - bottom
+        let fan = far + near
+        let fsn = far - near
+
+        return [2.0 / rsl, 0.0, 0.0, 0.0,
+                0.0, 2.0 / tsb, 0.0, 0.0,
+                0.0, 0.0, -2.0 / fsn, 0.0,
+                -ral / rsl, -tab / tsb, -fan / fsn, 1.0
+        ]
+    }
+
+
+    func updateVertexBuffer()
+    {
+        let (xmin, ymin) = screenpos(animation.currentState!.p0)
+        let (xmax, ymax) = (xmin + Float(texture.width), ymin + Float(texture.height))
+        
+        let vertexData: [Float] = [
+                xmin, ymax, //a
+                xmin, ymin, //b
+                xmax, ymin, //c
+                xmin, ymax, //a
+                xmax, ymin, //c
+                xmax, ymax  //d
+        ]
+        vertexBuffer = device.newBufferWithBytes(vertexData, length: sizeofArray(vertexData), options:MTLResourceOptions())
+    }
+
+    func screenpos(p: (x: Double, y: Double)) -> (x: Float, y: Float)
+    {
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
+        let x = bounds.size.width/2  + CGFloat(p.x)*glyphSize
+        let y = bounds.size.height/2 + CGFloat(p.y)*glyphSize
+        return (Float(x), Float(y))
+    }
+
     func renderFrame()
     {
         let drawable = metalLayer.nextDrawable()!
@@ -224,7 +272,8 @@ import Metal
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .Clear
-        renderPassDescriptor.colorAttachments[0].clearColor = backgroundColor!.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
+//        renderPassDescriptor.colorAttachments[0].storeAction = .Store
+        renderPassDescriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
         
         let commandBuffer = commandQueue.commandBuffer()
         
@@ -232,6 +281,7 @@ import Metal
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
         renderEncoder.setVertexBuffer(textureCoordBuffer, offset: 0, atIndex: 1)
+        renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, atIndex: 2)
         renderEncoder.setFragmentTexture(texture, atIndex: 0)
         renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
         renderEncoder.endEncoding()

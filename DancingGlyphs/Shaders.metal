@@ -18,24 +18,33 @@
 
 using namespace metal;
 
+
+struct Uniforms {
+    float4x4 ndcMatrix;
+};
+
 struct VertexOut
 {
-    float4 position          [[position]];
+    float4 position [[position]];
     float2 textureCoordinate [[user(texturecoord)]];
 };
 
-vertex VertexOut vertexShader(uint vid                                  [[ vertex_id ]],
-                              constant packed_float4* position          [[ buffer(0) ]],
-                              constant packed_float2* textureCoordinate [[ buffer(1) ]])
+
+vertex VertexOut vertexShader(uint vid [[ vertex_id ]],
+                              constant packed_float2* vertices [[ buffer(0) ]],
+                              constant packed_float2* textureCoordinates [[ buffer(1) ]],
+                              constant Uniforms& uniforms [[ buffer(2) ]])
 {
     VertexOut vout;
-    vout.position = position[vid];
-    vout.textureCoordinate = textureCoordinate[vid];
+    float2 position = vertices[vid];
+    vout.position = uniforms.ndcMatrix * float4(position.x, position.y, 0, 1);
+    vout.textureCoordinate = textureCoordinates[vid];
     return vout;
     
 };
 
-fragment half4 texturedQuadFragmentShader(VertexOut vout          [[ stage_in ]],
+
+fragment half4 texturedQuadFragmentShader(VertexOut vout [[ stage_in ]],
                                           texture2d<half> texture [[ texture(0) ]])
 {
     constexpr sampler quad_sampler;
