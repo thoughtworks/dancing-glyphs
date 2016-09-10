@@ -23,7 +23,7 @@ class Configuration
     }
     
     enum Glyph: Int {
-        case Square, Circle, Lozenge
+        case Square, Circle
     }
     
     enum Size: Int {
