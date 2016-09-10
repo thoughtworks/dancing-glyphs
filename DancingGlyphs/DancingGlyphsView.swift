@@ -44,10 +44,7 @@ import Metal
     var vertexBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var texture: MTLTexture!
-    
-    var metalLayer: CAMetalLayer!
-    
-    var layerView: GlyphLayerView!
+   
     var infoView: InfoView!
     var animation: Animation!
     
@@ -56,11 +53,11 @@ import Metal
         super.init(frame: frame, isPreview: isPreview)
 
         setupMetal()
-        
-        self.layer = self.metalLayer;
-        self.wantsLayer = true;
 
-        self.animationTimeInterval = 1/60
+        wantsLayer = true;
+        layer = createMetalLayer();
+
+        animationTimeInterval = 1/60
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -69,6 +66,19 @@ import Metal
     }
     
     
+    override func hasConfigureSheet() -> Bool
+    {
+        return true
+    }
+    
+    override func configureSheet() -> NSWindow?
+    {
+        let controller = ConfigureSheetController.sharedInstance
+        controller.loadConfiguration()
+        return controller.window
+    }
+    
+
     override func startAnimation()
     {
         super.startAnimation()
@@ -129,11 +139,6 @@ import Metal
         pipelineState = try! device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
 
         commandQueue = device.newCommandQueue()
-        
-        metalLayer = CAMetalLayer()
-        metalLayer.device = device
-        metalLayer.pixelFormat = .BGRA8Unorm;
-        metalLayer.framebufferOnly = true    // TODO: probably change when we begin sampling textures
     }
 
     func selectMetalDevice(deviceList: [MTLDevice], preferLowPower: Bool) -> MTLDevice
@@ -156,6 +161,16 @@ import Metal
         }
         return device! // TODO: can we assume there will always be a device?
     }
+    
+    func createMetalLayer() -> CAMetalLayer
+    {
+        let metalLayer = CAMetalLayer()
+        metalLayer.device = device
+        metalLayer.pixelFormat = .BGRA8Unorm;
+        metalLayer.framebufferOnly = true    // TODO: probably change when we begin sampling textures
+        return metalLayer
+    }
+    
     
     func createTextures()
     {
@@ -265,8 +280,10 @@ import Metal
         return (Float(x), Float(y))
     }
 
+    
     func renderFrame()
     {
+        let metalLayer = layer as! CAMetalLayer
         let drawable = metalLayer.nextDrawable()!
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
@@ -291,18 +308,6 @@ import Metal
     }
     
     
-    override func hasConfigureSheet() -> Bool
-    {
-        return true
-    }
-    
-    override func configureSheet() -> NSWindow?
-    {
-        let controller = ConfigureSheetController.sharedInstance
-        controller.loadConfiguration()
-        return controller.window
-    }
-
 
 }
 
