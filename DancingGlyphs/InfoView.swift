@@ -21,12 +21,14 @@ class InfoView : NSView
     let textAttr: [String: AnyObject]
     
     var lastCheckpoint: Double = 0
+    var frameStart: Double = 0
+    var renderTime: Double = 0
     var frames: Int = 0
     
     override init(frame: NSRect)
     {
-        textAttr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(10)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
-        super.init(frame: NSRect(origin: frame.origin, size: NSMakeSize(100, 14)))
+        textAttr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(11)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
+        super.init(frame: NSRect(origin: frame.origin, size: NSMakeSize(200, 14)))
         wantsLayer = true
         self.layer = createLayer()
     }
@@ -45,14 +47,21 @@ class InfoView : NSView
         return layer
     }
     
+    func startFrame()
+    {
+        frameStart = NSDate().timeIntervalSinceReferenceDate
+    }
+    
     func renderFrame()
     {
         frames += 1
         let now = NSDate().timeIntervalSinceReferenceDate
+        renderTime += (now - frameStart)
         if (now - lastCheckpoint) >= 1.0 {
             updateFrameCount()
             lastCheckpoint = now
             frames = 0
+            renderTime = 0
         }
     }
     
@@ -61,7 +70,8 @@ class InfoView : NSView
         if frames > 1 && frames < 100 {
             let image = NSImage(size: self.bounds.size)
             image.lockFocus()
-            NSAttributedString(string: String(format:"%d fps", frames), attributes:textAttr).drawAtPoint(NSMakePoint(1, 1))
+            let text = String(format:"%d fps, %.2f ms/f", frames, renderTime / Double(frames) * 1000)
+            NSAttributedString(string: text, attributes:textAttr).drawAtPoint(NSMakePoint(1, 1))
             image.unlockFocus()
 
             let scale = image.recommendedLayerContentsScale(window!.backingScaleFactor)

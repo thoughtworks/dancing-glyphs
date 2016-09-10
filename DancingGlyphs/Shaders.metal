@@ -17,13 +17,25 @@
 #include <metal_stdlib>
 using namespace metal;
 
-
-vertex float4 myVertexShader(const device float2 * vertex_array [[ buffer(0) ]], uint vid [[ vertex_id ]])
+struct VertexInOut
 {
-    return float4(vertex_array[vid],0,1);
-}
+    float4  position [[position]];
+    float4  color;
+    
+};
 
-fragment float4 myFragmentShader()
+vertex VertexInOut vertexShader(uint vid [[ vertex_id ]],
+                                constant packed_float4* position [[ buffer(0) ]],
+                                constant packed_float4* color    [[ buffer(1) ]])
 {
-    return float4(1.0, 0.0, 1.0, 1.0);
-}
+    VertexInOut outVertex;
+    outVertex.position = position[vid];
+    outVertex.color    = color[vid];
+    return outVertex;
+    
+};
+
+fragment half4 fragmentShader(VertexInOut inFrag [[stage_in]])
+{
+    return half4(inFrag.color);
+};

@@ -38,6 +38,7 @@ import Metal
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
     var vertexBuffer: MTLBuffer!
+    var colorBuffer: MTLBuffer!
     
     var metalLayer: CAMetalLayer!
     
@@ -78,10 +79,9 @@ import Metal
         }
 
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-        pipelineStateDescriptor.vertexFunction = library.newFunctionWithName("myVertexShader")
-        pipelineStateDescriptor.fragmentFunction = library.newFunctionWithName("myFragmentShader")
+        pipelineStateDescriptor.vertexFunction = library.newFunctionWithName("vertexShader")
+        pipelineStateDescriptor.fragmentFunction = library.newFunctionWithName("fragmentShader")
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
-        
         do {
             pipelineState = try device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
         } catch {
@@ -119,11 +119,25 @@ import Metal
     func createResources()
     {
         let vertexArray:[Float] = [
-             0.0,   0.75,
-            -0.75, -0.75,
-             0.75, -0.75
+            -0.7,  0.7, 0, 1,
+            -0.7, -0.7, 0, 1,
+             0.7, -0.7, 0, 1,
+            -0.7,  0.7, 0, 1,
+             0.7, -0.7, 0, 1,
+             0.7,  0.7, 0, 1
         ]
+       
+        let colorArray:[Float] = [
+            1.0, 0.5, 0.5, 1, //a
+            0.5, 1.0, 0.5, 1, //b
+            0.5, 0.5, 1.0, 1, //c
+            1.0, 0.5, 0.5, 1, //a
+            0.5, 0.5, 1.0, 1, //c
+            1.0, 0.5, 1.0, 1, //d
+        ]
+        
         self.vertexBuffer = device.newBufferWithBytes(vertexArray, length: vertexArray.count*sizeofValue(vertexArray[0]), options:MTLResourceOptions())
+        self.colorBuffer = device.newBufferWithBytes(colorArray, length: colorArray.count*sizeofValue(colorArray[0]), options:MTLResourceOptions())
     }
     
     
@@ -164,6 +178,7 @@ import Metal
     
     override func animateOneFrame()
     {
+        infoView.startFrame()
         let now = NSDate().timeIntervalSinceReferenceDate
         animation.moveToTime(now * (self.preview ? 1.5 : 1))
         renderFrame()
@@ -184,7 +199,8 @@ import Metal
         let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-        renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+        renderEncoder.setVertexBuffer(colorBuffer, offset: 0, atIndex: 1)
+        renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
         renderEncoder.endEncoding()
         
         commandBuffer.presentDrawable(drawable)
