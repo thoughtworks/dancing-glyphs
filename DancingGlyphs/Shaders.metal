@@ -15,27 +15,30 @@
  */
 
 #include <metal_stdlib>
+
 using namespace metal;
 
-struct VertexInOut
+struct VertexOut
 {
-    float4  position [[position]];
-    float4  color;
+    float4 position          [[position]];
+    float2 textureCoordinate [[user(texturecoord)]];
+};
+
+vertex VertexOut vertexShader(uint vid                                  [[ vertex_id ]],
+                              constant packed_float4* position          [[ buffer(0) ]],
+                              constant packed_float2* textureCoordinate [[ buffer(1) ]])
+{
+    VertexOut vout;
+    vout.position = position[vid];
+    vout.textureCoordinate = textureCoordinate[vid];
+    return vout;
     
 };
 
-vertex VertexInOut vertexShader(uint vid [[ vertex_id ]],
-                                constant packed_float4* position [[ buffer(0) ]],
-                                constant packed_float4* color    [[ buffer(1) ]])
+fragment half4 texturedQuadFragmentShader(VertexOut vout          [[ stage_in ]],
+                                          texture2d<half> texture [[ texture(0) ]])
 {
-    VertexInOut outVertex;
-    outVertex.position = position[vid];
-    outVertex.color    = color[vid];
-    return outVertex;
-    
-};
-
-fragment half4 fragmentShader(VertexInOut inFrag [[stage_in]])
-{
-    return half4(inFrag.color);
-};
+    constexpr sampler quad_sampler;
+    half4 color = texture.sample(quad_sampler, vout.textureCoordinate);
+    return color;
+}
