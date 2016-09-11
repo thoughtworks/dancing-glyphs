@@ -45,6 +45,8 @@ import Metal
     var textureCoordBuffer: MTLBuffer!
     var texture: MTLTexture!
    
+    var displayLink: CVDisplayLink?
+
     var animation: Animation!
     var statistics: Statistics!
 
@@ -82,7 +84,17 @@ import Metal
     override func startAnimation()
     {
         super.startAnimation()
+
+        func displayLinkOutputCallback(displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn {
+            unsafeBitCast(displayLinkContext, DancingGlyphsView.self).animateOneFrameCV()
+            return kCVReturnSuccess
+        }
         
+        let screensID = UInt32(window!.screen!.deviceDescription["NSScreenNumber"] as! Int)
+        CVDisplayLinkCreateWithCGDisplay(screensID, &displayLink)
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
+        CVDisplayLinkStart(displayLink!)
+
         let configuration = Configuration()
         settings = configuration.viewSettings
  
@@ -108,11 +120,13 @@ import Metal
         animation = nil
         statistics = nil
 
+        CVDisplayLinkStop(displayLink!)
+
         super.stopAnimation()
     }
     
     
-    override func animateOneFrame()
+    func animateOneFrameCV()
     {
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()

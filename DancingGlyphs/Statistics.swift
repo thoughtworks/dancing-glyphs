@@ -28,7 +28,7 @@ class Statistics
     func viewWillStartRenderingFrame()
     {
         let now = NSDate().timeIntervalSinceReferenceDate
-        if (now - frameStartTime) > 1.0/60.0 {
+        if (now - frameStartTime) >= 0.017 { // 1.0/60.0 {
             suspectedDroppedFrames += 1
         }
         frameStartTime = now
