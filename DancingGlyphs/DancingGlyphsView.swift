@@ -45,9 +45,9 @@ import Metal
     var textureCoordBuffer: MTLBuffer!
     var texture: MTLTexture!
    
-    var infoView: InfoView!
     var animation: Animation!
-    
+    var statistics: Statistics!
+
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
@@ -55,7 +55,7 @@ import Metal
         setupMetal()
 
         wantsLayer = true;
-        layer = createMetalLayer();
+        layer = createMetalLayer()
 
         animationTimeInterval = 1/60
     }
@@ -89,9 +89,11 @@ import Metal
         animation = Animation()
         animation.settings = configuration.animationSettings
         animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
-        
-        infoView = InfoView(frame: frame)
-        addSubview(infoView)
+
+        statistics = Statistics()
+
+//        infoView = InfoView(frame: frame)
+//        addSubview(infoView)
         
         createTextures()
         updateUniformsBuffer()
@@ -101,10 +103,11 @@ import Metal
     
     override func stopAnimation()
     {
-        infoView.removeFromSuperview()
-        infoView = nil
+//        infoView.removeFromSuperview()
+//        infoView = nil
         animation = nil
-        
+        statistics = nil
+
         super.stopAnimation()
     }
     
@@ -112,12 +115,12 @@ import Metal
     override func animateOneFrame()
     {
         autoreleasepool {
-            infoView.startFrame()
+            statistics.viewWillStartRenderingFrame()
             let now = NSDate().timeIntervalSinceReferenceDate
             animation.moveToTime(now * (self.preview ? 1.5 : 1))
             updateVertexBuffer()
             renderFrame()
-            infoView.renderFrame()
+            statistics.viewDidFinishRenderingFrame()
         }
     }
     

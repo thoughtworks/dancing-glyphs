@@ -33,6 +33,8 @@
 		03A3355C1D77778C00D82942 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3355A1D77778C00D82942 /* InfoView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66841D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03BD66871D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,7 @@
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
 		03A3355A1D77778C00D82942 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,7 @@
 				03A3355A1D77778C00D82942 /* InfoView.swift */,
 				031494881D691A62005F5EB5 /* Animation.swift */,
 				031494851D67C291005F5EB5 /* Configuration.swift */,
+				03BD66851D85D97B0023012F /* Statistics.swift */,
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */,
 				031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */,
@@ -264,6 +268,7 @@
 				031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				031494891D691A62005F5EB5 /* Animation.swift in Sources */,
 				031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
+				03BD66861D85D97B0023012F /* Statistics.swift in Sources */,
 				0314947A1D67A0DF005F5EB5 /* GlyphLayerView.swift in Sources */,
 				03BD66831D84642E0023012F /* Shaders.metal in Sources */,
 				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
@@ -284,6 +289,7 @@
 				032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */,
 				03A3355C1D77778C00D82942 /* InfoView.swift in Sources */,
+				03BD66871D85D97B0023012F /* Statistics.swift in Sources */,
 				032604AE1D5FBCB60030AA78 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
