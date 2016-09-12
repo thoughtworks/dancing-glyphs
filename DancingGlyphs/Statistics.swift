@@ -14,7 +14,7 @@
  *  under the License.
  */
 
-import Foundation
+import Cocoa
 
 class Statistics
 {
@@ -27,8 +27,8 @@ class Statistics
     
     func viewWillStartRenderingFrame()
     {
-        let now = NSDate().timeIntervalSinceReferenceDate
-        if (now - frameStartTime) >= 0.017 { // 1.0/60.0 {
+        let now = CACurrentMediaTime()
+        if (now - frameStartTime) >= 0.018 { // 1.0/60.0 {  TODO: figure out why true interval doesn't work
             suspectedDroppedFrames += 1
         }
         frameStartTime = now
@@ -36,11 +36,11 @@ class Statistics
     
     func viewDidFinishRenderingFrame()
     {
-        let now = NSDate().timeIntervalSinceReferenceDate
-        framesSinceCheckpoint += 1
+        let now = CACurrentMediaTime()
         let renderTime = (now - frameStartTime)
         longestRenderTime = max(longestRenderTime, renderTime)
         renderTimeSinceCheckpoint += renderTime
+        framesSinceCheckpoint += 1
 
         if (now - lastCheckpoint) >= 1.0 {
             printStatistics()

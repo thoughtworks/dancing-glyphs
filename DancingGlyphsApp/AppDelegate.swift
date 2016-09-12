@@ -15,6 +15,7 @@ class AppDelegate: NSObject
         view.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
         window.contentView!.autoresizesSubviews = true
         window.contentView!.addSubview(view)
+        window.backingType = DancingGlyphsView.backingStoreType()
         view.startAnimation()
     }
     

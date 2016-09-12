@@ -68,6 +68,17 @@ import Metal
     }
     
     
+    override class func backingStoreType() -> NSBackingStoreType
+    {
+        return NSBackingStoreType.Nonretained
+    }
+    
+    override class func performGammaFade() -> Bool
+    {
+        return false
+    }
+    
+    
     override func hasConfigureSheet() -> Bool
     {
         return true
@@ -83,8 +94,24 @@ import Metal
 
     override func startAnimation()
     {
-        super.startAnimation()
+//        super.startAnimation()
 
+        let configuration = Configuration()
+        settings = configuration.viewSettings
+ 
+        animation = Animation()
+        animation.settings = configuration.animationSettings
+        animation.moveToTime(CACurrentMediaTime())
+
+        statistics = Statistics()
+
+//        infoView = InfoView(frame: frame)
+//        addSubview(infoView)
+        
+        createBuffer()
+        createTextures()
+        updateUniformsBuffer()
+ 
         func displayLinkOutputCallback(displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn {
             unsafeBitCast(displayLinkContext, DancingGlyphsView.self).animateOneFrameCV()
             return kCVReturnSuccess
@@ -94,23 +121,6 @@ import Metal
         CVDisplayLinkCreateWithCGDisplay(screensID, &displayLink)
         CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
         CVDisplayLinkStart(displayLink!)
-
-        let configuration = Configuration()
-        settings = configuration.viewSettings
- 
-        animation = Animation()
-        animation.settings = configuration.animationSettings
-        animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
-
-        statistics = Statistics()
-
-//        infoView = InfoView(frame: frame)
-//        addSubview(infoView)
-        
-        createTextures()
-        updateUniformsBuffer()
-        updateVertexBuffer()
-        renderFrame()
     }
     
     override func stopAnimation()
@@ -122,7 +132,7 @@ import Metal
 
         CVDisplayLinkStop(displayLink!)
 
-        super.stopAnimation()
+//        super.stopAnimation()
     }
     
     
@@ -130,8 +140,8 @@ import Metal
     {
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
-            let now = NSDate().timeIntervalSinceReferenceDate
-            animation.moveToTime(now * (self.preview ? 1.5 : 1))
+            let now = CACurrentMediaTime()
+            animation.moveToTime(now * (self.preview ? 1 : 1))
             updateVertexBuffer()
             renderFrame()
             statistics.viewDidFinishRenderingFrame()
@@ -188,7 +198,12 @@ import Metal
         return metalLayer
     }
     
-    
+    func createBuffer()
+    {
+        uniformsBuffer = device.newBufferWithLength(sizeof(Float)*16, options:.StorageModeManaged) // TODO: fix hardcoded buffer size?
+        vertexBuffer = device.newBufferWithLength(sizeof(Float)*12, options:.StorageModeManaged) // TODO: fix hardcoded buffer size?
+    }
+
     func createTextures()
     {
         let textureCoordData: [Float] = [
@@ -200,11 +215,13 @@ import Metal
             1.0, 0.0  //d
         ]
 
-        textureCoordBuffer = device.newBufferWithBytes(textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions())
+        textureCoordBuffer = device.newBufferWithBytes(textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions.StorageModeManaged)
 
         let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor())
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.RGBA8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
-        texture = device.newTextureWithDescriptor(textureDescriptor)
+        let descriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.RGBA8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
+        descriptor.usage = MTLTextureUsage.ShaderRead
+        descriptor.storageMode = MTLStorageMode.Managed
+        texture = device.newTextureWithDescriptor(descriptor)
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
         texture.replaceRegion(region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
     }
@@ -247,12 +264,13 @@ import Metal
         let floatSize = sizeof(Float)
         // let float4x4ByteAlignment = floatSize * 4
         let float4x4Size = floatSize * 16
-        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
-        let uniformsStructSize = float4x4Size + paddingBytesSize
+//        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
+//        let uniformsStructSize = float4x4Size + paddingBytesSize
 
-        uniformsBuffer = device.newBufferWithLength(uniformsStructSize, options: MTLResourceOptions())
+        //uniformsBuffer = device.newBufferWithLength(uniformsStructSize, options: MTLResourceOptions())
         let bufferPointer = uniformsBuffer.contents()
         memcpy(bufferPointer, ndcMatrix, float4x4Size)
+        uniformsBuffer.didModifyRange(NSMakeRange(0, float4x4Size))
     }
 
 
@@ -275,18 +293,20 @@ import Metal
 
     func updateVertexBuffer()
     {
-        let (xmin, ymin) = screenpos(animation.currentState!.p0)
-        let (xmax, ymax) = (xmin + Float(texture.width), ymin + Float(texture.height))
+        let (x, y) = screenpos(animation.currentState!.p0)
+        let (w, h) = (Float(texture.width), Float(texture.height))
         
         let vertexData: [Float] = [
-                xmin, ymax, //a
-                xmin, ymin, //b
-                xmax, ymin, //c
-                xmin, ymax, //a
-                xmax, ymin, //c
-                xmax, ymax  //d
+                x-w/2, y+h/2, //a
+                x-w/2, y-h/2, //b
+                x+w/2, y-h/2, //c
+                x-w/2, y+h/2, //a
+                x+w/2, y-w/2, //c
+                x+w/2, y+h/2  //d
         ]
-        vertexBuffer = device.newBufferWithBytes(vertexData, length: sizeofArray(vertexData), options:MTLResourceOptions())
+        let bufferPointer = vertexBuffer.contents()
+        memcpy(bufferPointer, vertexData, sizeofArray(vertexData))
+        vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData)))
     }
 
     func screenpos(p: (x: Double, y: Double)) -> (x: Float, y: Float)
