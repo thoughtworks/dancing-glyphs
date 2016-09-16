@@ -21,10 +21,10 @@ import Metal
 
 extension NSColor
 {
-    class func TWGrayColor()       -> NSColor { return NSColor(red: 0x80/0x100, green: 0x82/0x100, blue: 0x85/0x100, alpha: 1) }
-    class func TWLightGreenColor() -> NSColor { return NSColor(red: 0x8A/0x100, green: 0xB6/0x100, blue: 0x81/0x100, alpha: 1) }
-    class func TWHotPinkColor()    -> NSColor { return NSColor(red: 0xED/0x100, green: 0x5C/0x100, blue: 0xA0/0x100, alpha: 1) }
-    class func TWTurquoiseColor()  -> NSColor { return NSColor(red: 0x32/0x100, green: 0xBE/0x100, blue: 0xCE/0x100, alpha: 1) }
+    class var TWGrayColor: NSColor       { get { return NSColor(red: 0x80/0x100, green: 0x82/0x100, blue: 0x85/0x100, alpha: 1) } }
+    class var TWLightGreenColor: NSColor { get { return NSColor(red: 0x8A/0x100, green: 0xB6/0x100, blue: 0x81/0x100, alpha: 1) } }
+    class var TWHotPinkColor: NSColor    { get { return NSColor(red: 0xED/0x100, green: 0x5C/0x100, blue: 0xA0/0x100, alpha: 1) } }
+    class var TWTurquoiseColor: NSColor  { get { return NSColor(red: 0x32/0x100, green: 0xBE/0x100, blue: 0xCE/0x100, alpha: 1) } }
 
     func lighter(_ amount :CGFloat = 0.25) -> NSColor
     {

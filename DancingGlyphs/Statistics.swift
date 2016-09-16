@@ -38,7 +38,7 @@ class Statistics
         framesSinceCheckpoint += 1
 
         if (now - lastCheckpoint) >= 1.0 {
-            printStatistics()
+            print()
             lastCheckpoint = now
             framesSinceCheckpoint = 0
             renderTimeSinceCheckpoint = 0
@@ -46,7 +46,7 @@ class Statistics
         }
     }
     
-    func printStatistics()
+    fileprivate func print()
     {
         if longestRenderTime * 1000 < 8 {
             return

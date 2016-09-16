@@ -68,6 +68,8 @@ import Metal
     }
     
     
+    // screen saver api
+    
     override class func backingStoreType() -> NSBackingStoreType
     {
         return NSBackingStoreType.nonretained
@@ -94,8 +96,8 @@ import Metal
 
     override func startAnimation()
     {
-//        super.startAnimation()
-
+        // we're not calling super because we need to set up our own timer for the animation
+        
         let configuration = Configuration()
         settings = configuration.viewSettings
  
@@ -105,49 +107,42 @@ import Metal
 
         statistics = Statistics()
 
-//        infoView = InfoView(frame: frame)
-//        addSubview(infoView)
-        
-        createBuffer()
+        createVertexBuffer()
+        createUniformsBuffer()
         createTextures()
-        updateUniformsBuffer()
  
-        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
-            unsafeBitCast(displayLinkContext, to: DancingGlyphsView.self).animateOneFrameCV()
-            return kCVReturnSuccess
+        // must be done here and not in initFrame because it requires this view to be in a view hierarchy
+        if displayLink == nil {
+            createDisplayLink()
         }
-        
-        let screensID = UInt32(window!.screen!.deviceDescription["NSScreenNumber"] as! Int)
-        CVDisplayLinkCreateWithCGDisplay(screensID, &displayLink)
-        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
         CVDisplayLinkStart(displayLink!)
     }
     
     override func stopAnimation()
     {
-//        infoView.removeFromSuperview()
-//        infoView = nil
+        // we're not calling super because we didn't do it in startAnimation()
+        
         animation = nil
         statistics = nil
 
         CVDisplayLinkStop(displayLink!)
-
-//        super.stopAnimation()
     }
     
     
-    func animateOneFrameCV()
+    override func animateOneFrame()
     {
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
             let now = CACurrentMediaTime()
-            animation.moveToTime(now * (self.isPreview ? 1 : 1))
+            animation.moveToTime(now * (self.isPreview ? 1.5 : 1))
             updateVertexBuffer()
             renderFrame()
             statistics.viewDidFinishRenderingFrame()
         }
     }
     
+    
+    // functions called once
     
     func setupMetal()
     {
@@ -198,12 +193,60 @@ import Metal
         return metalLayer
     }
     
-    func createBuffer()
+    
+    // functions called when animation starts
+
+    func createDisplayLink()
     {
-        uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*16, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
+            unsafeBitCast(displayLinkContext, to: DancingGlyphsView.self).animateOneFrame()
+            return kCVReturnSuccess
+        }
+        
+        let screensID = UInt32(window!.screen!.deviceDescription["NSScreenNumber"] as! Int)
+        CVDisplayLinkCreateWithCGDisplay(screensID, &displayLink)
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+    }
+    
+    
+    func createVertexBuffer()
+    {
         vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
     }
 
+    func createUniformsBuffer()
+    {
+        let width = Float(bounds.size.width)
+        let height = Float(bounds.size.height)
+        let ndcMatrix = makeOrthographicMatrix(left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
+        let floatSize = MemoryLayout<Float>.size
+        // let float4x4ByteAlignment = floatSize * 4
+        let float4x4Size = floatSize * 16
+        //        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
+        //        let uniformsStructSize = float4x4Size + paddingBytesSize
+        
+        uniformsBuffer = device.makeBuffer(length: float4x4Size, options:.storageModeManaged)
+        let bufferPointer = uniformsBuffer.contents()
+        memcpy(bufferPointer, ndcMatrix, float4x4Size)
+        uniformsBuffer.didModifyRange(NSMakeRange(0, float4x4Size))
+    }
+    
+    func makeOrthographicMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
+    {
+        let ral = right + left
+        let rsl = right - left
+        let tab = top + bottom
+        let tsb = top - bottom
+        let fan = far + near
+        let fsn = far - near
+        
+        return [2.0 / rsl, 0.0, 0.0, 0.0,
+                0.0, 2.0 / tsb, 0.0, 0.0,
+                0.0, 0.0, -2.0 / fsn, 0.0,
+                -ral / rsl, -tab / tsb, -fan / fsn, 1.0
+        ]
+    }
+    
     func createTextures()
     {
         let textureCoordData: [Float] = [
@@ -217,7 +260,7 @@ import Metal
 
         textureCoordBuffer = device.makeBuffer(bytes: textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions.storageModeManaged)
 
-        let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor())
+        let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
         descriptor.usage = MTLTextureUsage.shaderRead
         descriptor.storageMode = MTLStorageMode.managed
@@ -242,13 +285,13 @@ import Metal
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
         
-        let path = glyph.copy()
+        let path = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
         transform.scale(x: glyphSize, y: glyphSize)
         transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
-        (path as AnyObject).transform(using: transform)
+        path.transform(using: transform)
         color.set()
-        (path as AnyObject).fill()
+        path.fill()
     
         NSGraphicsContext.restoreGraphicsState()
         
@@ -256,40 +299,7 @@ import Metal
     }
 
 
-    func updateUniformsBuffer()
-    {
-        let width = Float(bounds.size.width)
-        let height = Float(bounds.size.height)
-        let ndcMatrix = makeOrthographicMatrix(left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
-        let floatSize = MemoryLayout<Float>.size
-        // let float4x4ByteAlignment = floatSize * 4
-        let float4x4Size = floatSize * 16
-//        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
-//        let uniformsStructSize = float4x4Size + paddingBytesSize
-
-        //uniformsBuffer = device.newBufferWithLength(uniformsStructSize, options: MTLResourceOptions())
-        let bufferPointer = uniformsBuffer.contents()
-        memcpy(bufferPointer, ndcMatrix, float4x4Size)
-        uniformsBuffer.didModifyRange(NSMakeRange(0, float4x4Size))
-    }
-
-
-    func makeOrthographicMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
-    {
-        let ral = right + left
-        let rsl = right - left
-        let tab = top + bottom
-        let tsb = top - bottom
-        let fan = far + near
-        let fsn = far - near
-
-        return [2.0 / rsl, 0.0, 0.0, 0.0,
-                0.0, 2.0 / tsb, 0.0, 0.0,
-                0.0, 0.0, -2.0 / fsn, 0.0,
-                -ral / rsl, -tab / tsb, -fan / fsn, 1.0
-        ]
-    }
-
+    // functions called for every frame
 
     func updateVertexBuffer()
     {
@@ -304,8 +314,7 @@ import Metal
                 x+w/2, y-h/2, //c
                 x+w/2, y+h/2  //d
         ]
-        let bufferPointer = vertexBuffer.contents()
-        memcpy(bufferPointer, vertexData, sizeofArray(vertexData))
+        memcpy(vertexBuffer.contents(), vertexData, sizeofArray(vertexData))
         vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData)))
     }
 
@@ -323,30 +332,28 @@ import Metal
         let commandBuffer = commandQueue.makeCommandBuffer()
 
         let metalLayer = layer as! CAMetalLayer
-        let drawable = metalLayer.nextDrawable()!
+        let drawable = metalLayer.nextDrawable()! // TODO: add guard to skip frame if we dont get a drawable
         
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
-        renderPassDescriptor.colorAttachments[0].storeAction = .dontCare
+        let descriptor = MTLRenderPassDescriptor()
+        descriptor.colorAttachments[0].texture = drawable.texture
+        descriptor.colorAttachments[0].loadAction = .clear
+        descriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
+        descriptor.colorAttachments[0].storeAction = .dontCare
         
-        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-        renderEncoder.setRenderPipelineState(pipelineState)
-        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
-        renderEncoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
-        renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        renderEncoder.setFragmentTexture(texture, at: 0)
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
-        renderEncoder.endEncoding()
+        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        encoder.setRenderPipelineState(pipelineState)
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
+        encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
+        encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
+        encoder.setFragmentTexture(texture, at: 0)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
+        encoder.endEncoding()
         
         commandBuffer.present(drawable)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         }
 
-    
-    
 }
 
  

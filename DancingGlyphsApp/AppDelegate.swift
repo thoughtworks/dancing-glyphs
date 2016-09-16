@@ -40,7 +40,7 @@ extension AppDelegate: NSApplicationDelegate
     func applicationDidFinishLaunching(_ notification: Notification)
     {
         setupAndStartAnimation()
-        Timer.scheduledTimer(timeInterval: view.animationTimeInterval, target: self, selector: #selector(animateOneFrame), userInfo: nil, repeats: true)
+//        Timer.scheduledTimer(timeInterval: view.animationTimeInterval, target: self, selector: #selector(animateOneFrame), userInfo: nil, repeats: true)
     }
 }
 
