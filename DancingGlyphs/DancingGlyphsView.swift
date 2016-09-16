@@ -320,16 +320,16 @@ import Metal
     
     func renderFrame()
     {
+        let commandBuffer = commandQueue.commandBuffer()
+
         let metalLayer = layer as! CAMetalLayer
         let drawable = metalLayer.nextDrawable()!
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .Clear
-//        renderPassDescriptor.colorAttachments[0].storeAction = .Store
         renderPassDescriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
-        
-        let commandBuffer = commandQueue.commandBuffer()
+        renderPassDescriptor.colorAttachments[0].storeAction = .DontCare
         
         let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder.setRenderPipelineState(pipelineState)
