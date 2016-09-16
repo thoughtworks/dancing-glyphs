@@ -301,7 +301,7 @@ import Metal
                 x-w/2, y-h/2, //b
                 x+w/2, y-h/2, //c
                 x-w/2, y+h/2, //a
-                x+w/2, y-w/2, //c
+                x+w/2, y-h/2, //c
                 x+w/2, y+h/2  //d
         ]
         let bufferPointer = vertexBuffer.contents()
@@ -342,10 +342,10 @@ import Metal
         
         commandBuffer.presentDrawable(drawable)
         commandBuffer.commit()
-    }
-    
-    
+        }
 
+    
+    
 }
 
  
