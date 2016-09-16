@@ -75,9 +75,14 @@ class Animation
 
     private func position(now: Double, phaseOffset: Double) -> (x: Double, y: Double)
     {
+#if false
         let dist = (settings.MVMID + sin(now*settings.MVSPEED) * settings.MVAMP)
         let xpos = dist * cos(now*settings.GRTSPEED + phaseOffset) + (sin(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
         let ypos = dist * sin(now*settings.GRTSPEED + phaseOffset) + (cos(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
+#else
+        let xpos = sin(now) * 0.5
+        let ypos = cos(now) * 0.5
+#endif
         return (xpos, ypos)
     }
 

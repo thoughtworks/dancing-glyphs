@@ -342,6 +342,7 @@ import Metal
         
         commandBuffer.presentDrawable(drawable)
         commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
         }
 
     
