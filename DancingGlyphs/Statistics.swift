@@ -23,15 +23,10 @@ class Statistics
     private var renderTimeSinceCheckpoint: Double = 0
     private var framesSinceCheckpoint: Int = 0
     private var longestRenderTime: Double = 0
-    private var suspectedDroppedFrames: Int = 0
     
     func viewWillStartRenderingFrame()
     {
-        let now = CACurrentMediaTime()
-        if (now - frameStartTime) >= 0.018 { // 1.0/60.0 {  TODO: figure out why true interval doesn't work
-            suspectedDroppedFrames += 1
-        }
-        frameStartTime = now
+        frameStartTime = CACurrentMediaTime()
     }
     
     func viewDidFinishRenderingFrame()
@@ -48,17 +43,19 @@ class Statistics
             framesSinceCheckpoint = 0
             renderTimeSinceCheckpoint = 0
             longestRenderTime = 0
-            suspectedDroppedFrames = 0
         }
     }
     
     func printStatistics()
     {
-        let text = String(format:"%d fps,render time (avg/max): %.2f/%.2f ms, dropped frames: %d",
+        if longestRenderTime * 1000 < 8 {
+            return
+        }
+        
+        let text = String(format:"%d fps, render time (avg/max): %.2f/%.2f ms",
                 framesSinceCheckpoint,
                 renderTimeSinceCheckpoint / Double(framesSinceCheckpoint) * 1000,
-                longestRenderTime * 1000,
-                suspectedDroppedFrames)
+                longestRenderTime * 1000)
         NSLog(text)
     }
 
