@@ -121,35 +121,35 @@ extension NSBezierPath
         return PathBuilder(points: points).applyRatio(0.688).flip().path
     }
     
-    private class PathBuilder
+    fileprivate class PathBuilder
     {
         var path: NSBezierPath
         
         init(points: [NSPoint])
         {
             path = NSBezierPath()
-            path.moveToPoint(points[0])
+            path.move(to: points[0])
             var i = 1
             while i < points.count {
-                path.curveToPoint(points[i+2], controlPoint1: points[i+0], controlPoint2: points[i+1])
+                path.curve(to: points[i+2], controlPoint1: points[i+0], controlPoint2: points[i+1])
                 i += 3
             }
-            path.closePath()
+            path.close()
         }
         
         func flip() -> PathBuilder
         {
-            let transform = NSAffineTransform()
-            transform.scaleXBy(1, yBy: -1)
-            path.transformUsingAffineTransform(transform)
+            var transform = AffineTransform.identity
+            transform.scale(x: 1, y: -1)
+            path.transform(using: transform)
             return self
         }
         
-        func applyRatio(ratio: CGFloat) -> PathBuilder
+        func applyRatio(_ ratio: CGFloat) -> PathBuilder
         {
-            let transform = NSAffineTransform()
-            transform.scaleXBy(1, yBy: ratio)
-            path.transformUsingAffineTransform(transform)
+            var transform = AffineTransform.identity
+            transform.scale(x: 1, y: ratio)
+            path.transform(using: transform)
             return self
         }
         

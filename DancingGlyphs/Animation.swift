@@ -61,7 +61,7 @@ class Animation
     var currentState: State?
 
 
-    func moveToTime(time: Double)
+    func moveToTime(_ time: Double)
     {
         currentState = State(
             p0: position(time, phaseOffset: 4/3*M_PI),
@@ -73,7 +73,7 @@ class Animation
         )
     }
 
-    private func position(now: Double, phaseOffset: Double) -> (x: Double, y: Double)
+    fileprivate func position(_ now: Double, phaseOffset: Double) -> (x: Double, y: Double)
     {
 #if false
         let dist = (settings.MVMID + sin(now*settings.MVSPEED) * settings.MVAMP)
@@ -86,7 +86,7 @@ class Animation
         return (xpos, ypos)
     }
 
-    private func rotation(now: Double, glyphRotationSpeed grt: Double, phaseOffset: Double) -> Double
+    fileprivate func rotation(_ now: Double, glyphRotationSpeed grt: Double, phaseOffset: Double) -> Double
     {
         if settings.RTMAX >= 0 {
             return sin(now*grt + phaseOffset) * settings.RTMAX

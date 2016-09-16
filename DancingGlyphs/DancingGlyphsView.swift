@@ -70,7 +70,7 @@ import Metal
     
     override class func backingStoreType() -> NSBackingStoreType
     {
-        return NSBackingStoreType.Nonretained
+        return NSBackingStoreType.nonretained
     }
     
     override class func performGammaFade() -> Bool
@@ -112,14 +112,14 @@ import Metal
         createTextures()
         updateUniformsBuffer()
  
-        func displayLinkOutputCallback(displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn {
-            unsafeBitCast(displayLinkContext, DancingGlyphsView.self).animateOneFrameCV()
+        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
+            unsafeBitCast(displayLinkContext, to: DancingGlyphsView.self).animateOneFrameCV()
             return kCVReturnSuccess
         }
         
         let screensID = UInt32(window!.screen!.deviceDescription["NSScreenNumber"] as! Int)
         CVDisplayLinkCreateWithCGDisplay(screensID, &displayLink)
-        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
         CVDisplayLinkStart(displayLink!)
     }
     
@@ -141,7 +141,7 @@ import Metal
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
             let now = CACurrentMediaTime()
-            animation.moveToTime(now * (self.preview ? 1 : 1))
+            animation.moveToTime(now * (self.isPreview ? 1 : 1))
             updateVertexBuffer()
             renderFrame()
             statistics.viewDidFinishRenderingFrame()
@@ -153,22 +153,22 @@ import Metal
     {
         device = selectMetalDevice(MTLCopyAllDevices(), preferLowPower: true) // TODO: make low power preference a user default?
         
-        let myBundle = NSBundle(forClass: Configuration.self)
-        let libraryPath = myBundle.pathForResource("default", ofType: "metallib")!
-        let library = try! self.device.newLibraryWithFile(libraryPath) // TODO: do something
+        let myBundle = Bundle(for: Configuration.self)
+        let libraryPath = myBundle.path(forResource: "default", ofType: "metallib")!
+        let library = try! self.device.makeLibrary(filepath: libraryPath) // TODO: do something
         
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
         pipelineStateDescriptor.sampleCount = 1
-        pipelineStateDescriptor.vertexFunction = library.newFunctionWithName("vertexShader")
-        pipelineStateDescriptor.fragmentFunction = library.newFunctionWithName("texturedQuadFragmentShader")
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+        pipelineStateDescriptor.vertexFunction = library.makeFunction(name: "vertexShader")
+        pipelineStateDescriptor.fragmentFunction = library.makeFunction(name: "texturedQuadFragmentShader")
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
-        pipelineState = try! device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
+        pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
 
-        commandQueue = device.newCommandQueue()
+        commandQueue = device.makeCommandQueue()
     }
 
-    func selectMetalDevice(deviceList: [MTLDevice], preferLowPower: Bool) -> MTLDevice
+    func selectMetalDevice(_ deviceList: [MTLDevice], preferLowPower: Bool) -> MTLDevice
     {
         var device: MTLDevice?
         if !preferLowPower {
@@ -176,7 +176,7 @@ import Metal
         } else {
             for d in deviceList {
                 device = d
-                if(d.lowPower) {
+                if(d.isLowPower) {
                     break
                 }
             }
@@ -193,15 +193,15 @@ import Metal
     {
         let metalLayer = CAMetalLayer()
         metalLayer.device = device
-        metalLayer.pixelFormat = .BGRA8Unorm;
+        metalLayer.pixelFormat = .bgra8Unorm;
         metalLayer.framebufferOnly = true    // TODO: probably change when we begin sampling textures
         return metalLayer
     }
     
     func createBuffer()
     {
-        uniformsBuffer = device.newBufferWithLength(sizeof(Float)*16, options:.StorageModeManaged) // TODO: fix hardcoded buffer size?
-        vertexBuffer = device.newBufferWithLength(sizeof(Float)*12, options:.StorageModeManaged) // TODO: fix hardcoded buffer size?
+        uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*16, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
     }
 
     func createTextures()
@@ -215,23 +215,23 @@ import Metal
             1.0, 0.0  //d
         ]
 
-        textureCoordBuffer = device.newBufferWithBytes(textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions.StorageModeManaged)
+        textureCoordBuffer = device.makeBuffer(bytes: textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions.storageModeManaged)
 
         let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor())
-        let descriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.RGBA8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
-        descriptor.usage = MTLTextureUsage.ShaderRead
-        descriptor.storageMode = MTLStorageMode.Managed
-        texture = device.newTextureWithDescriptor(descriptor)
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
+        descriptor.usage = MTLTextureUsage.shaderRead
+        descriptor.storageMode = MTLStorageMode.managed
+        texture = device.makeTexture(descriptor: descriptor)
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
-        texture.replaceRegion(region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
+        texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
     }
     
-    private func sizeofArray<T>(array: [T]) -> Int
+    fileprivate func sizeofArray<T>(_ array: [T]) -> Int
     {
-        return array.count * sizeof(T)
+        return array.count * MemoryLayout<T>.size
     }
 
-    func createBitmapImageRepForGlyph(glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
+    func createBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
     {
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
@@ -240,15 +240,15 @@ import Metal
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSDeviceRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
         
         NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.setCurrentContext(NSGraphicsContext(bitmapImageRep: imageRep))
+        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
         
         let path = glyph.copy()
-        let transform = NSAffineTransform()
-        transform.scaleXBy(glyphSize, yBy: glyphSize)
-        transform.translateXBy(0.5 + overscan/2, yBy: 0.5 + overscan/2)
-        path.transformUsingAffineTransform(transform)
+        var transform = AffineTransform.identity
+        transform.scale(x: glyphSize, y: glyphSize)
+        transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
+        (path as AnyObject).transform(using: transform)
         color.set()
-        path.fill()
+        (path as AnyObject).fill()
     
         NSGraphicsContext.restoreGraphicsState()
         
@@ -261,7 +261,7 @@ import Metal
         let width = Float(bounds.size.width)
         let height = Float(bounds.size.height)
         let ndcMatrix = makeOrthographicMatrix(left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
-        let floatSize = sizeof(Float)
+        let floatSize = MemoryLayout<Float>.size
         // let float4x4ByteAlignment = floatSize * 4
         let float4x4Size = floatSize * 16
 //        let paddingBytesSize = 0 // float4x4ByteAlignment - floatSize * 2
@@ -274,7 +274,7 @@ import Metal
     }
 
 
-    func makeOrthographicMatrix(left left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
+    func makeOrthographicMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
     {
         let ral = right + left
         let rsl = right - left
@@ -309,7 +309,7 @@ import Metal
         vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData)))
     }
 
-    func screenpos(p: (x: Double, y: Double)) -> (x: Float, y: Float)
+    func screenpos(_ p: (x: Double, y: Double)) -> (x: Float, y: Float)
     {
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
         let x = bounds.size.width/2  + CGFloat(p.x)*glyphSize
@@ -320,27 +320,27 @@ import Metal
     
     func renderFrame()
     {
-        let commandBuffer = commandQueue.commandBuffer()
+        let commandBuffer = commandQueue.makeCommandBuffer()
 
         let metalLayer = layer as! CAMetalLayer
         let drawable = metalLayer.nextDrawable()!
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .Clear
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
-        renderPassDescriptor.colorAttachments[0].storeAction = .DontCare
+        renderPassDescriptor.colorAttachments[0].storeAction = .dontCare
         
-        let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         renderEncoder.setRenderPipelineState(pipelineState)
-        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-        renderEncoder.setVertexBuffer(textureCoordBuffer, offset: 0, atIndex: 1)
-        renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, atIndex: 2)
-        renderEncoder.setFragmentTexture(texture, atIndex: 0)
-        renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
+        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
+        renderEncoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
+        renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
+        renderEncoder.setFragmentTexture(texture, at: 0)
+        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
         renderEncoder.endEncoding()
         
-        commandBuffer.presentDrawable(drawable)
+        commandBuffer.present(drawable)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         }

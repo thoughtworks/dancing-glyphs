@@ -33,7 +33,7 @@ class GlyphLayerView : NSView
     }
 
 
-    func addLayers(config: DancingGlyphsView.Settings)
+    func addLayers(_ config: DancingGlyphsView.Settings)
     {
         glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(config.size))
         let backgroundLayer = createBackgroundLayer()
@@ -54,13 +54,13 @@ class GlyphLayerView : NSView
         return layer
     }
 
-    func createLayerForImage(image: NSImage, filter: CIFilter) -> CALayer
+    func createLayerForImage(_ image: NSImage, filter: CIFilter) -> CALayer
     {
         let layer = CALayer()
         
         layer.bounds = NSRect(origin:NSMakePoint(0,0), size:image.size)
         let scale = image.recommendedLayerContentsScale(window!.backingScaleFactor)
-        layer.contents = image.layerContentsForContentsScale(scale)
+        layer.contents = image.layerContents(forContentsScale: scale)
         layer.contentsScale = scale
         layer.contentsGravity = kCAGravityBottomLeft
         layer.opacity = 0.94
@@ -73,7 +73,7 @@ class GlyphLayerView : NSView
         return layer
     }
 
-    func createImageForGlyph(glyph: NSBezierPath, color: NSColor) -> NSImage
+    func createImageForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSImage
     {
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
         let imageSize = floor(glyphSize * (1 + overscan))
@@ -82,12 +82,12 @@ class GlyphLayerView : NSView
         image.lockFocus()
 
         let path = glyph.copy()
-        let transform = NSAffineTransform()
-        transform.scaleXBy(glyphSize, yBy: glyphSize)
-        transform.translateXBy(0.5 + overscan/2, yBy: 0.5 + overscan/2)
-        path.transformUsingAffineTransform(transform)
+        var transform = AffineTransform.identity
+        transform.scale(x: glyphSize, y: glyphSize)
+        transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
+        (path as AnyObject).transform(using: transform)
         color.set()
-        path.fill()
+        (path as AnyObject).fill()
 
         image.unlockFocus()
 
@@ -95,7 +95,7 @@ class GlyphLayerView : NSView
     }
     
 
-    func applyAnimationState(state: Animation.State)
+    func applyAnimationState(_ state: Animation.State)
     {
         let sublayers = self.layer!.sublayers!
 
@@ -108,7 +108,7 @@ class GlyphLayerView : NSView
         sublayers[2].transform = CATransform3DMakeRotation(CGFloat(state.r2), 0.0, 0.0, 1.0)
     }
 
-    func screenpos(p: (x: Double, y: Double)) -> NSPoint
+    func screenpos(_ p: (x: Double, y: Double)) -> NSPoint
     {
         let x = bounds.size.width/2  + CGFloat(p.x)*glyphSize
         let y = bounds.size.height/2 + CGFloat(p.y)*glyphSize

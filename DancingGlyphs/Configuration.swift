@@ -19,39 +19,39 @@ import ScreenSaver
 class Configuration
 {
     enum Scheme: Int {
-        case Normal, Dark
+        case normal, dark
     }
     
     enum Glyph: Int {
-        case Square, Circle
+        case square, circle
     }
     
     enum Size: Int {
-        case Small, Medium, Large
+        case small, medium, large
     }
     
     enum Movement: Int {
-        case Tight, Normal, Wild
+        case tight, normal, wild
     }
     
 
-    var defaults: NSUserDefaults
+    var defaults: UserDefaults
     
-    var scheme: Scheme = Scheme.Dark
-    var glyph: Glyph = Glyph.Square
-    var size: Size = Size.Medium
-    var movement: Movement = Movement.Normal
+    var scheme: Scheme = Scheme.dark
+    var glyph: Glyph = Glyph.square
+    var size: Size = Size.medium
+    var movement: Movement = Movement.normal
     
     
     init()
     {
-        let identifier = NSBundle(forClass: Configuration.self).bundleIdentifier!
-        defaults = ScreenSaverDefaults(forModuleWithName: identifier) as NSUserDefaults!
-        defaults.registerDefaults([
-                String(Scheme): Scheme.Dark.rawValue,
-                String(Glyph): -1,
-                String(Size): -1,
-                String(Movement): -1
+        let identifier = Bundle(for: Configuration.self).bundleIdentifier!
+        defaults = ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults!
+        defaults.register(defaults: [
+                String(describing: Scheme.self): Scheme.dark.rawValue,
+                String(describing: Glyph.self): -1,
+                String(describing: Size.self): -1,
+                String(describing: Movement.self): -1
         ])
         update()
     }
@@ -59,53 +59,53 @@ class Configuration
     
     var schemeCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: String(Scheme)); update() }
-        get { return defaults.integerForKey(String(Scheme)) }
+        set { defaults.set(newValue, forKey: String(describing: Scheme.self)); update() }
+        get { return defaults.integer(forKey: String(describing: Scheme.self)) }
     }
     
     var glyphCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: String(Glyph)); update() }
-        get { return defaults.integerForKey(String(Glyph)) }
+        set { defaults.set(newValue, forKey: String(describing: Glyph.self)); update() }
+        get { return defaults.integer(forKey: String(describing: Glyph.self)) }
     }
     
     var sizeCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: String(Size)); update() }
-        get { return defaults.integerForKey(String(Size)) }
+        set { defaults.set(newValue, forKey: String(describing: Size.self)); update() }
+        get { return defaults.integer(forKey: String(describing: Size.self)) }
     }
     
     var movementCode: Int
     {
-        set { defaults.setInteger(newValue, forKey: String(Movement)); update()}
-        get { return defaults.integerForKey(String(Movement)) }
+        set { defaults.set(newValue, forKey: String(describing: Movement.self)); update()}
+        get { return defaults.integer(forKey: String(describing: Movement.self)) }
     }
 
     
-    private func update()
+    fileprivate func update()
     {
         defaults.synchronize()
 
-        self.scheme = enumForCode(self.schemeCode, defaultCase: Scheme.Dark)
-        self.glyph = enumForCode(self.glyphCode, defaultCase: Glyph.Square)
-        self.size = enumForCode(self.sizeCode, defaultCase: Size.Medium)
-        self.movement = enumForCode(self.movementCode, defaultCase: Movement.Normal)
+        self.scheme = enumForCode(self.schemeCode, defaultCase: Scheme.dark)
+        self.glyph = enumForCode(self.glyphCode, defaultCase: Glyph.square)
+        self.size = enumForCode(self.sizeCode, defaultCase: Size.medium)
+        self.movement = enumForCode(self.movementCode, defaultCase: Movement.normal)
 
         if sizeCode == -1 && movementCode == -1 {
             switch(randomInt(7)) {
-                case 0: (self.size, self.movement) = (.Small  , .Normal)
-                case 1: (self.size, self.movement) = (.Small  , .Wild)
-                case 2: (self.size, self.movement) = (.Medium , .Tight)
-                case 3: (self.size, self.movement) = (.Medium , .Normal)
-                case 4: (self.size, self.movement) = (.Medium , .Wild)
-                case 5: (self.size, self.movement) = (.Large , .Tight)
-                case 6: (self.size, self.movement) = (.Large , .Normal)
+                case 0: (self.size, self.movement) = (.small  , .normal)
+                case 1: (self.size, self.movement) = (.small  , .wild)
+                case 2: (self.size, self.movement) = (.medium , .tight)
+                case 3: (self.size, self.movement) = (.medium , .normal)
+                case 4: (self.size, self.movement) = (.medium , .wild)
+                case 5: (self.size, self.movement) = (.large , .tight)
+                case 6: (self.size, self.movement) = (.large , .normal)
                 default: break // keep compiler happy
             }
         }
     }
 
-    private func enumForCode<E: RawRepresentable where E.RawValue == Int>(code :Int, defaultCase: E) -> E
+    fileprivate func enumForCode<E: RawRepresentable>(_ code :Int, defaultCase: E) -> E where E.RawValue == Int
     {
         let val: Int
         if code == -1 {
@@ -120,7 +120,7 @@ class Configuration
         return E(rawValue: val) ?? defaultCase
     }
     
-    private func randomInt(max: Int) -> Int
+    fileprivate func randomInt(_ max: Int) -> Int
     {
         return Int(arc4random_uniform(UInt32(max)))
     }
@@ -130,8 +130,8 @@ class Configuration
     {
         get
         {
-            let backgroundColor = (self.scheme == .Dark) ? NSColor.blackColor() : NSColor.TWGrayColor().lighter(0.1)
-            let filter = (self.scheme == .Dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
+            let backgroundColor = (self.scheme == .dark) ? NSColor.black : NSColor.TWGrayColor().lighter(0.1)
+            let filter = (self.scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
             let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyph.rawValue]
 
@@ -151,7 +151,7 @@ class Configuration
             let animationSettings: Animation.Settings
             switch(movement)
             {
-                case .Wild:
+                case .wild:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 3/60,
                         MVMID:    0.22,
@@ -159,12 +159,12 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.20,
                         CRSPEED:  2*M_PI * 10/60,
-                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 8/360,
+                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
                         RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
-                case .Normal:
+                case .normal:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 1/60,
                         MVMID:    0.08,
@@ -172,12 +172,12 @@ class Configuration
                         MVSPEED:  2*M_PI * 11/60,
                         CRRAD:    0.04,
                         CRSPEED:  2*M_PI * 17/60,
-                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 8/360,
+                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 8/360,
                         RTSPEED1: 2*M_PI * 8/60,
                         RTSPEED2: 2*M_PI * -7/60,
                         RTSPEED3: 2*M_PI * 6/60
                         )
-                case .Tight:
+                case .tight:
                     animationSettings = Animation.Settings(
                         GRTSPEED: 2*M_PI * 4/60,
                         MVMID:    0.020,
@@ -185,7 +185,7 @@ class Configuration
                         MVSPEED:  2*M_PI * 33/60,
                         CRRAD:    0.006,
                         CRSPEED:  2*M_PI * 37/60,
-                        RTMAX:    (self.glyph == .Circle) ? -1 : 2*M_PI * 4/360,
+                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 4/360,
                         RTSPEED1: 2*M_PI * 4/60,
                         RTSPEED2: 2*M_PI * -3/60,
                         RTSPEED3: 2*M_PI * 2/60

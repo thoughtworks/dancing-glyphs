@@ -31,7 +31,7 @@ class ConfigureSheetController : NSObject
     {
         super.init()
 
-        let myBundle = NSBundle(forClass: ConfigureSheetController.self)
+        let myBundle = Bundle(for: ConfigureSheetController.self)
         myBundle.loadNibNamed("ConfigureSheet", owner: self, topLevelObjects: nil)
 
         let bundleVersion = (myBundle.infoDictionary!["CFBundleShortVersionString"] ?? "n/a") as! String
@@ -40,12 +40,12 @@ class ConfigureSheetController : NSObject
     }
     
 
-    @IBAction func openProjectPage(sender: AnyObject)
+    @IBAction func openProjectPage(_ sender: AnyObject)
     {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(string: "http://github.com/thoughtworks/dancing-glyphs")!);
+        NSWorkspace.shared().open(URL(string: "http://github.com/thoughtworks/dancing-glyphs")!);
     }
 
-    @IBAction func closeConfigureSheet(sender: NSButton)
+    @IBAction func closeConfigureSheet(_ sender: NSButton)
     {
         if sender.tag == 1 {
             saveConfiguration()
@@ -57,13 +57,13 @@ class ConfigureSheetController : NSObject
     func loadConfiguration()
     {
         let config = Configuration()
-        schemePopup.selectItemWithTag(config.schemeCode)
-        glyphPopup.selectItemWithTag(config.glyphCode)
-        sizePopup.selectItemWithTag(config.sizeCode)
-        movementPopup.selectItemWithTag(config.movementCode)
+        schemePopup.selectItem(withTag: config.schemeCode)
+        glyphPopup.selectItem(withTag: config.glyphCode)
+        sizePopup.selectItem(withTag: config.sizeCode)
+        movementPopup.selectItem(withTag: config.movementCode)
     }
 
-    private func saveConfiguration()
+    fileprivate func saveConfiguration()
     {
         let config = Configuration()
         config.schemeCode = schemePopup.selectedTag()

@@ -26,17 +26,17 @@ extension NSColor
     class func TWHotPinkColor()    -> NSColor { return NSColor(red: 0xED/0x100, green: 0x5C/0x100, blue: 0xA0/0x100, alpha: 1) }
     class func TWTurquoiseColor()  -> NSColor { return NSColor(red: 0x32/0x100, green: 0xBE/0x100, blue: 0xCE/0x100, alpha: 1) }
 
-    func lighter(amount :CGFloat = 0.25) -> NSColor
+    func lighter(_ amount :CGFloat = 0.25) -> NSColor
     {
         return hueColorWithBrightnessAmount(1 + amount)
     }
     
-    func darker(amount :CGFloat = 0.25) -> NSColor
+    func darker(_ amount :CGFloat = 0.25) -> NSColor
     {
         return hueColorWithBrightnessAmount(1 - amount)
     }
     
-    private func hueColorWithBrightnessAmount(amount: CGFloat) -> NSColor
+    fileprivate func hueColorWithBrightnessAmount(_ amount: CGFloat) -> NSColor
     {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
@@ -53,7 +53,7 @@ extension NSColor
         var green: CGFloat = 0
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
-        let deviceColor = self.colorUsingColorSpaceName("NSDeviceRGBColorSpace") 
+        let deviceColor = self.usingColorSpaceName("NSDeviceRGBColorSpace") 
         deviceColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return MTLClearColor(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
     }

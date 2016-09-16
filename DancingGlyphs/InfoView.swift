@@ -18,16 +18,16 @@ import Cocoa
 
 class InfoView : NSView
 {
-    private let textAttr: [String: AnyObject]
+    fileprivate let textAttr: [String: AnyObject]
 
-    private var lastCheckpoint: Double = 0
-    private var frameStart: Double = 0
-    private var renderTime: Double = 0
-    private var frames: Int = 0
+    fileprivate var lastCheckpoint: Double = 0
+    fileprivate var frameStart: Double = 0
+    fileprivate var renderTime: Double = 0
+    fileprivate var frames: Int = 0
     
     override init(frame: NSRect)
     {
-        textAttr = [ NSFontAttributeName: NSFont.userFixedPitchFontOfSize(10)!, NSForegroundColorAttributeName: NSColor.whiteColor() ]
+        textAttr = [ NSFontAttributeName: NSFont.userFixedPitchFont(ofSize: 10)!, NSForegroundColorAttributeName: NSColor.white ]
         super.init(frame: NSRect(origin: frame.origin, size: NSMakeSize(200, 14)))
         wantsLayer = true
         self.layer = createLayer()
@@ -38,25 +38,25 @@ class InfoView : NSView
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func createLayer() -> CALayer
+    fileprivate func createLayer() -> CALayer
     {
         let layer = CALayer()
         layer.bounds = self.bounds
         layer.opacity = 1
-        layer.opaque = true
+        layer.isOpaque = true
         layer.actions = [ "contents": NSNull() ]
         return layer
     }
     
     func startFrame()
     {
-        frameStart = NSDate().timeIntervalSinceReferenceDate
+        frameStart = Date().timeIntervalSinceReferenceDate
     }
     
     func renderFrame()
     {
         frames += 1
-        let now = NSDate().timeIntervalSinceReferenceDate
+        let now = Date().timeIntervalSinceReferenceDate
         renderTime += (now - frameStart)
         if (now - lastCheckpoint) >= 1.0 {
             updateFrameCount()
@@ -66,22 +66,22 @@ class InfoView : NSView
         }
     }
     
-    private func updateFrameCount()
+    fileprivate func updateFrameCount()
     {
         if frames > 1 { // && frames < 59 {
             let image = NSImage(size: self.bounds.size)
             image.lockFocus()
             let path = NSBezierPath()
-            path.appendBezierPathWithRect(bounds)
-            NSColor.blackColor().setFill() // TODO: use background color configured in main view
+            path.appendRect(bounds)
+            NSColor.black.setFill() // TODO: use background color configured in main view
             path.fill()
             let text = String(format:"%d fps, %.2f ms/f", frames, renderTime / Double(frames) * 1000)
-            NSAttributedString(string: text, attributes:textAttr).drawAtPoint(NSMakePoint(2, 1))
+            NSAttributedString(string: text, attributes:textAttr).draw(at: NSMakePoint(2, 1))
             image.unlockFocus()
 
             let scale = image.recommendedLayerContentsScale(window!.backingScaleFactor)
             layer?.contentsScale = scale
-            layer?.contents = image.layerContentsForContentsScale(scale)
+            layer?.contents = image.layerContents(forContentsScale: scale)
         }
         else {
             layer?.contents = nil
