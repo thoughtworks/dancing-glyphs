@@ -48,10 +48,6 @@ class Statistics
     
     fileprivate func print()
     {
-        if longestRenderTime * 1000 < 8 {
-            return
-        }
-        
         let text = String(format:"%d fps, render time (avg/max): %.2f/%.2f ms",
                 framesSinceCheckpoint,
                 renderTimeSinceCheckpoint / Double(framesSinceCheckpoint) * 1000,

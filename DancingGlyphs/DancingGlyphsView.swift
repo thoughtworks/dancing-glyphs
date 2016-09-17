@@ -211,7 +211,7 @@ import Metal
     
     func createVertexBuffer()
     {
-        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*24, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
     }
 
     func createUniformsBuffer()
@@ -258,8 +258,12 @@ import Metal
             1.0, 0.0  //d
         ]
 
-        textureCoordBuffer = device.makeBuffer(bytes: textureCoordData, length: sizeofArray(textureCoordData), options:MTLResourceOptions.storageModeManaged)
-
+        textureCoordBuffer = device.makeBuffer(length: sizeofArray(textureCoordData) * 2, options:.storageModeManaged)
+        var bufferPointer = textureCoordBuffer.contents()
+        memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
+        bufferPointer += sizeofArray(textureCoordData)
+        memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
+        
         let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
         descriptor.usage = MTLTextureUsage.shaderRead
@@ -303,19 +307,34 @@ import Metal
 
     func updateVertexBuffer()
     {
-        let (x, y) = screenpos(animation.currentState!.p0)
-        let (w, h) = (Float(texture.width), Float(texture.height))
-        
-        let vertexData: [Float] = [
-                x-w/2, y+h/2, //a
-                x-w/2, y-h/2, //b
-                x+w/2, y-h/2, //c
-                x-w/2, y+h/2, //a
-                x+w/2, y-h/2, //c
-                x+w/2, y+h/2  //d
+        var bufferPointer = vertexBuffer.contents()
+
+        let (x0, y0) = screenpos(animation.currentState!.p0)
+        let (w0, h0) = (Float(texture.width), Float(texture.height))
+        let vertexData0: [Float] = [
+            x0-w0/2, y0+h0/2, //a
+            x0-w0/2, y0-h0/2, //b
+            x0+w0/2, y0-h0/2, //c
+            x0-w0/2, y0+h0/2, //a
+            x0+w0/2, y0-h0/2, //c
+            x0+w0/2, y0+h0/2  //d
         ]
-        memcpy(vertexBuffer.contents(), vertexData, sizeofArray(vertexData))
-        vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData)))
+        memcpy(bufferPointer, vertexData0, sizeofArray(vertexData0))
+        bufferPointer += sizeofArray(vertexData0)
+
+        let (x1, y1) = screenpos(animation.currentState!.p1)
+        let (w1, h1) = (Float(texture.width), Float(texture.height))
+        let vertexData1: [Float] = [
+            x1-w1/2, y1+h1/2, //a
+            x1-w1/2, y1-h1/2, //b
+            x1+w1/2, y1-h1/2, //c
+            x1-w1/2, y1+h1/2, //a
+            x1+w1/2, y1-h1/2, //c
+            x1+w1/2, y1+h1/2  //d
+        ]
+        memcpy(bufferPointer, vertexData1, sizeofArray(vertexData1))
+
+        vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData0) * 2))
     }
 
     func screenpos(_ p: (x: Double, y: Double)) -> (x: Float, y: Float)
@@ -346,7 +365,7 @@ import Metal
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
         encoder.setFragmentTexture(texture, at: 0)
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 12, instanceCount: 1)
         encoder.endEncoding()
         
         commandBuffer.present(drawable)
