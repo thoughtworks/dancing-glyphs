@@ -263,6 +263,7 @@ import Metal
         memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
         bufferPointer += sizeofArray(textureCoordData)
         memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
+        textureCoordBuffer.didModifyRange(NSMakeRange(0, sizeofArray(textureCoordData) * 2))
         
         let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
