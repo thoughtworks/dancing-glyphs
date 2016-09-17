@@ -43,7 +43,8 @@ import Metal
     var uniformsBuffer: MTLBuffer!
     var vertexBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
-    var texture: MTLTexture!
+    var texture0: MTLTexture!
+    var texture1: MTLTexture!
    
     var displayLink: CVDisplayLink?
 
@@ -151,13 +152,20 @@ import Metal
         let myBundle = Bundle(for: Configuration.self)
         let libraryPath = myBundle.path(forResource: "default", ofType: "metallib")!
         let library = try! self.device.makeLibrary(filepath: libraryPath) // TODO: do something
-        
+       
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
         pipelineStateDescriptor.sampleCount = 1
         pipelineStateDescriptor.vertexFunction = library.makeFunction(name: "vertexShader")
         pipelineStateDescriptor.fragmentFunction = library.makeFunction(name: "texturedQuadFragmentShader")
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        
+        let a = pipelineStateDescriptor.colorAttachments[0]!
+        a.pixelFormat = .bgra8Unorm
+        a.isBlendingEnabled = true
+        a.rgbBlendOperation = MTLBlendOperation.add
+        a.alphaBlendOperation = MTLBlendOperation.add
+        a.sourceRGBBlendFactor = .sourceAlpha
+        a.sourceAlphaBlendFactor = .sourceAlpha
+        a.destinationRGBBlendFactor = .oneMinusSourceColor
+        a.destinationAlphaBlendFactor = .oneMinusSourceAlpha
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
 
         commandQueue = device.makeCommandQueue()
@@ -189,7 +197,7 @@ import Metal
         let metalLayer = CAMetalLayer()
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm;
-        metalLayer.framebufferOnly = true    // TODO: probably change when we begin sampling textures
+        metalLayer.framebufferOnly = true
         return metalLayer
     }
     
@@ -265,13 +273,11 @@ import Metal
         memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
         textureCoordBuffer.didModifyRange(NSMakeRange(0, sizeofArray(textureCoordData) * 2))
         
-        let image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
-        let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
-        descriptor.usage = MTLTextureUsage.shaderRead
-        descriptor.storageMode = MTLStorageMode.managed
-        texture = device.makeTexture(descriptor: descriptor)
-        let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
-        texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
+        let g0Image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
+        texture0 = createTextureForBitmapImageRep(g0Image)
+
+        let g1Image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWHotPinkColor)
+        texture1 = createTextureForBitmapImageRep(g1Image)
     }
     
     fileprivate func sizeofArray<T>(_ array: [T]) -> Int
@@ -290,6 +296,11 @@ import Metal
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
         
+        let p0 = NSBezierPath()
+        p0.appendRect(bounds)
+        NSColor(red: 1, green: 1, blue: 1, alpha: 0.2).set()
+        p0.fill()
+        
         let path = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
         transform.scale(x: glyphSize, y: glyphSize)
@@ -302,6 +313,19 @@ import Metal
         
         return imageRep
     }
+    
+    func createTextureForBitmapImageRep(_ image: NSBitmapImageRep) -> MTLTexture
+    {
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
+        descriptor.usage = MTLTextureUsage.shaderRead
+        descriptor.storageMode = MTLStorageMode.managed
+        let texture = device.makeTexture(descriptor: descriptor)
+        
+        let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
+        texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
+        
+        return texture
+    }
 
 
     // functions called for every frame
@@ -311,7 +335,7 @@ import Metal
         var bufferPointer = vertexBuffer.contents()
 
         let (x0, y0) = screenpos(animation.currentState!.p0)
-        let (w0, h0) = (Float(texture.width), Float(texture.height))
+        let (w0, h0) = (Float(texture0.width), Float(texture0.height))
         let vertexData0: [Float] = [
             x0-w0/2, y0+h0/2, //a
             x0-w0/2, y0-h0/2, //b
@@ -324,7 +348,7 @@ import Metal
         bufferPointer += sizeofArray(vertexData0)
 
         let (x1, y1) = screenpos(animation.currentState!.p1)
-        let (w1, h1) = (Float(texture.width), Float(texture.height))
+        let (w1, h1) = (Float(texture0.width), Float(texture0.height))
         let vertexData1: [Float] = [
             x1-w1/2, y1+h1/2, //a
             x1-w1/2, y1-h1/2, //b
@@ -359,13 +383,14 @@ import Metal
         descriptor.colorAttachments[0].loadAction = .clear
         descriptor.colorAttachments[0].clearColor = settings.backgroundColor.toMTLClearColor() // TODO: conversion is expensive; cache somewhere?
         descriptor.colorAttachments[0].storeAction = .dontCare
-        
+
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
         encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        encoder.setFragmentTexture(texture, at: 0)
+        encoder.setFragmentTexture(texture0, at: 0)
+        encoder.setFragmentTexture(texture1, at: 1)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 12, instanceCount: 1)
         encoder.endEncoding()
         
