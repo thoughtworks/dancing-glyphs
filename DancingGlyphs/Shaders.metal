@@ -53,15 +53,22 @@ vertex VertexOut vertexShader(uint vid [[ vertex_id ]],
 
 fragment FragmentOut texturedQuadFragmentShader(VertexOut vout [[ stage_in ]],
                                           texture2d<half> texture0 [[ texture(0) ]],
-                                          texture2d<half> texture1 [[ texture(1) ]])
+                                          texture2d<half> texture1 [[ texture(1) ]],
+                                          texture2d<half> texture2 [[ texture(2) ]])
 {
     FragmentOut fout;
     constexpr sampler quad_sampler;
-    fout.color0 = half4(0.5, 0.5, 0, 1);
-    if (vout.textureId == 0) {
-        fout.color0 = texture0.sample(quad_sampler, vout.textureCoordinate);
-    } else {
-        fout.color0 = texture1.sample(quad_sampler, vout.textureCoordinate);
+    switch (vout.textureId) // TODO: move sample op out of switch
+    {
+        case 0:
+            fout.color0 = texture0.sample(quad_sampler, vout.textureCoordinate);
+            break;
+        case 1:
+            fout.color0 = texture1.sample(quad_sampler, vout.textureCoordinate);
+            break;
+        case 2:
+            fout.color0 = texture2.sample(quad_sampler, vout.textureCoordinate);
+            break;
     }
     return fout;
 }

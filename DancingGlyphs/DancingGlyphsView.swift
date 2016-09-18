@@ -43,8 +43,7 @@ import Metal
     var uniformsBuffer: MTLBuffer!
     var vertexBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
-    var texture0: MTLTexture!
-    var texture1: MTLTexture!
+    var textures: [MTLTexture]!
    
     var displayLink: CVDisplayLink?
 
@@ -219,7 +218,7 @@ import Metal
     
     func createVertexBuffer()
     {
-        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*24, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*36, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
     }
 
     func createUniformsBuffer()
@@ -265,19 +264,21 @@ import Metal
             1.0, 1.0, //c
             1.0, 0.0  //d
         ]
-
-        textureCoordBuffer = device.makeBuffer(length: sizeofArray(textureCoordData) * 2, options:.storageModeManaged)
+        let numGlyphs = settings.glyphColors.count
+        textureCoordBuffer = device.makeBuffer(length: sizeofArray(textureCoordData) * numGlyphs, options:.storageModeManaged)
         var bufferPointer = textureCoordBuffer.contents()
-        memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
-        bufferPointer += sizeofArray(textureCoordData)
-        memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
-        textureCoordBuffer.didModifyRange(NSMakeRange(0, sizeofArray(textureCoordData) * 2))
-        
-        let g0Image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWTurquoiseColor)
-        texture0 = createTextureForBitmapImageRep(g0Image)
-
-        let g1Image = createBitmapImageRepForGlyph(settings.glyph, color: NSColor.TWHotPinkColor)
-        texture1 = createTextureForBitmapImageRep(g1Image)
+        for _ in 0..<numGlyphs {
+            memcpy(bufferPointer, textureCoordData, sizeofArray(textureCoordData))
+            bufferPointer += sizeofArray(textureCoordData)
+        }
+        textureCoordBuffer.didModifyRange(NSMakeRange(0, sizeofArray(textureCoordData) * numGlyphs))
+    
+        textures = []
+        for color in settings.glyphColors {
+            let image = createBitmapImageRepForGlyph(settings.glyph, color:color)
+            let texture = createTextureForBitmapImageRep(image)
+            textures.append(texture)
+        }
     }
     
     fileprivate func sizeofArray<T>(_ array: [T]) -> Int
@@ -295,12 +296,12 @@ import Metal
         
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
-        
+#if false
         let p0 = NSBezierPath()
-        p0.appendRect(bounds)
-        NSColor(red: 1, green: 1, blue: 1, alpha: 0.2).set()
-        p0.fill()
-        
+        p0.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
+        NSColor(red: 1, green: 1, blue: 1, alpha: 0.8).set()
+        p0.stroke()
+#endif
         let path = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
         transform.scale(x: glyphSize, y: glyphSize)
@@ -332,34 +333,29 @@ import Metal
 
     func updateVertexBuffer()
     {
-        var bufferPointer = vertexBuffer.contents()
-
-        let (x0, y0) = screenpos(animation.currentState!.p0)
-        let (w0, h0) = (Float(texture0.width), Float(texture0.height))
-        let vertexData0: [Float] = [
-            x0-w0/2, y0+h0/2, //a
-            x0-w0/2, y0-h0/2, //b
-            x0+w0/2, y0-h0/2, //c
-            x0-w0/2, y0+h0/2, //a
-            x0+w0/2, y0-h0/2, //c
-            x0+w0/2, y0+h0/2  //d
+        updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p0), at:0)
+        updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p1), at:1)
+        updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p2), at:2)
+    }
+    
+    func updateVertextBufferWithTextureQuad(position p: (x: Float, y: Float), at index: Int)
+    {
+        let x = Float(p.x)
+        let y = Float(p.y)
+        let w = Float(textures[0].width)
+        let h = Float(textures[0].height)
+        let vertexData: [Float] = [
+            x-w/2, y+h/2, //a
+            x-w/2, y-h/2, //b
+            x+w/2, y-h/2, //c
+            x-w/2, y+h/2, //a
+            x+w/2, y-h/2, //c
+            x+w/2, y+h/2  //d
         ]
-        memcpy(bufferPointer, vertexData0, sizeofArray(vertexData0))
-        bufferPointer += sizeofArray(vertexData0)
-
-        let (x1, y1) = screenpos(animation.currentState!.p1)
-        let (w1, h1) = (Float(texture0.width), Float(texture0.height))
-        let vertexData1: [Float] = [
-            x1-w1/2, y1+h1/2, //a
-            x1-w1/2, y1-h1/2, //b
-            x1+w1/2, y1-h1/2, //c
-            x1-w1/2, y1+h1/2, //a
-            x1+w1/2, y1-h1/2, //c
-            x1+w1/2, y1+h1/2  //d
-        ]
-        memcpy(bufferPointer, vertexData1, sizeofArray(vertexData1))
-
-        vertexBuffer.didModifyRange(NSMakeRange(0, sizeofArray(vertexData0) * 2))
+        let arraySize = sizeofArray(vertexData)
+        let bufferPointer = vertexBuffer.contents() + arraySize * index
+        memcpy(bufferPointer, vertexData, arraySize)
+        vertexBuffer.didModifyRange(NSMakeRange(arraySize * index, sizeofArray(vertexData)))
     }
 
     func screenpos(_ p: (x: Double, y: Double)) -> (x: Float, y: Float)
@@ -389,9 +385,10 @@ import Metal
         encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        encoder.setFragmentTexture(texture0, at: 0)
-        encoder.setFragmentTexture(texture1, at: 1)
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 12, instanceCount: 1)
+        for (index, texture) in textures.enumerated() {
+            encoder.setFragmentTexture(texture, at: index)
+        }
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 18, instanceCount: 1)
         encoder.endEncoding()
         
         commandBuffer.present(drawable)
