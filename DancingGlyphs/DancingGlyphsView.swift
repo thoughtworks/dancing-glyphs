@@ -162,10 +162,10 @@ import MetalKit
         a.isBlendingEnabled = true
         a.rgbBlendOperation = .add
         a.alphaBlendOperation = .add
-        a.sourceRGBBlendFactor = .destinationAlpha
-        a.sourceAlphaBlendFactor = .destinationAlpha
+        a.sourceRGBBlendFactor = .one
+        a.sourceAlphaBlendFactor = .sourceAlpha
         a.destinationRGBBlendFactor = .oneMinusSourceColor
-        a.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+        a.destinationAlphaBlendFactor = .destinationAlpha
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
 
         commandQueue = device.makeCommandQueue()
@@ -293,13 +293,10 @@ import MetalKit
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
         let imageSize = Int(floor(glyphSize * (1 + overscan)))
         
-        let image = NSImage(size: NSMakeSize(CGFloat(imageSize), CGFloat(imageSize)))
-        image.lockFocus()
-
-//        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat:.alphaNonpremultiplied, bytesPerRow: imageSize*4, bitsPerPixel:32)!
-//        
-//        NSGraphicsContext.saveGraphicsState()
-//        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
+        
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
 #if false
         let p0 = NSBezierPath()
         p0.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
@@ -314,15 +311,9 @@ import MetalKit
         color.set()
         path.fill()
         
-//        NSGraphicsContext.restoreGraphicsState()
-        
-        image.unlockFocus()
+        NSGraphicsContext.restoreGraphicsState()
 
-        image.lockFocus()
-        let imageRep = NSBitmapImageRep(focusedViewRect: NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
-        image.unlockFocus()
-            
-        return imageRep!
+        return imageRep
     }
     
     func createTextureForBitmapImageRep(_ image: NSBitmapImageRep) -> MTLTexture
@@ -335,11 +326,6 @@ import MetalKit
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
         texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
 
-//        var rect = NSMakeRect(0, 0, image.size.width, image.size.height)
-//        let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
-//        let loader = MTKTextureLoader(device: device)
-//        let texture = try! loader.newTexture(with:cgImage, options: nil)
-        
         return texture
     }
 
