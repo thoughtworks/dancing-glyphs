@@ -166,9 +166,9 @@ import MetalKit
         a.rgbBlendOperation = .add
         a.alphaBlendOperation = .add
         a.sourceRGBBlendFactor = .one
-        a.sourceAlphaBlendFactor = .sourceAlpha
+        a.sourceAlphaBlendFactor = .zero
         a.destinationRGBBlendFactor = .oneMinusSourceColor
-        a.destinationAlphaBlendFactor = .destinationAlpha
+        a.destinationAlphaBlendFactor = .zero
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
 
         commandQueue = device.makeCommandQueue()
@@ -182,7 +182,7 @@ import MetalKit
         } else {
             for d in deviceList {
                 device = d
-                if(d.isLowPower) {
+                if d.isLowPower && !d.isHeadless {
                     break
                 }
             }
