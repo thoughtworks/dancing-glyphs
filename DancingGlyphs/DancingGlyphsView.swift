@@ -42,10 +42,13 @@ import MetalKit
     var pipelineState: MTLRenderPipelineState!
     
     var uniformsBuffer: MTLBuffer!
-    var vertexBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var textures: [MTLTexture]!
-   
+
+    let VERTEX_BUFFER_COUNT = 2
+    var vertexBufferIndex = 0
+    var vertexBuffers: [MTLBuffer]!
+
     var displayLink: CVDisplayLink?
 
     var animation: Animation!
@@ -219,7 +222,10 @@ import MetalKit
     
     func createVertexBuffer()
     {
-        vertexBuffer = device.makeBuffer(length: MemoryLayout<Float>.size*36, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        vertexBuffers = []
+        for _ in 0..<VERTEX_BUFFER_COUNT {
+            vertexBuffers.append(device.makeBuffer(length: MemoryLayout<Float>.size*36, options:.storageModeManaged)) // TODO: fix hardcoded buffer size?
+        }
     }
 
     func createUniformsBuffer()
@@ -334,6 +340,7 @@ import MetalKit
 
     func updateVertexBuffer()
     {
+        vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
         updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p0), at:0)
         updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p1), at:1)
         updateVertextBufferWithTextureQuad(position: screenpos(animation.currentState!.p2), at:2)
@@ -353,10 +360,11 @@ import MetalKit
             x+w/2, y-h/2, //c
             x+w/2, y+h/2  //d
         ]
+        let currentVertextBuffer = vertexBuffers[vertexBufferIndex]
         let arraySize = sizeofArray(vertexData)
-        let bufferPointer = vertexBuffer.contents() + arraySize * index
+        let bufferPointer = currentVertextBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
-        vertexBuffer.didModifyRange(NSMakeRange(arraySize * index, sizeofArray(vertexData)))
+        currentVertextBuffer.didModifyRange(NSMakeRange(arraySize * index, sizeofArray(vertexData)))
     }
 
     func screenpos(_ p: (x: Double, y: Double)) -> (x: Float, y: Float)
@@ -383,7 +391,7 @@ import MetalKit
 
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
+        encoder.setVertexBuffer(vertexBuffers[vertexBufferIndex], offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
         for (index, texture) in textures.enumerated() {
