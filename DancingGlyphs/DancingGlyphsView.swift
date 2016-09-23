@@ -41,6 +41,7 @@ import MetalKit
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
     
+    let IMAGE_SSAA = 2
     var uniformsBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var textures: [MTLTexture]!
@@ -199,8 +200,9 @@ import MetalKit
     {
         let metalLayer = CAMetalLayer()
         metalLayer.device = device
-        metalLayer.pixelFormat = .bgra8Unorm;
+        metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
+        metalLayer.contentsScale = 2
         return metalLayer
     }
     
@@ -297,7 +299,7 @@ import MetalKit
     {
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
-        let imageSize = Int(floor(glyphSize * (1 + overscan)))
+        let imageSize = Int(floor(glyphSize * (1 + overscan))) * IMAGE_SSAA
         
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
         
@@ -311,7 +313,7 @@ import MetalKit
 #endif
         let path = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
-        transform.scale(x: glyphSize, y: glyphSize)
+        transform.scale(x: glyphSize * CGFloat(IMAGE_SSAA), y: glyphSize * CGFloat(IMAGE_SSAA))
         transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
         path.transform(using: transform)
         color.set()
@@ -350,8 +352,8 @@ import MetalKit
     {
         let x = Float(p.x)
         let y = Float(p.y)
-        let w = Float(textures[0].width)
-        let h = Float(textures[0].height)
+        let w = Float(textures[0].width / IMAGE_SSAA)
+        let h = Float(textures[0].height / IMAGE_SSAA)
         let vertexData: [Float] = [
             x-w/2, y+h/2, //a
             x-w/2, y-h/2, //b
