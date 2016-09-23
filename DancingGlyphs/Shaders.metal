@@ -57,7 +57,9 @@ fragment FragmentOut texturedQuadFragmentShader(VertexOut vout [[ stage_in ]],
                                           texture2d<half> texture2 [[ texture(2) ]])
 {
     FragmentOut fout;
-    constexpr sampler quad_sampler;
+    constexpr sampler quad_sampler(coord::normalized,
+                                   address::repeat,
+                                   filter::linear);
     switch (vout.textureId) // TODO: move sample op out of switch
     {
         case 0:

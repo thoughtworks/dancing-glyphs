@@ -41,7 +41,7 @@ import MetalKit
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
     
-    let IMAGE_SSAA = 2
+    let IMAGE_SSAA = 1
     var uniformsBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var textures: [MTLTexture]!
@@ -202,7 +202,7 @@ import MetalKit
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
-        metalLayer.contentsScale = 2
+        metalLayer.contentsScale = 1
         return metalLayer
     }
     
