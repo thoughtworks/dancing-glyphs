@@ -19,14 +19,6 @@ class AppDelegate: NSObject
         view.startAnimation()
     }
     
-    func animateOneFrame()
-    {
-        let context = window.graphicsContext
-        NSGraphicsContext.setCurrent(context)
-        view.animateOneFrame()
-        context?.flushGraphics()
-    }
-    
     @IBAction func showPreferences(_ sender: NSObject!)
     {
         window.beginSheet(view.configureSheet()!, completionHandler: nil)
@@ -40,7 +32,6 @@ extension AppDelegate: NSApplicationDelegate
     func applicationDidFinishLaunching(_ notification: Notification)
     {
         setupAndStartAnimation()
-//        Timer.scheduledTimer(timeInterval: view.animationTimeInterval, target: self, selector: #selector(animateOneFrame), userInfo: nil, repeats: true)
     }
 }
 

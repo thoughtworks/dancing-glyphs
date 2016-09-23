@@ -41,7 +41,6 @@ import MetalKit
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
     
-    let IMAGE_SSAA = 1
     var uniformsBuffer: MTLBuffer!
     var textureCoordBuffer: MTLBuffer!
     var textures: [MTLTexture]!
@@ -62,7 +61,6 @@ import MetalKit
         setupMetal()
 
         wantsLayer = true;
-        layer = createMetalLayer()
 
         animationTimeInterval = 1/60
     }
@@ -71,13 +69,21 @@ import MetalKit
     {
         super.init(coder: aDecoder)
     }
+
+    override func viewDidMoveToSuperview()
+    {
+        super.viewDidMoveToSuperview()
+        if superview?.window != nil {
+            layer = createMetalLayer()
+        }
+    }
     
     
     // screen saver api
     
     override class func backingStoreType() -> NSBackingStoreType
     {
-        return NSBackingStoreType.nonretained
+        return NSBackingStoreType.retained
     }
     
     override class func performGammaFade() -> Bool
@@ -202,7 +208,7 @@ import MetalKit
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
-        metalLayer.contentsScale = 1
+        metalLayer.contentsScale = superview!.window!.backingScaleFactor
         return metalLayer
     }
     
@@ -297,9 +303,10 @@ import MetalKit
 
     func createBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
     {
+        let imageScale = layer!.contentsScale
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
         let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
-        let imageSize = Int(floor(glyphSize * (1 + overscan))) * IMAGE_SSAA
+        let imageSize = Int(floor(glyphSize * (1 + overscan)) * imageScale)
         
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
         
@@ -313,7 +320,7 @@ import MetalKit
 #endif
         let path = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
-        transform.scale(x: glyphSize * CGFloat(IMAGE_SSAA), y: glyphSize * CGFloat(IMAGE_SSAA))
+        transform.scale(x: glyphSize * CGFloat(imageScale), y: glyphSize * CGFloat(imageScale))
         transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
         path.transform(using: transform)
         color.set()
@@ -350,10 +357,11 @@ import MetalKit
     
     func updateVertextBufferWithTextureQuad(position p: (x: Float, y: Float), at index: Int)
     {
+        let imageScale = Int(layer!.contentsScale)
         let x = Float(p.x)
         let y = Float(p.y)
-        let w = Float(textures[0].width / IMAGE_SSAA)
-        let h = Float(textures[0].height / IMAGE_SSAA)
+        let w = Float(textures[0].width / imageScale)
+        let h = Float(textures[0].height / imageScale)
         let vertexData: [Float] = [
             x-w/2, y+h/2, //a
             x-w/2, y-h/2, //b
@@ -404,7 +412,7 @@ import MetalKit
         
         commandBuffer.present(drawable)
         commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
+        commandBuffer.waitUntilCompleted() // only doing this to get accurate statistics
         }
 
 }
