@@ -75,13 +75,13 @@ class Animation
 
     fileprivate func position(_ now: Double, phaseOffset: Double) -> (x: Double, y: Double)
     {
-#if true
+#if false
         let dist = (settings.MVMID + sin(now*settings.MVSPEED) * settings.MVAMP)
         let xpos = dist * cos(now*settings.GRTSPEED + phaseOffset) + (sin(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
         let ypos = dist * sin(now*settings.GRTSPEED + phaseOffset) + (cos(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
 #else
-        let xpos = sin(now) * 0.5
-        let ypos = cos(now) * 0.5
+        let xpos = 0.0 + (phaseOffset - 2/3*M_PI) / 3
+        let ypos = 0.0
 #endif
         return (xpos, ypos)
     }
