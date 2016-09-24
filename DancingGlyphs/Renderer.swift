@@ -44,10 +44,9 @@ class Renderer
         self.textures = [MTLTexture!](repeating: nil, count: numGlyphs)
 
         self.device = selectMetalDevice(MTLCopyAllDevices(), preferLowPower: true) // TODO: make low power preference a user default?
-        self.setupMetal()
-        self.makeUniformsBuffer()
+        self.setUpMetal()
         self.makeVertexBuffers()
-        self.makeTextureCoordinateBuffer()
+        self.setUpTextureCoordinateBuffer()
     }
     
 
@@ -72,7 +71,7 @@ class Renderer
         return device! // TODO: can we assume there will always be a device?
     }
 
-    private func setupMetal()
+    private func setUpMetal()
     {
         let myBundle = Bundle(for: Configuration.self)
         let libraryPath = myBundle.path(forResource: "default", ofType: "metallib")!
@@ -102,45 +101,11 @@ class Renderer
         for i in 0..<VERTEX_BUFFER_COUNT {
             vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numGlyphs, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
         }
-    }
-
-    private func makeUniformsBuffer()
-    {
         uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 16, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        textureCoordBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
     }
 
-    private func makeTextureCoordinateBuffer()
-    {
-        textureCoordBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numGlyphs, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
-    }
-
-
-    func setOutputSize(_ size: NSSize)
-    {
-        let ndcMatrix = makeOrthographicMatrix(left: 0, right: Float(size.width), bottom: 0, top: Float(size.height), near: -1, far: 1)
-        let bufferPointer = uniformsBuffer.contents()
-        memcpy(bufferPointer, ndcMatrix, MemoryLayout<Float>.size * 16)
-        uniformsBuffer.didModifyRange(NSMakeRange(0, MemoryLayout<Float>.size * 16))
-    }
-
-    private func makeOrthographicMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> [Float]
-    {
-        let ral = right + left
-        let rsl = right - left
-        let tab = top + bottom
-        let tsb = top - bottom
-        let fan = far + near
-        let fsn = far - near
-
-        return [2.0 / rsl, 0.0, 0.0, 0.0,
-                0.0, 2.0 / tsb, 0.0, 0.0,
-                0.0, 0.0, -2.0 / fsn, 0.0,
-                -ral / rsl, -tab / tsb, -fan / fsn, 1.0
-        ]
-    }
-
-
-    func setTexture(image: NSBitmapImageRep, at index: Int)
+    private func setUpTextureCoordinateBuffer()
     {
         let textureCoordData: [Float] = [
             0.0, 0.0, //a
@@ -150,20 +115,37 @@ class Renderer
             1.0, 1.0, //c
             1.0, 0.0  //d
         ]
+        let arraySize = sizeofArray(textureCoordData)
         let bufferPointer = textureCoordBuffer.contents()
-        memcpy(bufferPointer + index * sizeofArray(textureCoordData), textureCoordData, sizeofArray(textureCoordData))
-        textureCoordBuffer.didModifyRange(NSMakeRange(index * sizeofArray(textureCoordData), sizeofArray(textureCoordData)))
-
-        let texture = createTextureForBitmapImageRep(image)
-        textures[index] = texture // TODO: this orphans existing textures on the device..
+        memcpy(bufferPointer, textureCoordData, arraySize)
+        textureCoordBuffer.didModifyRange(NSMakeRange(0, arraySize))
     }
 
-    private func sizeofArray<T>(_ array: [T]) -> Int
+
+    func setOutputSize(_ size: NSSize)
     {
-        return array.count * MemoryLayout<T>.size
+        let l: Float = 0                  // left
+        let r: Float = Float(size.width)  // right
+        let b: Float = 0                  // bottom
+        let t: Float = Float(size.height) // top
+        let n: Float = -1                 // near
+        let f: Float = 1                  // far
+
+        // orthographic matrix for normalized device coordinate calculation
+        let ndcMatrix: [Float] = [
+            2/(r-l)       , 0             , 0             , 0,
+            0             , 2/(t-b)       , 0             , 0,
+            0             , 0             , -2/(f-n)      , 0,
+            -((r+l)/(r-l)), -((t+b)/(t-b)), -((f+n)/(f-n)), 1
+        ]
+        let arraySize = sizeofArray(ndcMatrix)
+        let bufferPointer = uniformsBuffer.contents()
+        memcpy(bufferPointer, ndcMatrix, arraySize)
+        uniformsBuffer.didModifyRange(NSMakeRange(0, arraySize))
     }
 
-    private func createTextureForBitmapImageRep(_ image: NSBitmapImageRep) -> MTLTexture
+
+    func setTexture(image: NSBitmapImageRep, at index: Int)
     {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
         descriptor.usage = MTLTextureUsage.shaderRead
@@ -173,7 +155,7 @@ class Renderer
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
         texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
 
-        return texture
+        textures[index] = texture // TODO: this orphans existing textures on the device..
     }
 
 
@@ -184,20 +166,20 @@ class Renderer
 
     func updateQuad(corners: ((Float, Float), (Float, Float)), at index: Int)
     {
-        let (p0, p1) = corners
+        let ((p0x, p0y), (p1x, p1y)) = corners
         let vertexData: [Float] = [
-            p0.0, p1.1, //a
-            p0.0, p0.1, //b
-            p1.0, p0.1, //c
-            p0.0, p1.1, //a
-            p1.0, p0.1, //c
-            p1.0, p1.1  //d
+            p0x, p1y, //a
+            p0x, p0y, //b
+            p1x, p0y, //c
+            p0x, p1y, //a
+            p1x, p0y, //c
+            p1x, p1y  //d
         ]
         let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
         let arraySize = sizeofArray(vertexData)
         let bufferPointer = currentVertextBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
-        currentVertextBuffer.didModifyRange(NSMakeRange(arraySize * index, sizeofArray(vertexData)))
+        currentVertextBuffer.didModifyRange(NSMakeRange(arraySize * index, arraySize))
     }
 
     func renderFrame(drawable: CAMetalDrawable)
@@ -215,16 +197,23 @@ class Renderer
         encoder.setVertexBuffer(vertexBuffers[vertexBufferIndex], offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        for (index, texture) in textures.enumerated() {
-            encoder.setFragmentTexture(texture, at: index)
+        for i in 0..<numGlyphs {
+            encoder.setFragmentTexture(textures[i], at: 0)
+            encoder.drawPrimitives(type: .triangle, vertexStart: i*6, vertexCount: 6, instanceCount: 1)
         }
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 18, instanceCount: 1)
         encoder.endEncoding()
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted() // only doing this to get accurate statistics
     }
+
+
+    private func sizeofArray<T>(_ array: [T]) -> Int
+    {
+        return array.count * MemoryLayout<T>.size
+    }
+
 
 }
 

@@ -27,7 +27,6 @@ struct VertexOut
 {
     float4 position [[position]];
     float2 textureCoordinate [[user(texturecoord)]];
-    uint textureId [[user(textureid)]];
 };
 
 
@@ -39,32 +38,17 @@ vertex VertexOut vertexShader(uint vid [[ vertex_id ]],
     VertexOut vout;
     float2 position = vertices[vid];
     vout.position = uniforms.ndcMatrix * float4(position.x, position.y, 0, 1);
-    vout.textureCoordinate = textureCoordinates[vid];
-    vout.textureId = vid / 6;
+    vout.textureCoordinate = textureCoordinates[vid % 6]; // small hack, but we know we render quads (2 triangles x 3 vertices)
     return vout;
     
 };
 
 
 fragment float4 texturedQuadFragmentShader(VertexOut vout [[ stage_in ]],
-                                          texture2d<float> texture0 [[ texture(0) ]],
-                                          texture2d<float> texture1 [[ texture(1) ]],
-                                          texture2d<float> texture2 [[ texture(2) ]])
+                                           texture2d<float> texture0 [[ texture(0) ]])
 {
     constexpr sampler linearSampler(coord::normalized, address::repeat, filter::linear);
-    float4 color0;
-    switch (vout.textureId) // TODO: move sample op out of switch
-    {
-        case 0:
-            color0 = texture0.sample(linearSampler, vout.textureCoordinate);
-            break;
-        case 1:
-            color0 = texture1.sample(linearSampler, vout.textureCoordinate);
-            break;
-        case 2:
-            color0 = texture2.sample(linearSampler, vout.textureCoordinate);
-            break;
-    }
+    float4 color0 = texture0.sample(linearSampler, vout.textureCoordinate);
     return color0;
 }
 
