@@ -39,8 +39,6 @@ import ScreenSaver
     var animation: Animation!
     var statistics: Statistics!
 
-    var glyphSizeScreen: Float = 0
-
 
     override init?(frame: NSRect, isPreview: Bool)
     {
@@ -131,9 +129,8 @@ import ScreenSaver
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
 
-            let now = CACurrentMediaTime()
-            animation.moveToTime(now * (self.isPreview ? 1.5 : 1))
-
+            animation.moveToTime(CACurrentMediaTime() * (self.isPreview ? 1.5 : 1))
+            renderer.beginFrame()
             updateQuadPositions()
 
             let metalLayer = layer as! CAMetalLayer
@@ -181,10 +178,8 @@ import ScreenSaver
     {
         let imageScale = layer!.contentsScale
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
-        let overscan = CGFloat(0.05) // the glyph is a little bigger than 1x1
-        let imageSize = Int(floor(glyphSize * (1 + overscan)) * imageScale)
-        glyphSizeScreen = Float(imageSize) / Float(imageScale) // TODO: it's a bit odd to set this here...
-        
+        let imageSize = Int(glyphSize * imageScale)
+
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
         
         NSGraphicsContext.saveGraphicsState()
@@ -199,7 +194,7 @@ import ScreenSaver
         let glyphPath = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
         transform.scale(x: glyphSize * CGFloat(imageScale), y: glyphSize * CGFloat(imageScale))
-        transform.translate(x: 0.5 + overscan/2, y: 0.5 + overscan/2)
+        transform.translate(x: 0.5, y: 0.5)
         glyphPath.transform(using: transform)
         color.set()
         glyphPath.fill()
@@ -214,28 +209,26 @@ import ScreenSaver
 
     func updateQuadPositions()
     {
-        renderer.beginFrame()
+        let screenCenter = Vector2(Float(bounds.size.width/2), Float(bounds.size.height/2))
+        let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.size)))
+        let w = glyphSize
+        let h = glyphSize
+
         let animationState = animation.currentState!
-        
-        renderer.updateQuad(corners: corners(screenpos(animationState.p0)), at:0)
-        renderer.updateQuad(corners: corners(screenpos(animationState.p1)), at:1)
-        renderer.updateQuad(corners: corners(screenpos(animationState.p2)), at:2)
-    }
+        let positions = [animationState.p0, animationState.p1, animationState.p2]
+        let rotations = [animationState.r0, animationState.r1, animationState.r2]
 
-    func screenpos(_ p: (x: Double, y: Double)) -> (Float, Float)
-    {
-        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
-        let x = bounds.size.width/2  + CGFloat(p.x)*glyphSize
-        let y = bounds.size.height/2 + CGFloat(p.y)*glyphSize
-        return (Float(x), Float(y))
-    }
+        for i in 0...2 {
+            let p = Vector2(Float(positions[i].x), Float(positions[i].y)) * glyphSize + screenCenter
+            let rotationMatrix = Matrix2x2(rotation: Float(rotations[i]))
 
-    func corners(_ p: (Float, Float)) -> ((Float, Float), (Float, Float))
-    {
-        let (x, y) = p
-        let w = glyphSizeScreen
-        let h = glyphSizeScreen
-        return ((x-w/2, y-h/2), (x+w/2, y+h/2))
+            let a = p + Vector2(-w/2, +h/2) * rotationMatrix
+            let b = p + Vector2(-w/2, -h/2) * rotationMatrix
+            let c = p + Vector2(+w/2, -h/2) * rotationMatrix
+            let d = p + Vector2(+w/2, +h/2) * rotationMatrix
+
+            renderer.updateQuad((a, b, c, d), at:i)
+        }
     }
 
 }

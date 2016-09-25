@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
 		03043E8C1D95EA37009AF715 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
+		03043E8F1D987E1A009AF715 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 		031494811D67C044005F5EB5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0314947F1D67C044005F5EB5 /* LICENSE */; };
 		031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
 		031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
@@ -37,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		03043E8A1D95E5AB009AF715 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		03043E8D1D987E1A009AF715 /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		0314947F1D67C044005F5EB5 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		031494801D67C044005F5EB5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		031494851D67C291005F5EB5 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 				0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */,
 				03043E8A1D95E5AB009AF715 /* Renderer.swift */,
 				03BD66821D84642E0023012F /* Shaders.metal */,
+				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
 				031494881D691A62005F5EB5 /* Animation.swift */,
 				03BD66851D85D97B0023012F /* Statistics.swift */,
 				031494851D67C291005F5EB5 /* Configuration.swift */,
@@ -269,6 +273,7 @@
 				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */,
 				032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */,
+				03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +283,7 @@
 			files = (
 				031494931D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
 				031494871D67C4E3005F5EB5 /* Configuration.swift in Sources */,
+				03043E8F1D987E1A009AF715 /* VectorMath.swift in Sources */,
 				031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				03BD66841D84642E0023012F /* Shaders.metal in Sources */,
 				0314948A1D691A62005F5EB5 /* Animation.swift in Sources */,

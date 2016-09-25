@@ -164,16 +164,16 @@ class Renderer
         vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
     }
 
-    func updateQuad(corners: ((Float, Float), (Float, Float)), at index: Int)
+    func updateQuad(_ corners: ((Vector2, Vector2, Vector2, Vector2)), at index: Int)
     {
-        let ((p0x, p0y), (p1x, p1y)) = corners
+        let (a, b, c, d) = corners
         let vertexData: [Float] = [
-            p0x, p1y, //a
-            p0x, p0y, //b
-            p1x, p0y, //c
-            p0x, p1y, //a
-            p1x, p0y, //c
-            p1x, p1y  //d
+            a.x, a.y, //a
+            b.x, b.y, //b
+            c.x, c.y, //c
+            a.x, a.y, //a
+            c.x, c.y, //c
+            d.x, d.y  //d
         ]
         let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
         let arraySize = sizeofArray(vertexData)

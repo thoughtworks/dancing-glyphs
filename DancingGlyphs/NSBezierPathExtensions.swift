@@ -47,7 +47,7 @@ extension NSBezierPath
             NSMakePoint(0.37894490765993893, -0.50000000000000178),
             NSMakePoint(0.23852567599158547, -0.50000000000000178),
         ]
-        return PathBuilder(points: points).applyRatio(0.964).flip().path
+        return PathBuilder(points: points).applyRatio(0.964).scale(0.95).flip().path
     }
     
     class func TWCircleGlyphPath() -> NSBezierPath
@@ -144,7 +144,15 @@ extension NSBezierPath
             path.transform(using: transform)
             return self
         }
-        
+
+        func scale(_ factor:CGFloat) -> PathBuilder
+        {
+            var transform = AffineTransform.identity
+            transform.scale(x: factor, y: factor)
+            path.transform(using: transform)
+            return self
+        }
+
         func applyRatio(_ ratio: CGFloat) -> PathBuilder
         {
             var transform = AffineTransform.identity
