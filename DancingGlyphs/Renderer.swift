@@ -99,9 +99,14 @@ class Renderer
     {
         for i in 0..<VERTEX_BUFFER_COUNT {
             vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numGlyphs, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+            vertexBuffers[i]!.label = "vertexBuffer\(i)"
         }
+
         uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 16, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        uniformsBuffer.label = "uniformsBuffer"
+
         textureCoordBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        textureCoordBuffer.label = "textureCoordBuffer"
     }
 
     private func setUpTextureCoordinateBuffer()
@@ -150,11 +155,12 @@ class Renderer
         descriptor.usage = MTLTextureUsage.shaderRead
         descriptor.storageMode = MTLStorageMode.managed
         let texture = device.makeTexture(descriptor: descriptor)
+        texture.label = "glyph\(index)"
 
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
         texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
 
-        textures[index] = texture // TODO: this orphans existing textures on the device..
+        textures[index] = texture // TODO: does this orphan the existing texture on the device?
     }
 
 
@@ -187,9 +193,10 @@ class Renderer
 
         let descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].texture = drawable.texture
+        descriptor.colorAttachments[0].texture?.label = "drawable"
         descriptor.colorAttachments[0].loadAction = .clear
         descriptor.colorAttachments[0].clearColor = backgroundColor
-        descriptor.colorAttachments[0].storeAction = .dontCare
+        descriptor.colorAttachments[0].storeAction = .store
 
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
