@@ -58,8 +58,8 @@ import ScreenSaver
         // deferred initialisations that require access to the window
         super.viewDidMoveToSuperview()
         if let window = superview?.window {
-            layer = createMetalLayer(window: window)
-            displayLink = createDisplayLink(window: window)
+            layer = makeMetalLayer(window: window, device:renderer.device)
+            displayLink = makeDisplayLink(window: window)
         }
     }
     
@@ -145,10 +145,10 @@ import ScreenSaver
 
     // functions called when view is added to view hierarchy
 
-    func createMetalLayer(window: NSWindow) -> CAMetalLayer
+    private func makeMetalLayer(window: NSWindow, device: MTLDevice) -> CAMetalLayer
     {
         let metalLayer = CAMetalLayer()
-        metalLayer.device = renderer.device
+        metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
         metalLayer.contentsScale = window.backingScaleFactor
@@ -157,7 +157,7 @@ import ScreenSaver
     }
     
 
-    func createDisplayLink(window: NSWindow) -> CVDisplayLink
+    private func makeDisplayLink(window: NSWindow) -> CVDisplayLink
     {
         func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
             unsafeBitCast(displayLinkContext, to: DancingGlyphsView.self).animateOneFrame()
@@ -174,7 +174,7 @@ import ScreenSaver
 
     // functions called when animation starts
     
-    func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
+    private func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
     {
         let imageScale = layer!.contentsScale
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
@@ -207,7 +207,7 @@ import ScreenSaver
 
     // functions called for every frame
 
-    func updateQuadPositions()
+    private func updateQuadPositions()
     {
         let screenCenter = Vector2(Float(bounds.size.width/2), Float(bounds.size.height/2))
         let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.size)))
@@ -219,13 +219,13 @@ import ScreenSaver
         let rotations = [animationState.r0, animationState.r1, animationState.r2]
 
         for i in 0...2 {
-            let p = Vector2(Float(positions[i].x), Float(positions[i].y)) * glyphSize + screenCenter
+            let glyphCenter = Vector2(Float(positions[i].x), Float(positions[i].y)) * glyphSize + screenCenter
             let rotationMatrix = Matrix2x2(rotation: Float(rotations[i]))
 
-            let a = p + Vector2(-w/2, +h/2) * rotationMatrix
-            let b = p + Vector2(-w/2, -h/2) * rotationMatrix
-            let c = p + Vector2(+w/2, -h/2) * rotationMatrix
-            let d = p + Vector2(+w/2, +h/2) * rotationMatrix
+            let a = glyphCenter + Vector2(-w/2, +h/2) * rotationMatrix
+            let b = glyphCenter + Vector2(-w/2, -h/2) * rotationMatrix
+            let c = glyphCenter + Vector2(+w/2, -h/2) * rotationMatrix
+            let d = glyphCenter + Vector2(+w/2, +h/2) * rotationMatrix
 
             renderer.updateQuad((a, b, c, d), at:i)
         }
@@ -233,5 +233,5 @@ import ScreenSaver
 
 }
 
- 
- 
+
+

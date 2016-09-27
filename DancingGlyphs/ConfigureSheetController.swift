@@ -63,7 +63,7 @@ class ConfigureSheetController : NSObject
         movementPopup.selectItem(withTag: config.movementCode)
     }
 
-    fileprivate func saveConfiguration()
+    private func saveConfiguration()
     {
         let config = Configuration()
         config.schemeCode = schemePopup.selectedTag()

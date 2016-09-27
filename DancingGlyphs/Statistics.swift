@@ -18,11 +18,11 @@ import Cocoa
 
 class Statistics
 {
-    fileprivate var lastCheckpoint: Double = 0
-    fileprivate var frameStartTime: Double = 0
-    fileprivate var renderTimeSinceCheckpoint: Double = 0
-    fileprivate var framesSinceCheckpoint: Int = 0
-    fileprivate var longestRenderTime: Double = 0
+    private var lastCheckpoint: Double = 0
+    private var frameStartTime: Double = 0
+    private var renderTimeSinceCheckpoint: Double = 0
+    private var framesSinceCheckpoint: Int = 0
+    private var longestRenderTime: Double = 0
     
     func viewWillStartRenderingFrame()
     {

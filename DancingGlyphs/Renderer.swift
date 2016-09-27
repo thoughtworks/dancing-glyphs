@@ -20,21 +20,20 @@ import Metal
 class Renderer
 {
     var numGlyphs = 0
-
     var backgroundColor: MTLClearColor!
 
     var device: MTLDevice!
-    var commandQueue: MTLCommandQueue!
-    var pipelineState: MTLRenderPipelineState!
+    private var commandQueue: MTLCommandQueue!
+    private var pipelineState: MTLRenderPipelineState!
 
-    var uniformsBuffer: MTLBuffer!
+    private var uniformsBuffer: MTLBuffer!
 
-    let VERTEX_BUFFER_COUNT = 2
-    var vertexBufferIndex = 0
-    var vertexBuffers: [MTLBuffer?]
+    private let VERTEX_BUFFER_COUNT = 2
+    private var vertexBufferIndex = 0
+    private var vertexBuffers: [MTLBuffer?]
 
-    var textureCoordBuffer: MTLBuffer!
-    var textures: [MTLTexture?]
+    private var textureCoordBuffer: MTLBuffer!
+    private var textures: [MTLTexture?]
 
     
     init(numGlyphs: Int)

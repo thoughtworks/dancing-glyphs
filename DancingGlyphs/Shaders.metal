@@ -48,7 +48,6 @@ fragment float4 texturedQuadFragmentShader(VertexOut vout [[ stage_in ]],
                                            texture2d<float> texture0 [[ texture(0) ]])
 {
     constexpr sampler linearSampler(coord::normalized, address::repeat, filter::linear);
-    float4 color0 = texture0.sample(linearSampler, vout.textureCoordinate);
-    return color0;
+    return texture0.sample(linearSampler, vout.textureCoordinate);
 }
 

@@ -73,7 +73,7 @@ class Animation
         )
     }
 
-    fileprivate func position(_ now: Double, phaseOffset: Double) -> (x: Double, y: Double)
+    private func position(_ now: Double, phaseOffset: Double) -> (x: Double, y: Double)
     {
 #if true
         let dist = (settings.MVMID + sin(now*settings.MVSPEED) * settings.MVAMP)
