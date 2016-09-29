@@ -80,7 +80,7 @@ extension NSBezierPath
             NSMakePoint(-0.033596626037198263, -0.50000000000000355)
         ]
  
-        return PathBuilder(points: points).applyRatio(0.963).flip().path
+        return PathBuilder(points: points).applyRatio(0.963).scale(0.97).flip().path
     }
     
     class func TWLozengeGlyphPath() -> NSBezierPath
