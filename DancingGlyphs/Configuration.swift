@@ -82,30 +82,30 @@ class Configuration
     }
 
     
-    fileprivate func update()
+    private func update()
     {
         defaults.synchronize()
 
-        self.scheme = enumForCode(self.schemeCode, defaultCase: Scheme.dark)
-        self.glyph = enumForCode(self.glyphCode, defaultCase: Glyph.square)
-        self.size = enumForCode(self.sizeCode, defaultCase: Size.medium)
-        self.movement = enumForCode(self.movementCode, defaultCase: Movement.normal)
+        scheme = enumForCode(schemeCode, defaultCase: Scheme.dark)
+        glyph = enumForCode(glyphCode, defaultCase: Glyph.square)
+        size = enumForCode(sizeCode, defaultCase: Size.medium)
+        movement = enumForCode(movementCode, defaultCase: Movement.normal)
 
         if sizeCode == -1 && movementCode == -1 {
             switch(randomInt(7)) {
-                case 0: (self.size, self.movement) = (.small  , .normal)
-                case 1: (self.size, self.movement) = (.small  , .wild)
-                case 2: (self.size, self.movement) = (.medium , .tight)
-                case 3: (self.size, self.movement) = (.medium , .normal)
-                case 4: (self.size, self.movement) = (.medium , .wild)
-                case 5: (self.size, self.movement) = (.large , .tight)
-                case 6: (self.size, self.movement) = (.large , .normal)
+                case 0: (size, movement) = (.small  , .normal)
+                case 1: (size, movement) = (.small  , .wild)
+                case 2: (size, movement) = (.medium , .tight)
+                case 3: (size, movement) = (.medium , .normal)
+                case 4: (size, movement) = (.medium , .wild)
+                case 5: (size, movement) = (.large , .tight)
+                case 6: (size, movement) = (.large , .normal)
                 default: break // keep compiler happy
             }
         }
     }
 
-    fileprivate func enumForCode<E: RawRepresentable>(_ code :Int, defaultCase: E) -> E where E.RawValue == Int
+    private func enumForCode<E: RawRepresentable>(_ code :Int, defaultCase: E) -> E where E.RawValue == Int
     {
         let val: Int
         if code == -1 {
@@ -120,7 +120,7 @@ class Configuration
         return E(rawValue: val) ?? defaultCase
     }
     
-    fileprivate func randomInt(_ max: Int) -> Int
+    private func randomInt(_ max: Int) -> Int
     {
         return Int(arc4random_uniform(UInt32(max)))
     }
@@ -130,14 +130,14 @@ class Configuration
     {
         get
         {
-            let backgroundColor = (self.scheme == .dark) ? NSColor.black : NSColor.TWGrayColor.lighter(0.1)
-            let filter = (self.scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
+            let backgroundColor = (scheme == .dark) ? NSColor.black : NSColor.TWGrayColor.lighter(0.1)
+            let filter = (scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
             let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyph.rawValue]
 
             let glyphColors = [NSColor.TWLightGreenColor, NSColor.TWHotPinkColor, NSColor.TWTurquoiseColor]
 
-            let sizeValue: Double = (Double(self.size.rawValue) + 1) * 0.16
+            let sizeValue: Double = (Double(size.rawValue) + 1) * 0.16
 
             return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, size: sizeValue)
         }
