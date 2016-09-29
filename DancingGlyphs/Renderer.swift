@@ -72,7 +72,7 @@ class Renderer
 
     private func setUpMetal()
     {
-        let myBundle = Bundle(for: Configuration.self)
+        let myBundle = Bundle(for: Renderer.self)
         let libraryPath = myBundle.path(forResource: "default", ofType: "metallib")!
         let library = try! self.device.makeLibrary(filepath: libraryPath) // TODO: do something
 

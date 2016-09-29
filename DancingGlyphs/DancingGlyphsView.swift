@@ -192,9 +192,9 @@ import ScreenSaver
     {
         let imageScale = layer!.contentsScale
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
-        let imageSize = Int(glyphSize * imageScale)
+        let imageSize = glyphSize * imageScale
 
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: imageSize, pixelsHigh: imageSize, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: imageSize*4, bitsPerPixel:32)!
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
         
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
@@ -207,7 +207,7 @@ import ScreenSaver
 #endif
         let glyphPath = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
-        transform.scale(x: glyphSize * CGFloat(imageScale), y: glyphSize * CGFloat(imageScale))
+        transform.scale(x: imageSize, y: imageSize)
         transform.translate(x: 0.5, y: 0.5)
         glyphPath.transform(using: transform)
         color.set()
