@@ -47,7 +47,12 @@ import ScreenSaver
         wantsLayer = true;
         animationTimeInterval = 1/60
     }
-    
+
+    deinit
+    {
+        CVDisplayLinkStop(displayLink!)
+    }
+
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
@@ -60,6 +65,15 @@ import ScreenSaver
         if let window = superview?.window {
             layer = makeMetalLayer(window: window, device:renderer.device)
             displayLink = makeDisplayLink(window: window)
+        }
+    }
+
+    override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
+        super.resize(withOldSuperviewSize: oldSuperviewSize)
+        renderer.setOutputSize(bounds.size)
+        for (index, color) in settings.glyphColors.enumerated() {
+            let image = makeBitmapImageRepForGlyph(settings.glyph, color:color)
+            renderer.setTexture(image: image, at: index)
         }
     }
     
