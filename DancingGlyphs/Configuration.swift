@@ -139,7 +139,7 @@ class Configuration
 
             let sizeValue: Double = (Double(size.rawValue) + 1) * 0.16
 
-            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, size: sizeValue)
+            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, glyphSize: sizeValue)
         }
     }
 

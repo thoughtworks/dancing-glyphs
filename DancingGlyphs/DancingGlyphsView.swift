@@ -30,7 +30,7 @@ import ScreenSaver
         var glyphColors: [NSColor]
         var backgroundColor: NSColor
         var filter: String
-        var size: Double
+        var glyphSize: Double
     }
 
     var settings: Settings!
@@ -53,11 +53,7 @@ import ScreenSaver
  
     override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSuperviewSize)
-        renderer.setOutputSize(bounds.size)
-        for (index, color) in settings.glyphColors.enumerated() {
-            let image = makeBitmapImageRepForGlyph(settings.glyph, color:color)
-            renderer.setTexture(image: image, at: index)
-        }
+        updateSizeAndTextures()
     }
     
     
@@ -81,12 +77,8 @@ import ScreenSaver
         let configuration = Configuration()
         settings = configuration.viewSettings
 
-        renderer.setOutputSize(bounds.size)
         renderer.backgroundColor = settings.backgroundColor.toMTLClearColor()
-        for (index, color) in settings.glyphColors.enumerated() {
-            let image = makeBitmapImageRepForGlyph(settings.glyph, color:color)
-            renderer.setTexture(image: image, at: index)
-        }
+        updateSizeAndTextures()
 
         animation = Animation()
         animation.settings = configuration.animationSettings
@@ -105,10 +97,19 @@ import ScreenSaver
         statistics = nil
     }
 
+    private func updateSizeAndTextures()
+    {
+        renderer.setOutputSize(bounds.size)
+        for (index, color) in settings.glyphColors.enumerated() {
+            let image = makeBitmapImageRepForGlyph(settings.glyph, color:color)
+            renderer.setTexture(image: image, at: index)
+        }
+    }
+
     private func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
     {
         let imageScale = layer!.contentsScale
-        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize))
         let imageSize = glyphSize * imageScale
 
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
@@ -160,7 +161,7 @@ import ScreenSaver
     private func updateQuadPositions()
     {
         let screenCenter = Vector2(Float(bounds.size.width/2), Float(bounds.size.height/2))
-        let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.size)))
+        let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize)))
         let w = glyphSize
         let h = glyphSize
 
