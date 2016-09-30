@@ -130,12 +130,12 @@ class Configuration
     {
         get
         {
-            let backgroundColor = (scheme == .dark) ? NSColor.black : NSColor.TWGrayColor.lighter(0.1)
+            let backgroundColor = (scheme == .dark) ? NSColor.black : NSColor.twGrey.lighter(0.1)
             let filter = (scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
             let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyph.rawValue]
 
-            let glyphColors = [NSColor.TWLightGreenColor, NSColor.TWHotPinkColor, NSColor.TWTurquoiseColor]
+            let glyphColors = [NSColor.twGreen02, NSColor.twBrightPink, NSColor.twBlue02]
 
             let sizeValue: Double = (Double(size.rawValue) + 1) * 0.16
 

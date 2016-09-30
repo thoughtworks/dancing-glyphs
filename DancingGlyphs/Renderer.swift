@@ -22,7 +22,7 @@ class Renderer
     var numGlyphs = 0
     var backgroundColor: MTLClearColor!
 
-    var device: MTLDevice!
+    private var device: MTLDevice!
     private var commandQueue: MTLCommandQueue!
     private var pipelineState: MTLRenderPipelineState!
 
@@ -36,39 +36,18 @@ class Renderer
     private var textures: [MTLTexture?]
 
     
-    init(numGlyphs: Int)
+    init(device: MTLDevice, numGlyphs: Int)
     {
         self.numGlyphs = numGlyphs
         self.vertexBuffers = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
         self.textures = [MTLTexture!](repeating: nil, count: numGlyphs)
 
-        self.device = selectMetalDevice(MTLCopyAllDevices(), preferLowPower: true) // TODO: make low power preference a user default?
+        self.device = device
         self.setUpMetal()
         self.makeVertexBuffers()
         self.setUpTextureCoordinateBuffer()
     }
-    
 
-    private func selectMetalDevice(_ deviceList: [MTLDevice], preferLowPower: Bool) -> MTLDevice
-    {
-        var device: MTLDevice?
-        if !preferLowPower {
-            device = MTLCreateSystemDefaultDevice()!
-        } else {
-            for d in deviceList {
-                device = d
-                if d.isLowPower && !d.isHeadless {
-                    break
-                }
-            }
-        }
-        if let name = device?.name {
-            NSLog("Using device '\(name)'")
-        } else {
-            NSLog("No or unknown device")
-        }
-        return device! // TODO: can we assume there will always be a device?
-    }
 
     private func setUpMetal()
     {

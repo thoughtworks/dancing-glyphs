@@ -21,10 +21,20 @@ import Metal
 
 extension NSColor
 {
-    class var TWGrayColor: NSColor       { get { return NSColor(red: 0x80/0x100, green: 0x82/0x100, blue: 0x85/0x100, alpha: 1) } }
-    class var TWLightGreenColor: NSColor { get { return NSColor(red: 0x8A/0x100, green: 0xB6/0x100, blue: 0x81/0x100, alpha: 1) } }
-    class var TWHotPinkColor: NSColor    { get { return NSColor(red: 0xED/0x100, green: 0x5C/0x100, blue: 0xA0/0x100, alpha: 1) } }
-    class var TWTurquoiseColor: NSColor  { get { return NSColor(red: 0x32/0x100, green: 0xBE/0x100, blue: 0xCE/0x100, alpha: 1) } }
+    class var twGreen02:    NSColor { get { return NSColor(webcolor: "#85b880") } }
+    class var twBrightPink: NSColor { get { return NSColor(webcolor: "#ee5ba0") } }
+    class var twBlue02:     NSColor { get { return NSColor(webcolor: "#00bccd") } }
+    class var twGrey:       NSColor { get { return NSColor(webcolor: "#808184") } }
+
+
+    convenience init(webcolor: NSString)
+    {
+        var red:   Double = 0; Scanner(string: "0x"+webcolor.substring(with: NSMakeRange(1, 2))).scanHexDouble(&red)
+        var green: Double = 0; Scanner(string: "0x"+webcolor.substring(with: NSMakeRange(3, 2))).scanHexDouble(&green)
+        var blue:  Double = 0; Scanner(string: "0x"+webcolor.substring(with: NSMakeRange(5, 2))).scanHexDouble(&blue)
+        self.init(red: CGFloat(red/256), green: CGFloat(green/256), blue: CGFloat(blue/256), alpha: 1)
+    }
+
 
     func lighter(_ amount :CGFloat = 0.25) -> NSColor
     {

@@ -22,7 +22,7 @@
 import ScreenSaver
 
 
-@objc(DancingGlyphsView) class DancingGlyphsView : ScreenSaverView
+@objc(DancingGlyphsView) class DancingGlyphsView : MetalScreenSaverView
 {
     struct Settings
     {
@@ -35,7 +35,6 @@ import ScreenSaver
 
     var settings: Settings!
     var renderer: Renderer!
-    var displayLink: CVDisplayLink!
     var animation: Animation!
     var statistics: Statistics!
 
@@ -43,14 +42,7 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        renderer = Renderer(numGlyphs: 3)
-        wantsLayer = true;
-        animationTimeInterval = 1/60
-    }
-
-    deinit
-    {
-        CVDisplayLinkStop(displayLink!)
+        renderer = Renderer(device: device, numGlyphs: 3)
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -58,16 +50,7 @@ import ScreenSaver
         super.init(coder: aDecoder)
     }
 
-    override func viewDidMoveToSuperview()
-    {
-        // deferred initialisations that require access to the window
-        super.viewDidMoveToSuperview()
-        if let window = superview?.window {
-            layer = makeMetalLayer(window: window, device:renderer.device)
-            displayLink = makeDisplayLink(window: window)
-        }
-    }
-
+ 
     override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSuperviewSize)
         renderer.setOutputSize(bounds.size)
@@ -79,17 +62,6 @@ import ScreenSaver
     
     
     // screen saver api
-    
-    override class func backingStoreType() -> NSBackingStoreType
-    {
-        return NSBackingStoreType.retained
-    }
-    
-    override class func performGammaFade() -> Bool
-    {
-        return false
-    }
-    
     
     override func hasConfigureSheet() -> Bool
     {
@@ -106,8 +78,6 @@ import ScreenSaver
 
     override func startAnimation()
     {
-        // we're not calling super because we need to set up our own timer for the animation
-        
         let configuration = Configuration()
         settings = configuration.viewSettings
 
@@ -124,20 +94,48 @@ import ScreenSaver
 
         statistics = Statistics()
 
-        CVDisplayLinkStart(displayLink!)
+        super.startAnimation()
     }
     
     override func stopAnimation()
     {
-        // we're not calling super because we didn't do it in startAnimation()
-
-        CVDisplayLinkStop(displayLink!)
+        super.stopAnimation()
 
         animation = nil
         statistics = nil
     }
-    
-    
+
+    private func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
+    {
+        let imageScale = layer!.contentsScale
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
+        let imageSize = glyphSize * imageScale
+
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
+
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
+        #if false
+            let framePath = NSBezierPath()
+            framePath.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
+            framePath.appendRect(NSMakeRect(1, 1, CGFloat(imageSize)-2, CGFloat(imageSize)-2))
+            NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
+            framePath.stroke()
+        #endif
+        let glyphPath = glyph.copy() as! NSBezierPath
+        var transform = AffineTransform.identity
+        transform.scale(x: imageSize, y: imageSize)
+        transform.translate(x: 0.5, y: 0.5)
+        glyphPath.transform(using: transform)
+        color.set()
+        glyphPath.fill()
+
+        NSGraphicsContext.restoreGraphicsState()
+        
+        return imageRep
+    }
+
+
     override func animateOneFrame()
     {
         autoreleasepool {
@@ -155,71 +153,6 @@ import ScreenSaver
             statistics.viewDidFinishRenderingFrame()
         }
     }
-    
-
-    // functions called when view is added to view hierarchy
-
-    private func makeMetalLayer(window: NSWindow, device: MTLDevice) -> CAMetalLayer
-    {
-        let metalLayer = CAMetalLayer()
-        metalLayer.device = device
-        metalLayer.pixelFormat = .bgra8Unorm
-        metalLayer.framebufferOnly = true
-        metalLayer.contentsScale = window.backingScaleFactor
-        metalLayer.isOpaque = true
-        return metalLayer
-    }
-    
-
-    private func makeDisplayLink(window: NSWindow) -> CVDisplayLink
-    {
-        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
-            unsafeBitCast(displayLinkContext, to: DancingGlyphsView.self).animateOneFrame()
-            return kCVReturnSuccess
-        }
-
-        var link: CVDisplayLink?
-        let screensID = UInt32(window.screen!.deviceDescription["NSScreenNumber"] as! Int)
-        CVDisplayLinkCreateWithCGDisplay(screensID, &link)
-        CVDisplayLinkSetOutputCallback(link!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
-        return link!
-    }
-
-
-    // functions called when animation starts
-    
-    private func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
-    {
-        let imageScale = layer!.contentsScale
-        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.size))
-        let imageSize = glyphSize * imageScale
-
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
-        
-        NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
-#if false
-        let framePath = NSBezierPath()
-        framePath.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
-        framePath.appendRect(NSMakeRect(1, 1, CGFloat(imageSize)-2, CGFloat(imageSize)-2))
-        NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
-        framePath.stroke()
-#endif
-        let glyphPath = glyph.copy() as! NSBezierPath
-        var transform = AffineTransform.identity
-        transform.scale(x: imageSize, y: imageSize)
-        transform.translate(x: 0.5, y: 0.5)
-        glyphPath.transform(using: transform)
-        color.set()
-        glyphPath.fill()
-        
-        NSGraphicsContext.restoreGraphicsState()
-
-        return imageRep
-    }
-    
-
-    // functions called for every frame
 
     private func updateQuadPositions()
     {

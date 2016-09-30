@@ -31,6 +31,8 @@
 		032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
+		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03AB2AC01D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66841D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
@@ -58,6 +60,7 @@
 		032604B21D5FBCB60030AA78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		032604B41D5FBCB60030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +89,7 @@
 				031494801D67C044005F5EB5 /* README.md */,
 				0314947F1D67C044005F5EB5 /* LICENSE */,
 				032604921D5FBC2A0030AA78 /* DancingGlyphs */,
+				03AB2AC11D9F154700361F1B /* Library */,
 				032604AC1D5FBCB60030AA78 /* DancingGlyphsApp */,
 				032604911D5FBC2A0030AA78 /* Products */,
 			);
@@ -113,7 +117,6 @@
 				0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */,
 				032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */,
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
-				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
 				032604A01D5FBC9B0030AA78 /* thumbnail.png */,
 				032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */,
 				032604971D5FBC2A0030AA78 /* Info.plist */,
@@ -130,6 +133,16 @@
 				032604B41D5FBCB60030AA78 /* Info.plist */,
 			);
 			path = DancingGlyphsApp;
+			sourceTree = "<group>";
+		};
+		03AB2AC11D9F154700361F1B /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */,
+				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
+			);
+			name = Library;
+			path = DancingGlyphs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +281,7 @@
 				031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				031494891D691A62005F5EB5 /* Animation.swift in Sources */,
 				031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
+				03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */,
 				03BD66861D85D97B0023012F /* Statistics.swift in Sources */,
 				03BD66831D84642E0023012F /* Shaders.metal in Sources */,
 				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
@@ -286,6 +300,7 @@
 				03043E8F1D987E1A009AF715 /* VectorMath.swift in Sources */,
 				031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
 				03BD66841D84642E0023012F /* Shaders.metal in Sources */,
+				03AB2AC01D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */,
 				0314948A1D691A62005F5EB5 /* Animation.swift in Sources */,
 				032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */,
