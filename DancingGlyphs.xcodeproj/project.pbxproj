@@ -141,9 +141,8 @@
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
 			);
-			name = Library;
-			path = DancingGlyphs;
-			sourceTree = "<group>";
+			path = Library;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
