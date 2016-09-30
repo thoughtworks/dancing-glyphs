@@ -133,7 +133,7 @@ class Configuration
             let backgroundColor = (scheme == .dark) ? NSColor.black : NSColor.twGrey.lighter(0.1)
             let filter = (scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
 
-            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath(), NSBezierPath.TWLozengeGlyphPath()][glyph.rawValue]
+            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath()][glyph.rawValue]
 
             let glyphColors = [NSColor.twGreen02, NSColor.twBrightPink, NSColor.twBlue02]
 

@@ -82,46 +82,8 @@ extension NSBezierPath
  
         return PathBuilder(points: points).applyRatio(0.963).scale(0.97).flip().path
     }
-    
-    class func TWLozengeGlyphPath() -> NSBezierPath
-    {
-        let points = [
-            NSMakePoint(-0.031012314495498572, -0.5),
-            NSMakePoint(-0.0750703214653754, -0.5),
-            NSMakePoint(-0.1183669954823543, -0.48431183830606273),
-            NSMakePoint(-0.15514268725059743, -0.44764196342637064),
-            NSMakePoint(-0.30505907610602456, -0.29831568816169707),
-            NSMakePoint(-0.29201711160855481, -0.28527430221366856),
-            NSMakePoint(-0.44193350046398017, -0.13599615014437205),
-            NSMakePoint(-0.53187009320414091, -0.046294513955729144),
-            NSMakePoint(-0.51012245189744831, 0.069826756496627951),
-            NSMakePoint(-0.42604481275132855, 0.15360923965350892),
-            NSMakePoint(-0.28801183824765708, 0.29109720885466572),
-            NSMakePoint(-0.29158679298300427, 0.29470644850817962),
-            NSMakePoint(-0.1535538184793328, 0.43224254090471348),
-            NSMakePoint(-0.10956201437492474, 0.47608277189605275),
-            NSMakePoint(-0.057658967846926146, 0.5),
-            NSMakePoint(-0.0052593998279064635, 0.5),
-            NSMakePoint(0.042439764742786323, 0.5),
-            NSMakePoint(0.090602349371764035, 0.48012512030798504),
-            NSMakePoint(0.13350180619592855, 0.43739172281039274),
-            NSMakePoint(0.28338509361861952, 0.28806544754571206),
-            NSMakePoint(0.28950885867453735, 0.29441770933589595),
-            NSMakePoint(0.44366223092000467, 0.14927815206929651),
-            NSMakePoint(0.5335988236601672, 0.059672762271411273),
-            NSMakePoint(0.50764730039616701, -0.05904716073147398),
-            NSMakePoint(0.42360276268277985, -0.14282964388835495),
-            NSMakePoint(0.285536686746374, -0.28041385948027298),
-            NSMakePoint(0.28547048388090523, -0.28031761308951175),
-            NSMakePoint(0.14743750937723554, -0.417805582290665),
-            NSMakePoint(0.097785360275194577, -0.4673243503368667),
-            NSMakePoint(0.032575537787847608, -0.5),
-            NSMakePoint(-0.031012314495498572, -0.5),
-        ]
-        return PathBuilder(points: points).applyRatio(0.688).flip().path
-    }
-    
-    fileprivate class PathBuilder
+
+    private class PathBuilder
     {
         var path: NSBezierPath
         
@@ -139,25 +101,19 @@ extension NSBezierPath
         
         func flip() -> PathBuilder
         {
-            var transform = AffineTransform.identity
-            transform.scale(x: 1, y: -1)
-            path.transform(using: transform)
+            path.transform(using: AffineTransform(scaleByX: 1, byY: -1))
             return self
         }
 
         func scale(_ factor:CGFloat) -> PathBuilder
         {
-            var transform = AffineTransform.identity
-            transform.scale(x: factor, y: factor)
-            path.transform(using: transform)
+            path.transform(using: AffineTransform(scale:factor))
             return self
         }
 
         func applyRatio(_ ratio: CGFloat) -> PathBuilder
         {
-            var transform = AffineTransform.identity
-            transform.scale(x: 1, y: ratio)
-            path.transform(using: transform)
+            path.transform(using: AffineTransform(scaleByX: 1, byY: ratio))
             return self
         }
         
