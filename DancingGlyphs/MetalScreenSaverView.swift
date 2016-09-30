@@ -55,11 +55,13 @@ class MetalScreenSaverView : ScreenSaverView
                 }
             }
         }
+#if DEBUG
         if let name = device?.name {
             NSLog("Using device '\(name)'")
         } else {
             NSLog("No or unknown device")
         }
+#endif
         return device! // TODO: can we assume there will always be a device?
     }
 

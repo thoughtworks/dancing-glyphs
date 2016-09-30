@@ -89,8 +89,8 @@
 				031494801D67C044005F5EB5 /* README.md */,
 				0314947F1D67C044005F5EB5 /* LICENSE */,
 				032604921D5FBC2A0030AA78 /* DancingGlyphs */,
-				03AB2AC11D9F154700361F1B /* Library */,
 				032604AC1D5FBCB60030AA78 /* DancingGlyphsApp */,
+				03AB2AC11D9F154700361F1B /* Library */,
 				032604911D5FBC2A0030AA78 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,15 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */,
-				03043E8A1D95E5AB009AF715 /* Renderer.swift */,
-				03BD66821D84642E0023012F /* Shaders.metal */,
 				031494881D691A62005F5EB5 /* Animation.swift */,
-				03BD66851D85D97B0023012F /* Statistics.swift */,
 				031494851D67C291005F5EB5 /* Configuration.swift */,
 				031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */,
 				0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */,
 				032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */,
-				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				032604A01D5FBC9B0030AA78 /* thumbnail.png */,
 				032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */,
 				032604971D5FBC2A0030AA78 /* Info.plist */,
@@ -139,6 +135,10 @@
 			isa = PBXGroup;
 			children = (
 				03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */,
+				03043E8A1D95E5AB009AF715 /* Renderer.swift */,
+				03BD66821D84642E0023012F /* Shaders.metal */,
+				03BD66851D85D97B0023012F /* Statistics.swift */,
+				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
 			);
 			name = Library;
@@ -366,6 +366,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				SDKROOT = macosx;
 			};
 			name = Debug;

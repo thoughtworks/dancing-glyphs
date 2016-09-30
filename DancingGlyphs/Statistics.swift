@@ -38,7 +38,9 @@ class Statistics
         framesSinceCheckpoint += 1
 
         if (now - lastCheckpoint) >= 1.0 {
+#if DEBUG
             print()
+#endif
             lastCheckpoint = now
             framesSinceCheckpoint = 0
             renderTimeSinceCheckpoint = 0

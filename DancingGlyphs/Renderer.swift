@@ -20,6 +20,8 @@ import Metal
 class Renderer
 {
     var numGlyphs = 0
+    var numSprites = 0
+    var textureIds: [Int?]
     var backgroundColor: MTLClearColor!
 
     private var device: MTLDevice!
@@ -36,9 +38,11 @@ class Renderer
     private var textures: [MTLTexture?]
 
     
-    init(device: MTLDevice, numGlyphs: Int)
+    init(device: MTLDevice, numGlyphs: Int, numSprites: Int)
     {
         self.numGlyphs = numGlyphs
+        self.numSprites = numSprites
+        self.textureIds = [Int!](repeating:nil, count:numSprites)
         self.vertexBuffers = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
         self.textures = [MTLTexture!](repeating: nil, count: numGlyphs)
 
@@ -51,8 +55,7 @@ class Renderer
 
     private func setUpMetal()
     {
-        let myBundle = Bundle(for: Renderer.self)
-        let libraryPath = myBundle.path(forResource: "default", ofType: "metallib")!
+        let libraryPath = Bundle(for: Renderer.self).path(forResource: "default", ofType: "metallib")!
         let library = try! self.device.makeLibrary(filepath: libraryPath) // TODO: do something
 
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
@@ -77,7 +80,7 @@ class Renderer
     private func makeVertexBuffers()
     {
         for i in 0..<VERTEX_BUFFER_COUNT {
-            vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numGlyphs, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+            vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numSprites, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
             vertexBuffers[i]!.label = "vertexBuffer\(i)"
         }
 
@@ -143,12 +146,12 @@ class Renderer
     }
 
 
-    func beginFrame()
+    func beginUpdatingQuads()
     {
         vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
     }
 
-    func updateQuad(_ corners: ((Vector2, Vector2, Vector2, Vector2)), at index: Int)
+    func updateQuad(_ corners: (Vector2, Vector2, Vector2, Vector2), textureId: Int, at index: Int)
     {
         let (a, b, c, d) = corners
         let vertexData: [Float] = [
@@ -163,7 +166,13 @@ class Renderer
         let arraySize = sizeofArray(vertexData)
         let bufferPointer = currentVertextBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
-        currentVertextBuffer.didModifyRange(NSMakeRange(arraySize * index, arraySize))
+        textureIds[index] = textureId
+    }
+
+    func finishUpdatingQuads()
+    {
+        let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
+        currentVertextBuffer.didModifyRange(NSMakeRange(0, MemoryLayout<Float>.size * 12 * numSprites))
     }
 
     func renderFrame(drawable: CAMetalDrawable)
@@ -182,8 +191,8 @@ class Renderer
         encoder.setVertexBuffer(vertexBuffers[vertexBufferIndex], offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        for i in 0..<numGlyphs {
-            encoder.setFragmentTexture(textures[i], at: 0)
+        for i in 0..<numSprites {
+            encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
             encoder.drawPrimitives(type: .triangle, vertexStart: i*6, vertexCount: 6, instanceCount: 1)
         }
         encoder.endEncoding()

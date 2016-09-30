@@ -42,7 +42,7 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        renderer = Renderer(device: device, numGlyphs: 3)
+        renderer = Renderer(device: device, numGlyphs: 3, numSprites: 3)
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -115,13 +115,14 @@ import ScreenSaver
 
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
-        #if false
-            let framePath = NSBezierPath()
-            framePath.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
-            framePath.appendRect(NSMakeRect(1, 1, CGFloat(imageSize)-2, CGFloat(imageSize)-2))
-            NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
-            framePath.stroke()
-        #endif
+
+#if false
+        let framePath = NSBezierPath()
+        framePath.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
+        framePath.appendRect(NSMakeRect(1, 1, CGFloat(imageSize)-2, CGFloat(imageSize)-2))
+        NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
+        framePath.stroke()
+#endif
         let glyphPath = glyph.copy() as! NSBezierPath
         var transform = AffineTransform.identity
         transform.scale(x: imageSize, y: imageSize)
@@ -142,8 +143,10 @@ import ScreenSaver
             statistics.viewWillStartRenderingFrame()
 
             animation.moveToTime(CACurrentMediaTime() * (self.isPreview ? 1.5 : 1))
-            renderer.beginFrame()
+
+            renderer.beginUpdatingQuads()
             updateQuadPositions()
+            renderer.finishUpdatingQuads()
 
             let metalLayer = layer as! CAMetalLayer
             if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
@@ -174,11 +177,9 @@ import ScreenSaver
             let c = glyphCenter + Vector2(+w/2, -h/2) * rotationMatrix
             let d = glyphCenter + Vector2(+w/2, +h/2) * rotationMatrix
 
-            renderer.updateQuad((a, b, c, d), at:i)
+            renderer.updateQuad((a, b, c, d), textureId: i, at:i)
         }
     }
 
 }
-
-
 
