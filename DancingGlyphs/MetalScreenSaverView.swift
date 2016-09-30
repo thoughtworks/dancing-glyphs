@@ -107,14 +107,8 @@ class MetalScreenSaverView : ScreenSaverView
 
     override class func backingStoreType() -> NSBackingStoreType
     {
-        return NSBackingStoreType.retained
+        return NSBackingStoreType.nonretained
     }
-
-    override class func performGammaFade() -> Bool
-    {
-        return false
-    }
-
 
     override func startAnimation()
     {
