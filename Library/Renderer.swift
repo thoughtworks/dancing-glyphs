@@ -101,7 +101,7 @@ class Renderer
             1.0, 1.0, //c
             1.0, 0.0  //d
         ]
-        let arraySize = sizeofArray(textureCoordData)
+        let arraySize = Util.sizeofArray(textureCoordData)
         let bufferPointer = textureCoordBuffer.contents()
         memcpy(bufferPointer, textureCoordData, arraySize)
         textureCoordBuffer.didModifyRange(NSMakeRange(0, arraySize))
@@ -124,7 +124,7 @@ class Renderer
             0             , 0             , -2/(f-n)      , 0,
             -((r+l)/(r-l)), -((t+b)/(t-b)), -((f+n)/(f-n)), 1
         ]
-        let arraySize = sizeofArray(ndcMatrix)
+        let arraySize = Util.sizeofArray(ndcMatrix)
         let bufferPointer = uniformsBuffer.contents()
         memcpy(bufferPointer, ndcMatrix, arraySize)
         uniformsBuffer.didModifyRange(NSMakeRange(0, arraySize))
@@ -163,7 +163,7 @@ class Renderer
             d.x, d.y  //d
         ]
         let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
-        let arraySize = sizeofArray(vertexData)
+        let arraySize = Util.sizeofArray(vertexData)
         let bufferPointer = currentVertextBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
         textureIds[index] = textureId
@@ -191,22 +191,25 @@ class Renderer
         encoder.setVertexBuffer(vertexBuffers[vertexBufferIndex], offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
-        for i in 0..<numSprites {
+
+        // when the quads' textureIds are collated, we can minimise draw calls
+        var i = 0
+        while i < numSprites {
             encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
-            encoder.drawPrimitives(type: .triangle, vertexStart: i*6, vertexCount: 6, instanceCount: 1)
+            let s = i
+            while (i < numSprites) && (textureIds[i]! == textureIds[s]!) {
+                i += 1
+            }
+            encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)
         }
+
         encoder.endEncoding()
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-        commandBuffer.waitUntilCompleted() // only doing this to get accurate statistics
+//         commandBuffer.waitUntilCompleted() // only doing this to get accurate statistics
     }
 
-
-    private func sizeofArray<T>(_ array: [T]) -> Int
-    {
-        return array.count * MemoryLayout<T>.size
-    }
 
 
 }

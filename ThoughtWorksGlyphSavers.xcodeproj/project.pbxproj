@@ -8,35 +8,58 @@
 
 /* Begin PBXBuildFile section */
 		03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
-		03043E8C1D95EA37009AF715 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
 		03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
-		03043E8F1D987E1A009AF715 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 		031494811D67C044005F5EB5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0314947F1D67C044005F5EB5 /* LICENSE */; };
 		031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
-		031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
 		031494861D67C291005F5EB5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
-		031494871D67C4E3005F5EB5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
 		031494891D691A62005F5EB5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
-		0314948A1D691A62005F5EB5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
 		0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
-		031494901D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
 		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
-		031494931D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
+		03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
+		03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
+		03168EC31DA00E4700CAE093 /* GlyphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */; };
+		03168EC41DA00E4700CAE093 /* GlyphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */; };
+		03168EC51DA00E4700CAE093 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBC1DA00E4700CAE093 /* Glyphs.svg */; };
+		03168EC61DA00E4700CAE093 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBC1DA00E4700CAE093 /* Glyphs.svg */; };
+		03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
+		03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
+		03168EC91DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
+		03168ECA1DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
+		03168ECB1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */; };
+		03168ECC1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */; };
+		03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
+		03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
+		03168ED01DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		03168ED11DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03168ED51DA00F4100CAE093 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
+		03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
+		03168ED81DA00F4400CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
 		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
-		032604AE1D5FBCB60030AA78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604AD1D5FBCB60030AA78 /* AppDelegate.swift */; };
-		032604B01D5FBCB60030AA78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032604AF1D5FBCB60030AA78 /* Assets.xcassets */; };
-		032604B31D5FBCB60030AA78 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032604B11D5FBCB60030AA78 /* MainMenu.xib */; };
-		032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
-		032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
-		03AB2AC01D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
-		03BD66841D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
-		03BD66871D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
+		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
+		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
+		03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
+		03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
+		03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
+		03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
+		03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
+		03E1A26C1DA00C6600AE8DD3 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
+		03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
+		03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,24 +71,40 @@
 		031494881D691A62005F5EB5 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
 		031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
+		03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlyphWave.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		03168EBA1DA00E4700CAE093 /* Glyph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glyph.swift; sourceTree = "<group>"; };
+		03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlyphFactory.swift; sourceTree = "<group>"; };
+		03168EBC1DA00E4700CAE093 /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
+		03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlyphWaveView.swift; sourceTree = "<group>"; };
+		03168EBE1DA00E4700CAE093 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathSVGExtensions.swift; sourceTree = "<group>"; };
+		03168EC01DA00E4700CAE093 /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
+		03168ECF1DA00ECF00CAE093 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DancingGlyphs.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		032604971D5FBC2A0030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DancingGlyphsView.swift; sourceTree = "<group>"; };
 		0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		032604A01D5FBC9B0030AA78 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
 		032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
-		032604AB1D5FBCB60030AA78 /* DancingGlyphsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DancingGlyphsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		032604AD1D5FBCB60030AA78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		032604AF1D5FBCB60030AA78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		032604B21D5FBCB60030AA78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		032604B41D5FBCB60030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		03E1A25A1DA00C1900AE8DD3 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03E1A2611DA00C1900AE8DD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		03E1A2631DA00C1900AE8DD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		03168EA91DA00DEA00CAE093 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0326048C1D5FBC2A0030AA78 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -73,7 +112,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		032604A81D5FBCB60030AA78 /* Frameworks */ = {
+		03E1A2571DA00C1900AE8DD3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -83,14 +122,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03168EAE1DA00DEA00CAE093 /* GlyphWave */ = {
+			isa = PBXGroup;
+			children = (
+				03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */,
+				03168EC01DA00E4700CAE093 /* Sprite.swift */,
+				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
+				03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */,
+				03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */,
+				03168EBC1DA00E4700CAE093 /* Glyphs.svg */,
+				03168EBE1DA00E4700CAE093 /* Info.plist */,
+			);
+			path = GlyphWave;
+			sourceTree = "<group>";
+		};
 		032604861D5FBC2A0030AA78 = {
 			isa = PBXGroup;
 			children = (
 				031494801D67C044005F5EB5 /* README.md */,
 				0314947F1D67C044005F5EB5 /* LICENSE */,
 				032604921D5FBC2A0030AA78 /* DancingGlyphs */,
-				032604AC1D5FBCB60030AA78 /* DancingGlyphsApp */,
+				03168EAE1DA00DEA00CAE093 /* GlyphWave */,
 				03AB2AC11D9F154700361F1B /* Library */,
+				03E1A25B1DA00C1900AE8DD3 /* Runner */,
 				032604911D5FBC2A0030AA78 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,7 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */,
-				032604AB1D5FBCB60030AA78 /* DancingGlyphsApp.app */,
+				03E1A25A1DA00C1900AE8DD3 /* Runner.app */,
+				03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,17 +175,6 @@
 			path = DancingGlyphs;
 			sourceTree = "<group>";
 		};
-		032604AC1D5FBCB60030AA78 /* DancingGlyphsApp */ = {
-			isa = PBXGroup;
-			children = (
-				032604AD1D5FBCB60030AA78 /* AppDelegate.swift */,
-				032604AF1D5FBCB60030AA78 /* Assets.xcassets */,
-				032604B11D5FBCB60030AA78 /* MainMenu.xib */,
-				032604B41D5FBCB60030AA78 /* Info.plist */,
-			);
-			path = DancingGlyphsApp;
-			sourceTree = "<group>";
-		};
 		03AB2AC11D9F154700361F1B /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,13 +184,32 @@
 				03BD66851D85D97B0023012F /* Statistics.swift */,
 				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
+				03168ECF1DA00ECF00CAE093 /* Util.swift */,
 			);
 			path = Library;
 			sourceTree = SOURCE_ROOT;
 		};
+		03E1A25B1DA00C1900AE8DD3 /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */,
+				03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */,
+				03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */,
+				03E1A2631DA00C1900AE8DD3 /* Info.plist */,
+			);
+			path = Runner;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		03168EAA1DA00DEA00CAE093 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0326048D1D5FBC2A0030AA78 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,6 +220,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		03168EAC1DA00DEA00CAE093 /* GlyphWave */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03168EB41DA00DEA00CAE093 /* Build configuration list for PBXNativeTarget "GlyphWave" */;
+			buildPhases = (
+				03168EA81DA00DEA00CAE093 /* Sources */,
+				03168EA91DA00DEA00CAE093 /* Frameworks */,
+				03168EAA1DA00DEA00CAE093 /* Headers */,
+				03168EAB1DA00DEA00CAE093 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlyphWave;
+			productName = GlyphWave;
+			productReference = 03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */;
+			productType = "com.apple.product-type.bundle";
+		};
 		0326048F1D5FBC2A0030AA78 /* DancingGlyphs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0326049A1D5FBC2A0030AA78 /* Build configuration list for PBXNativeTarget "DancingGlyphs" */;
@@ -176,21 +257,21 @@
 			productReference = 032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
-		032604AA1D5FBCB60030AA78 /* DancingGlyphsApp */ = {
+		03E1A2591DA00C1900AE8DD3 /* Runner */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 032604B51D5FBCB60030AA78 /* Build configuration list for PBXNativeTarget "DancingGlyphsApp" */;
+			buildConfigurationList = 03E1A2661DA00C1900AE8DD3 /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
-				032604A71D5FBCB60030AA78 /* Sources */,
-				032604A81D5FBCB60030AA78 /* Frameworks */,
-				032604A91D5FBCB60030AA78 /* Resources */,
+				03E1A2561DA00C1900AE8DD3 /* Sources */,
+				03E1A2571DA00C1900AE8DD3 /* Frameworks */,
+				03E1A2581DA00C1900AE8DD3 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = DancingGlyphsApp;
-			productName = DancingGlyphsApp;
-			productReference = 032604AB1D5FBCB60030AA78 /* DancingGlyphsApp.app */;
+			name = Runner;
+			productName = Runner;
+			productReference = 03E1A25A1DA00C1900AE8DD3 /* Runner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -199,20 +280,25 @@
 		032604871D5FBC2A0030AA78 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = ThoughtWorks;
 				TargetAttributes = {
+					03168EAC1DA00DEA00CAE093 = {
+						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
 					0326048F1D5FBC2A0030AA78 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
-					032604AA1D5FBCB60030AA78 = {
-						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+					03E1A2591DA00C1900AE8DD3 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "DancingGlyphs" */;
+			buildConfigurationList = 0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSaver" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -226,12 +312,22 @@
 			projectRoot = "";
 			targets = (
 				0326048F1D5FBC2A0030AA78 /* DancingGlyphs */,
-				032604AA1D5FBCB60030AA78 /* DancingGlyphsApp */,
+				03168EAC1DA00DEA00CAE093 /* GlyphWave */,
+				03E1A2591DA00C1900AE8DD3 /* Runner */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		03168EAB1DA00DEA00CAE093 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03168ECA1DA00E4700CAE093 /* Info.plist in Resources */,
+				03168EC61DA00E4700CAE093 /* Glyphs.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0326048E1D5FBC2A0030AA78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -243,13 +339,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		032604A91D5FBCB60030AA78 /* Resources */ = {
+		03E1A2581DA00C1900AE8DD3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				032604B01D5FBCB60030AA78 /* Assets.xcassets in Resources */,
-				032604B31D5FBCB60030AA78 /* MainMenu.xib in Resources */,
-				031494901D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
+				03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */,
+				03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */,
+				03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */,
+				03168EC91DA00E4700CAE093 /* Info.plist in Resources */,
+				03168EC51DA00E4700CAE093 /* Glyphs.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +370,25 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		03168EA81DA00DEA00CAE093 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */,
+				03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */,
+				03168ED01DA00ECF00CAE093 /* Util.swift in Sources */,
+				03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */,
+				03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */,
+				03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */,
+				03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */,
+				03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
+				03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */,
+				03168ECC1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */,
+				03168ED51DA00F4100CAE093 /* Statistics.swift in Sources */,
+				03168EC41DA00E4700CAE093 /* GlyphFactory.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0326048B1D5FBC2A0030AA78 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -283,6 +400,7 @@
 				03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */,
 				03BD66861D85D97B0023012F /* Statistics.swift in Sources */,
 				03BD66831D84642E0023012F /* Shaders.metal in Sources */,
+				03168ED81DA00F4400CAE093 /* Util.swift in Sources */,
 				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */,
 				032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */,
@@ -290,32 +408,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		032604A71D5FBCB60030AA78 /* Sources */ = {
+		03E1A2561DA00C1900AE8DD3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				031494931D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
-				031494871D67C4E3005F5EB5 /* Configuration.swift in Sources */,
-				03043E8F1D987E1A009AF715 /* VectorMath.swift in Sources */,
-				031494841D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
-				03BD66841D84642E0023012F /* Shaders.metal in Sources */,
-				03AB2AC01D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */,
-				0314948A1D691A62005F5EB5 /* Animation.swift in Sources */,
-				032604BD1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
-				032604BA1D5FBCBF0030AA78 /* NSColorExtensions.swift in Sources */,
-				03BD66871D85D97B0023012F /* Statistics.swift in Sources */,
-				03043E8C1D95EA37009AF715 /* Renderer.swift in Sources */,
-				032604AE1D5FBCB60030AA78 /* AppDelegate.swift in Sources */,
+				03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */,
+				03168ED11DA00ECF00CAE093 /* Util.swift in Sources */,
+				03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
+				03E1A26C1DA00C6600AE8DD3 /* NSBezierPathExtensions.swift in Sources */,
+				03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */,
+				03168EC31DA00E4700CAE093 /* GlyphFactory.swift in Sources */,
+				03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */,
+				03168ECB1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */,
+				03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */,
+				03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */,
+				03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */,
+				03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */,
+				03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */,
+				03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */,
+				03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */,
+				03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */,
+				03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */,
+				03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		032604B11D5FBCB60030AA78 /* MainMenu.xib */ = {
+		03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				032604B21D5FBCB60030AA78 /* Base */,
+				03E1A2611DA00C1900AE8DD3 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -323,6 +447,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		03168EB51DA00DEA00CAE093 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = GlyphWave/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Debug;
+		};
+		03168EB61DA00DEA00CAE093 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = GlyphWave/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Release;
+		};
 		032604981D5FBC2A0030AA78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -443,28 +604,33 @@
 			};
 			name = Release;
 		};
-		032604B61D5FBCB60030AA78 /* Debug */ = {
+		03E1A2641DA00C1900AE8DD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = DancingGlyphsApp/Info.plist;
+				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		032604B71D5FBCB60030AA78 /* Release */ = {
+		03E1A2651DA00C1900AE8DD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = DancingGlyphsApp/Info.plist;
+				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -473,7 +639,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "DancingGlyphs" */ = {
+		03168EB41DA00DEA00CAE093 /* Build configuration list for PBXNativeTarget "GlyphWave" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03168EB51DA00DEA00CAE093 /* Debug */,
+				03168EB61DA00DEA00CAE093 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSaver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032604981D5FBC2A0030AA78 /* Debug */,
@@ -491,11 +666,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		032604B51D5FBCB60030AA78 /* Build configuration list for PBXNativeTarget "DancingGlyphsApp" */ = {
+		03E1A2661DA00C1900AE8DD3 /* Build configuration list for PBXNativeTarget "Runner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				032604B61D5FBCB60030AA78 /* Debug */,
-				032604B71D5FBCB60030AA78 /* Release */,
+				03E1A2641DA00C1900AE8DD3 /* Debug */,
+				03E1A2651DA00C1900AE8DD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

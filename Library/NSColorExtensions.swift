@@ -21,9 +21,16 @@ import Metal
 
 extension NSColor
 {
-    class var twGreen02:    NSColor { get { return NSColor(webcolor: "#85b880") } }
+    class var twYellow:     NSColor { get { return NSColor(webcolor: "#fff350") } }
+    class var twOrange:     NSColor { get { return NSColor(webcolor: "#f58a33") } }
+    class var twRed:        NSColor { get { return NSColor(webcolor: "#ed312f") } }
+    class var twDeepPink:   NSColor { get { return NSColor(webcolor: "#b51b58") } }
+    class var twPurple:     NSColor { get { return NSColor(webcolor: "#702269") } }
     class var twBrightPink: NSColor { get { return NSColor(webcolor: "#ee5ba0") } }
+    class var twGreen02:    NSColor { get { return NSColor(webcolor: "#85b880") } }
+    class var twGreen03:    NSColor { get { return NSColor(webcolor: "#00aa5b") } }
     class var twBlue02:     NSColor { get { return NSColor(webcolor: "#00bccd") } }
+    class var twBlue03:     NSColor { get { return NSColor(webcolor: "#0078bf") } }
     class var twGrey:       NSColor { get { return NSColor(webcolor: "#808184") } }
 
 
