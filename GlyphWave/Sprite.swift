@@ -23,28 +23,29 @@ class Sprite
     let r0: Double
     let r1: Double
     
+    var basePos: Vector2
     var pos: Vector2
     var rotation: Float
-
-    init(glyph: Int, size: Float, r0: Double, r1: Double)
+    
+    var animation: (Sprite, Double) -> ()
+    
+    init(glyph: Int, size: Float, r0: Double, r1: Double, animation: @escaping (Sprite, Double) -> ())
     {
         self.glyph = glyph
         self.size = size
         self.r0 = r0
         self.r1 = r1
         
+        self.basePos = Vector2(0, 0)
         self.pos = Vector2(0, 0)
         self.rotation = 0
+        
+        self.animation = animation
     }
-
-    func move(_ now: Double)
+    
+    func move(to now: Double)
     {
-        var y = sin(now * (1 + r0)) * 0.12                    // sprite swinging up and down, speed based on r0
-        y *= r1 * (0.5 + r1/2)                                // dampening, amplitude based on r1
-        y += sin(now * -2 + Double(pos.x) * M_PI * 3) * 0.03  // large wave across sprites
-        y += 0.5                                              // moving to middle
-        pos.y = Float(y)
-        rotation = Float(sin(now * (r0-0.5)) * 2 * M_PI)      // rotation based on r0
+        animation(self, now)
     }
 
     func corners(screenSize: Vector2) -> (Vector2, Vector2, Vector2, Vector2)

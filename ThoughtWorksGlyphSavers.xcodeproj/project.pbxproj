@@ -42,6 +42,10 @@
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
 		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
+		0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
+		0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
+		0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
+		0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
@@ -87,6 +91,8 @@
 		032604A01D5FBC9B0030AA78 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
 		032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		0372B3791DA2727400585DD8 /* CircularWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularWave.swift; sourceTree = "<group>"; };
+		0372B37C1DA2742500585DD8 /* LinearWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearWave.swift; sourceTree = "<group>"; };
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -126,6 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */,
+				0372B37C1DA2742500585DD8 /* LinearWave.swift */,
+				0372B3791DA2727400585DD8 /* CircularWave.swift */,
 				03168EC01DA00E4700CAE093 /* Sprite.swift */,
 				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
 				03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */,
@@ -298,7 +306,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSaver" */;
+			buildConfigurationList = 0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSavers" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -375,11 +383,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */,
+				0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */,
 				03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */,
 				03168ED01DA00ECF00CAE093 /* Util.swift in Sources */,
 				03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */,
 				03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */,
 				03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */,
+				0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */,
 				03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */,
 				03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
 				03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */,
@@ -417,7 +427,9 @@
 				03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
 				03E1A26C1DA00C6600AE8DD3 /* NSBezierPathExtensions.swift in Sources */,
 				03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */,
+				0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */,
 				03168EC31DA00E4700CAE093 /* GlyphFactory.swift in Sources */,
+				0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */,
 				03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */,
 				03168ECB1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */,
 				03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */,
@@ -648,7 +660,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSaver" */ = {
+		0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSavers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032604981D5FBC2A0030AA78 /* Debug */,
