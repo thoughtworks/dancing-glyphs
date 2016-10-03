@@ -27,10 +27,11 @@ class AppDelegate: NSObject
     func setupAndStartAnimation()
     {
         // change class below to select which saver to run
-        view = DancingGlyphsView(frame: window.contentView!.frame, isPreview: false)
+        view = GlyphWaveView(frame: window.contentView!.frame, isPreview: false)
         view.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
         window.contentView!.autoresizesSubviews = true
         window.contentView!.addSubview(view)
+        window.title = view.className
         window.backingType = MetalScreenSaverView.backingStoreType()
         view.startAnimation()
     }
