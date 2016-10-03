@@ -18,10 +18,6 @@ import ScreenSaver
 
 class Configuration
 {
-    enum Scheme: Int {
-        case normal, dark
-    }
-    
     enum Glyph: Int {
         case square, circle
     }
@@ -37,7 +33,6 @@ class Configuration
 
     var defaults: UserDefaults
     
-    var scheme: Scheme = Scheme.dark
     var glyph: Glyph = Glyph.square
     var size: Size = Size.medium
     var movement: Movement = Movement.normal
@@ -48,7 +43,6 @@ class Configuration
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
         defaults = ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults!
         defaults.register(defaults: [
-                String(describing: Scheme.self): Scheme.dark.rawValue,
                 String(describing: Glyph.self): -1,
                 String(describing: Size.self): -1,
                 String(describing: Movement.self): -1
@@ -56,12 +50,6 @@ class Configuration
         update()
     }
     
-    
-    var schemeCode: Int
-    {
-        set { defaults.set(newValue, forKey: String(describing: Scheme.self)); update() }
-        get { return defaults.integer(forKey: String(describing: Scheme.self)) }
-    }
     
     var glyphCode: Int
     {
@@ -86,7 +74,6 @@ class Configuration
     {
         defaults.synchronize()
 
-        scheme = enumForCode(schemeCode, defaultCase: Scheme.dark)
         glyph = enumForCode(glyphCode, defaultCase: Glyph.square)
         size = enumForCode(sizeCode, defaultCase: Size.medium)
         movement = enumForCode(movementCode, defaultCase: Movement.normal)
@@ -130,16 +117,11 @@ class Configuration
     {
         get
         {
-            let backgroundColor = (scheme == .dark) ? NSColor.black : NSColor.twGrey.lighter(0.1)
-            let filter = (scheme == .dark) ? "CILinearDodgeBlendMode" : "CIColorBurnBlendMode"
-
             let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath()][glyph.rawValue]
-
             let glyphColors = [NSColor.twGreen02, NSColor.twBrightPink, NSColor.twBlue02]
+            let sizeValue: Double = (Double(size.rawValue) + 1) * 0.18
 
-            let sizeValue: Double = (Double(size.rawValue) + 1) * 0.16
-
-            return DancingGlyphsView.Settings(glyph: glyphPath, glyphColors: glyphColors, backgroundColor: backgroundColor, filter: filter, glyphSize: sizeValue)
+            return DancingGlyphsView.Settings(backgroundColor: NSColor.black, glyph: glyphPath, glyphColors: glyphColors, glyphSize: sizeValue)
         }
     }
 

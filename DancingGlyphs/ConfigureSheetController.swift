@@ -22,7 +22,6 @@ class ConfigureSheetController : NSObject
     
     @IBOutlet var window: NSWindow!
     @IBOutlet var versionField: NSTextField!
-    @IBOutlet var schemePopup: NSPopUpButton!
     @IBOutlet var glyphPopup: NSPopUpButton!
     @IBOutlet var sizePopup: NSPopUpButton!
     @IBOutlet var movementPopup: NSPopUpButton!
@@ -57,7 +56,6 @@ class ConfigureSheetController : NSObject
     func loadConfiguration()
     {
         let config = Configuration()
-        schemePopup.selectItem(withTag: config.schemeCode)
         glyphPopup.selectItem(withTag: config.glyphCode)
         sizePopup.selectItem(withTag: config.sizeCode)
         movementPopup.selectItem(withTag: config.movementCode)
@@ -66,7 +64,6 @@ class ConfigureSheetController : NSObject
     private func saveConfiguration()
     {
         let config = Configuration()
-        config.schemeCode = schemePopup.selectedTag()
         config.glyphCode = glyphPopup.selectedTag()
         config.sizeCode = sizePopup.selectedTag()
         config.movementCode = movementPopup.selectedTag()

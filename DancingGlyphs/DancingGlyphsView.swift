@@ -26,10 +26,9 @@ import ScreenSaver
 {
     struct Settings
     {
+        var backgroundColor: NSColor
         var glyph: NSBezierPath
         var glyphColors: [NSColor]
-        var backgroundColor: NSColor
-        var filter: String
         var glyphSize: Double
     }
 
