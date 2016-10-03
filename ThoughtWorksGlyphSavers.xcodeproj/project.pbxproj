@@ -46,6 +46,10 @@
 		0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
 		0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
 		0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
+		0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
+		0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
+		0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
+		0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
@@ -93,6 +97,8 @@
 		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
 		0372B3791DA2727400585DD8 /* CircularWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularWave.swift; sourceTree = "<group>"; };
 		0372B37C1DA2742500585DD8 /* LinearWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearWave.swift; sourceTree = "<group>"; };
+		0372B37F1DA28ED700585DD8 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		0372B3801DA28ED700585DD8 /* thumbnail@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@x2.png"; sourceTree = "<group>"; };
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -139,6 +145,8 @@
 				03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */,
 				03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */,
 				03168EBC1DA00E4700CAE093 /* Glyphs.svg */,
+				0372B37F1DA28ED700585DD8 /* thumbnail.png */,
+				0372B3801DA28ED700585DD8 /* thumbnail@x2.png */,
 				03168EBE1DA00E4700CAE093 /* Info.plist */,
 			);
 			path = GlyphWave;
@@ -332,7 +340,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				03168ECA1DA00E4700CAE093 /* Info.plist in Resources */,
+				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
 				03168EC61DA00E4700CAE093 /* Glyphs.svg in Resources */,
+				0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +363,8 @@
 			files = (
 				03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */,
 				03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */,
+				0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */,
+				0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
 				03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */,
 				03168EC91DA00E4700CAE093 /* Info.plist in Resources */,
 				03168EC51DA00E4700CAE093 /* Glyphs.svg in Resources */,

@@ -73,7 +73,7 @@ import ScreenSaver
     {
         updateSizeAndTextures()
 
-        let list = LinearWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
+        let list = CircularWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyph > $1.glyph })
 
