@@ -76,6 +76,30 @@ extension Vector2
             lhs.x * rhs.m11 + lhs.y * rhs.m21,
             lhs.x * rhs.m12 + lhs.y * rhs.m22)
     }
+    
+    public static func /(lhs: Vector2, rhs: Vector2) -> Vector2
+    {
+        return Vector2(lhs.x / rhs.x, lhs.y / rhs.y)
+    }
+    
+    public static func /(lhs: Vector2, rhs: Scalar) -> Vector2
+    {
+        return Vector2(lhs.x / rhs, lhs.y / rhs)
+    }
+    
+    public var lengthSquared: Scalar
+    {
+        return x * x + y * y
+    }
+
+    public func normalized() -> Vector2
+    {
+        let lengthSquared = self.lengthSquared
+        if lengthSquared ~= 0 || lengthSquared ~= 1 {
+            return self
+        }
+        return self / sqrt(lengthSquared)
+    }
 
 }
 
