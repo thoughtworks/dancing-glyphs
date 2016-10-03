@@ -17,7 +17,7 @@
                BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
                BuildableName = "Runner.app"
                BlueprintName = "Runner"
-               ReferencedContainer = "container:ThoughtWorksGlyphSaver.xcodeproj">
+               ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
             BuildableName = "Runner.app"
             BlueprintName = "Runner"
-            ReferencedContainer = "container:ThoughtWorksGlyphSaver.xcodeproj">
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
             BuildableName = "Runner.app"
             BlueprintName = "Runner"
-            ReferencedContainer = "container:ThoughtWorksGlyphSaver.xcodeproj">
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
             BuildableName = "Runner.app"
             BlueprintName = "Runner"
-            ReferencedContainer = "container:ThoughtWorksGlyphSaver.xcodeproj">
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
