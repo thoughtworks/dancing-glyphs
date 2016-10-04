@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0326048F1D5FBC2A0030AA78"
-               BuildableName = "DancingGlyphs.saver"
-               BlueprintName = "DancingGlyphs"
-               ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+               BlueprintIdentifier = "03168EAC1DA00DEA00CAE093"
+               BuildableName = "GlyphWave.saver"
+               BlueprintName = "GlyphWave"
+               ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0326048F1D5FBC2A0030AA78"
-            BuildableName = "DancingGlyphs.saver"
-            BlueprintName = "DancingGlyphs"
-            ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+            BlueprintIdentifier = "03168EAC1DA00DEA00CAE093"
+            BuildableName = "GlyphWave.saver"
+            BlueprintName = "GlyphWave"
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0326048F1D5FBC2A0030AA78"
-            BuildableName = "DancingGlyphs.saver"
-            BlueprintName = "DancingGlyphs"
-            ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+            BlueprintIdentifier = "03168EAC1DA00DEA00CAE093"
+            BuildableName = "GlyphWave.saver"
+            BlueprintName = "GlyphWave"
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

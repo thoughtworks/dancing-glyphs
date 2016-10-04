@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "032604AA1D5FBCB60030AA78"
-               BuildableName = "DancingGlyphsApp.app"
-               BlueprintName = "DancingGlyphsApp"
-               ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+               BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
+               BuildableName = "Runner.app"
+               BlueprintName = "Runner"
+               ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "032604AA1D5FBCB60030AA78"
-            BuildableName = "DancingGlyphsApp.app"
-            BlueprintName = "DancingGlyphsApp"
-            ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+            BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
+            BuildableName = "Runner.app"
+            BlueprintName = "Runner"
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "032604AA1D5FBCB60030AA78"
-            BuildableName = "DancingGlyphsApp.app"
-            BlueprintName = "DancingGlyphsApp"
-            ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+            BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
+            BuildableName = "Runner.app"
+            BlueprintName = "Runner"
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "032604AA1D5FBCB60030AA78"
-            BuildableName = "DancingGlyphsApp.app"
-            BlueprintName = "DancingGlyphsApp"
-            ReferencedContainer = "container:DancingGlyphs.xcodeproj">
+            BlueprintIdentifier = "03E1A2591DA00C1900AE8DD3"
+            BuildableName = "Runner.app"
+            BlueprintName = "Runner"
+            ReferencedContainer = "container:ThoughtWorksGlyphSavers.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,0 +1,697 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
+		031494811D67C044005F5EB5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0314947F1D67C044005F5EB5 /* LICENSE */; };
+		031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
+		031494861D67C291005F5EB5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
+		031494891D691A62005F5EB5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
+		0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
+		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
+		03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
+		03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
+		03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
+		03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
+		03168EC91DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
+		03168ECA1DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
+		03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
+		03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
+		03168ED01DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		03168ED11DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03168ED51DA00F4100CAE093 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
+		03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
+		03168ED81DA00F4400CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
+		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
+		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
+		0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
+		0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
+		0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
+		0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
+		0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
+		0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
+		0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
+		0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
+		0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
+		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
+		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
+		03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
+		03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
+		03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
+		03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
+		03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
+		03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
+		03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
+		03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
+		03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
+		03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03043E8A1D95E5AB009AF715 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		03043E8D1D987E1A009AF715 /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
+		0314947F1D67C044005F5EB5 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		031494801D67C044005F5EB5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		031494851D67C291005F5EB5 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		031494881D691A62005F5EB5 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
+		031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
+		03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlyphWave.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		03168EBA1DA00E4700CAE093 /* Glyph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glyph.swift; sourceTree = "<group>"; };
+		03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlyphWaveView.swift; sourceTree = "<group>"; };
+		03168EBE1DA00E4700CAE093 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03168EC01DA00E4700CAE093 /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
+		03168ECF1DA00ECF00CAE093 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DancingGlyphs.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		032604971D5FBC2A0030AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DancingGlyphsView.swift; sourceTree = "<group>"; };
+		0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
+		032604A01D5FBC9B0030AA78 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
+		0372B3791DA2727400585DD8 /* CircularWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularWave.swift; sourceTree = "<group>"; };
+		0372B37C1DA2742500585DD8 /* LinearWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearWave.swift; sourceTree = "<group>"; };
+		0372B37F1DA28ED700585DD8 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		0372B3801DA28ED700585DD8 /* thumbnail@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@x2.png"; sourceTree = "<group>"; };
+		0372B3871DA40E1600585DD8 /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
+		0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathSVGExtensions.swift; sourceTree = "<group>"; };
+		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
+		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		03E1A25A1DA00C1900AE8DD3 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03E1A2611DA00C1900AE8DD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		03E1A2631DA00C1900AE8DD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03168EA91DA00DEA00CAE093 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0326048C1D5FBC2A0030AA78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03E1A2571DA00C1900AE8DD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03168EAE1DA00DEA00CAE093 /* GlyphWave */ = {
+			isa = PBXGroup;
+			children = (
+				03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */,
+				0372B37C1DA2742500585DD8 /* LinearWave.swift */,
+				0372B3791DA2727400585DD8 /* CircularWave.swift */,
+				03168EC01DA00E4700CAE093 /* Sprite.swift */,
+				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
+				0372B37F1DA28ED700585DD8 /* thumbnail.png */,
+				0372B3801DA28ED700585DD8 /* thumbnail@x2.png */,
+				03168EBE1DA00E4700CAE093 /* Info.plist */,
+			);
+			path = GlyphWave;
+			sourceTree = "<group>";
+		};
+		032604861D5FBC2A0030AA78 = {
+			isa = PBXGroup;
+			children = (
+				031494801D67C044005F5EB5 /* README.md */,
+				0314947F1D67C044005F5EB5 /* LICENSE */,
+				032604921D5FBC2A0030AA78 /* DancingGlyphs */,
+				03168EAE1DA00DEA00CAE093 /* GlyphWave */,
+				03AB2AC11D9F154700361F1B /* Library */,
+				03E1A25B1DA00C1900AE8DD3 /* Runner */,
+				032604911D5FBC2A0030AA78 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		032604911D5FBC2A0030AA78 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */,
+				03E1A25A1DA00C1900AE8DD3 /* Runner.app */,
+				03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		032604921D5FBC2A0030AA78 /* DancingGlyphs */ = {
+			isa = PBXGroup;
+			children = (
+				0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */,
+				031494881D691A62005F5EB5 /* Animation.swift */,
+				031494851D67C291005F5EB5 /* Configuration.swift */,
+				031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */,
+				0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */,
+				032604A01D5FBC9B0030AA78 /* thumbnail.png */,
+				032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */,
+				032604971D5FBC2A0030AA78 /* Info.plist */,
+			);
+			path = DancingGlyphs;
+			sourceTree = "<group>";
+		};
+		03AB2AC11D9F154700361F1B /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */,
+				03043E8A1D95E5AB009AF715 /* Renderer.swift */,
+				03BD66821D84642E0023012F /* Shaders.metal */,
+				03BD66851D85D97B0023012F /* Statistics.swift */,
+				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
+				03168ECF1DA00ECF00CAE093 /* Util.swift */,
+				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
+				0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */,
+				0372B3871DA40E1600585DD8 /* Glyphs.svg */,
+			);
+			path = Library;
+			sourceTree = SOURCE_ROOT;
+		};
+		03E1A25B1DA00C1900AE8DD3 /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */,
+				03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */,
+				03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */,
+				03E1A2631DA00C1900AE8DD3 /* Info.plist */,
+			);
+			path = Runner;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		03168EAA1DA00DEA00CAE093 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0326048D1D5FBC2A0030AA78 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		03168EAC1DA00DEA00CAE093 /* GlyphWave */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03168EB41DA00DEA00CAE093 /* Build configuration list for PBXNativeTarget "GlyphWave" */;
+			buildPhases = (
+				03168EA81DA00DEA00CAE093 /* Sources */,
+				03168EA91DA00DEA00CAE093 /* Frameworks */,
+				03168EAA1DA00DEA00CAE093 /* Headers */,
+				03168EAB1DA00DEA00CAE093 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlyphWave;
+			productName = GlyphWave;
+			productReference = 03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */;
+			productType = "com.apple.product-type.bundle";
+		};
+		0326048F1D5FBC2A0030AA78 /* DancingGlyphs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0326049A1D5FBC2A0030AA78 /* Build configuration list for PBXNativeTarget "DancingGlyphs" */;
+			buildPhases = (
+				0326048B1D5FBC2A0030AA78 /* Sources */,
+				0326048C1D5FBC2A0030AA78 /* Frameworks */,
+				0326048D1D5FBC2A0030AA78 /* Headers */,
+				0326048E1D5FBC2A0030AA78 /* Resources */,
+				039CDD801D774BBA00D4152C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DancingGlyphs;
+			productName = DancingGlyphs;
+			productReference = 032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */;
+			productType = "com.apple.product-type.bundle";
+		};
+		03E1A2591DA00C1900AE8DD3 /* Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03E1A2661DA00C1900AE8DD3 /* Build configuration list for PBXNativeTarget "Runner" */;
+			buildPhases = (
+				03E1A2561DA00C1900AE8DD3 /* Sources */,
+				03E1A2571DA00C1900AE8DD3 /* Frameworks */,
+				03E1A2581DA00C1900AE8DD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Runner;
+			productName = Runner;
+			productReference = 03E1A25A1DA00C1900AE8DD3 /* Runner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		032604871D5FBC2A0030AA78 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = ThoughtWorks;
+				TargetAttributes = {
+					03168EAC1DA00DEA00CAE093 = {
+						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+					0326048F1D5FBC2A0030AA78 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					03E1A2591DA00C1900AE8DD3 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSavers" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 032604861D5FBC2A0030AA78;
+			productRefGroup = 032604911D5FBC2A0030AA78 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0326048F1D5FBC2A0030AA78 /* DancingGlyphs */,
+				03168EAC1DA00DEA00CAE093 /* GlyphWave */,
+				03E1A2591DA00C1900AE8DD3 /* Runner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03168EAB1DA00DEA00CAE093 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */,
+				03168ECA1DA00E4700CAE093 /* Info.plist in Resources */,
+				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
+				0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0326048E1D5FBC2A0030AA78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */,
+				031494811D67C044005F5EB5 /* LICENSE in Resources */,
+				032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */,
+				0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
+				032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03E1A2581DA00C1900AE8DD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */,
+				03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */,
+				0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */,
+				0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
+				03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */,
+				03168EC91DA00E4700CAE093 /* Info.plist in Resources */,
+				0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		039CDD801D774BBA00D4152C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SHA=`git rev-parse --short HEAD | tr '[a-z]' '[A-Z]'`\nsed -i \"\" \"s/#gitsha#/$SHA/\" \"${BUILT_PRODUCTS_DIR}\"/DancingGlyphs.saver/Contents/Info.plist";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03168EA81DA00DEA00CAE093 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */,
+				0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */,
+				03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */,
+				03168ED01DA00ECF00CAE093 /* Util.swift in Sources */,
+				03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */,
+				03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */,
+				03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */,
+				0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */,
+				03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */,
+				03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
+				03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */,
+				03168ED51DA00F4100CAE093 /* Statistics.swift in Sources */,
+				0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0326048B1D5FBC2A0030AA78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				031494861D67C291005F5EB5 /* Configuration.swift in Sources */,
+				031494831D67C263005F5EB5 /* DancingGlyphsView.swift in Sources */,
+				031494891D691A62005F5EB5 /* Animation.swift in Sources */,
+				031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */,
+				03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */,
+				03BD66861D85D97B0023012F /* Statistics.swift in Sources */,
+				03BD66831D84642E0023012F /* Shaders.metal in Sources */,
+				03168ED81DA00F4400CAE093 /* Util.swift in Sources */,
+				03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */,
+				0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
+				032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */,
+				03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03E1A2561DA00C1900AE8DD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */,
+				03168ED11DA00ECF00CAE093 /* Util.swift in Sources */,
+				03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
+				03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */,
+				0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */,
+				0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */,
+				03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */,
+				03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */,
+				03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */,
+				03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */,
+				03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */,
+				0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
+				03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */,
+				03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */,
+				03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */,
+				03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */,
+				03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */,
+				03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03E1A2611DA00C1900AE8DD3 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03168EB51DA00DEA00CAE093 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = GlyphWave/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Debug;
+		};
+		03168EB61DA00DEA00CAE093 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = GlyphWave/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Release;
+		};
+		032604981D5FBC2A0030AA78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		032604991D5FBC2A0030AA78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		0326049B1D5FBC2A0030AA78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DancingGlyphs/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Debug;
+		};
+		0326049C1D5FBC2A0030AA78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DancingGlyphs/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Release;
+		};
+		03E1A2641DA00C1900AE8DD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.Runner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		03E1A2651DA00C1900AE8DD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.Runner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03168EB41DA00DEA00CAE093 /* Build configuration list for PBXNativeTarget "GlyphWave" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03168EB51DA00DEA00CAE093 /* Debug */,
+				03168EB61DA00DEA00CAE093 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0326048A1D5FBC2A0030AA78 /* Build configuration list for PBXProject "ThoughtWorksGlyphSavers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032604981D5FBC2A0030AA78 /* Debug */,
+				032604991D5FBC2A0030AA78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0326049A1D5FBC2A0030AA78 /* Build configuration list for PBXNativeTarget "DancingGlyphs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0326049B1D5FBC2A0030AA78 /* Debug */,
+				0326049C1D5FBC2A0030AA78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03E1A2661DA00C1900AE8DD3 /* Build configuration list for PBXNativeTarget "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03E1A2641DA00C1900AE8DD3 /* Debug */,
+				03E1A2651DA00C1900AE8DD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 032604871D5FBC2A0030AA78 /* Project object */;
+}

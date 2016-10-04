@@ -14,98 +14,50 @@
  *  under the License.
  */
 
-// see http://www.raywenderlich.com/74438/swift-tutorial-a-quick-start
-// see http://stackoverflow.com/questions/27852616/do-swift-screensavers-work-in-mac-os-x-before-yosemite
+// see https://www.raywenderlich.com/77488/ios-8-metal-tutorial-swift-getting-started
+// see https://www.raywenderlich.com/90592/liquidfun-tutorial-2
+// see http://stackoverflow.com/questions/27967170/rendering-quads-performance-with-metal
+// see https://github.com/nickzman/rainingcubes
 
 import ScreenSaver
 
-@objc(DancingGlyphsView) class DancingGlyphsView : ScreenSaverView
+
+@objc(DancingGlyphsView) class DancingGlyphsView : MetalScreenSaverView
 {
     struct Settings
     {
+        var backgroundColor: NSColor
         var glyph: NSBezierPath
         var glyphColors: [NSColor]
-        var backgroundColor: NSColor
-        var filter: String
-        var size: Double
+        var glyphSize: Double
     }
 
-    var backgroundColor: NSColor?
-    var layerView: GlyphLayerView!
-    var infoView: InfoView!
+    var settings: Settings!
+    var renderer: Renderer!
     var animation: Animation!
-    
-    override class func backingStoreType() -> NSBackingStoreType
-    {
-        return NSBackingStoreType.Nonretained
-    }
-    
+    var statistics: Statistics!
+
+
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        animationTimeInterval = 1/60
-   }
-    
+        renderer = Renderer(device: device, numGlyphs: 3, numSprites: 3)
+    }
+
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
-    
-    
-    override func drawRect(rect: NSRect)
-    {
-        super.drawRect(rect)
-        backgroundColor?.setFill()
-        NSRectFill(bounds)
+
+ 
+    override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
+        super.resize(withOldSuperviewSize: oldSuperviewSize)
+        updateSizeAndTextures()
     }
     
     
-    override func startAnimation()
-    {
-        super.startAnimation()
-
-        let configuration = Configuration()
-        let viewSettings = configuration.viewSettings
-        backgroundColor = viewSettings.backgroundColor
-
-        animation = Animation()
-        animation.settings = configuration.animationSettings
-        animation.moveToTime(NSDate().timeIntervalSinceReferenceDate)
-
-        layerView = GlyphLayerView(frame: frame)
-        layerView.autoresizingMask = [NSAutoresizingMaskOptions.ViewWidthSizable, NSAutoresizingMaskOptions.ViewHeightSizable]
-        // layers can only be created when view is in hierarchy, because layers need scale info from window
-        addSubview(layerView)
-        layerView.addLayers(viewSettings)
-        layerView.applyAnimationState(animation.currentState!)
-        
-        infoView = InfoView(frame: frame)
-        addSubview(infoView)
-        
-        self.needsDisplay = true
-    }
+    // screen saver api
     
-    override func stopAnimation()
-    {
-        layerView.removeFromSuperview()
-        layerView = nil
-        infoView.removeFromSuperview()
-        infoView = nil
-        animation = nil
-        
-        super.stopAnimation()
-    }
-    
-    
-    override func animateOneFrame()
-    {
-        let now = NSDate().timeIntervalSinceReferenceDate
-        animation.moveToTime(now * (self.preview ? 1.5 : 1))
-        layerView.applyAnimationState(animation.currentState!)
-        infoView.renderFrame()
-    }
-    
-
     override func hasConfigureSheet() -> Bool
     {
         return true
@@ -117,9 +69,119 @@ import ScreenSaver
         controller.loadConfiguration()
         return controller.window
     }
+    
 
+    override func startAnimation()
+    {
+        let configuration = Configuration()
+        settings = configuration.viewSettings
+
+        renderer.backgroundColor = settings.backgroundColor.toMTLClearColor()
+        updateSizeAndTextures()
+
+        animation = Animation()
+        animation.settings = configuration.animationSettings
+        animation.moveToTime(CACurrentMediaTime())
+
+        statistics = Statistics()
+
+        super.startAnimation()
+    }
+    
+    override func stopAnimation()
+    {
+        super.stopAnimation()
+
+        animation = nil
+        statistics = nil
+    }
+
+    private func updateSizeAndTextures()
+    {
+        renderer.setOutputSize(bounds.size)
+        for (index, color) in settings.glyphColors.enumerated() {
+            let image = makeBitmapImageRepForGlyph(settings.glyph, color:color)
+            renderer.setTexture(image: image, at: index)
+        }
+    }
+
+    private func makeBitmapImageRepForGlyph(_ glyph: NSBezierPath, color: NSColor) -> NSBitmapImageRep
+    {
+        let imageScale = layer!.contentsScale
+        let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize))
+        let imageSize = glyphSize * imageScale
+
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
+
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
+
+#if false
+        let framePath = NSBezierPath()
+        framePath.appendRect(NSMakeRect(0, 0, CGFloat(imageSize), CGFloat(imageSize)))
+        framePath.appendRect(NSMakeRect(1, 1, CGFloat(imageSize)-2, CGFloat(imageSize)-2))
+        NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
+        framePath.stroke()
+#endif
+        let safety: CGFloat = 0.018
+        let glyphPath = glyph.copy() as! NSBezierPath
+        glyphPath.transform(using: AffineTransform(scaleByX: (1 - 2 * safety), byY: (1 - 2 * safety)))
+        glyphPath.transform(using: AffineTransform(translationByX: safety, byY: safety))
+        glyphPath.transform(using: AffineTransform(scaleByX: 1, byY: -1))
+        glyphPath.transform(using: AffineTransform(translationByX: 0, byY: 1))
+        glyphPath.transform(using: AffineTransform(scaleByX: imageSize, byY: imageSize))
+        color.set()
+        glyphPath.fill()
+
+        NSGraphicsContext.restoreGraphicsState()
+        
+        return imageRep
+    }
+
+
+    override func animateOneFrame()
+    {
+        autoreleasepool {
+            statistics.viewWillStartRenderingFrame()
+
+            animation.moveToTime(CACurrentMediaTime() * (self.isPreview ? 1.5 : 1))
+
+            renderer.beginUpdatingQuads()
+            updateQuadPositions()
+            renderer.finishUpdatingQuads()
+
+            let metalLayer = layer as! CAMetalLayer
+            if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
+                renderer.renderFrame(drawable: drawable)
+            }
+
+            statistics.viewDidFinishRenderingFrame()
+        }
+    }
+
+    private func updateQuadPositions()
+    {
+        let screenCenter = Vector2(Float(bounds.size.width/2), Float(bounds.size.height/2))
+        let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize)))
+        let w = glyphSize
+        let h = glyphSize
+
+        let animationState = animation.currentState!
+        let positions = [animationState.p0, animationState.p1, animationState.p2]
+        let rotations = [animationState.r0, animationState.r1, animationState.r2]
+
+        for i in 0...2 {
+            let glyphCenter = Vector2(Float(positions[i].x), Float(positions[i].y)) * glyphSize + screenCenter
+            let rotationMatrix = Matrix2x2(rotation: Float(rotations[i]))
+
+            let a = glyphCenter + Vector2(-w/2, +h/2) * rotationMatrix
+            let b = glyphCenter + Vector2(-w/2, -h/2) * rotationMatrix
+            let c = glyphCenter + Vector2(+w/2, -h/2) * rotationMatrix
+            let d = glyphCenter + Vector2(+w/2, +h/2) * rotationMatrix
+
+            renderer.updateQuad((a, b, c, d), textureId: i, at:i)
+        }
+    }
 
 }
 
- 
- 
