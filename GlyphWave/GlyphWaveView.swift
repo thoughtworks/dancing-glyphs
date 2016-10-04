@@ -75,7 +75,7 @@ import ScreenSaver
 
         let list: [Sprite]
         // Not super elegant but gets us around having to define a protocol
-        if Util.randomInt(2) == 0 && false {
+        if Util.randomInt(2) == 0 {
             list = LinearWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
         } else {
             list = CircularWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
