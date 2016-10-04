@@ -73,7 +73,13 @@ import ScreenSaver
     {
         updateSizeAndTextures()
 
-        let list = CircularWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
+        let list: [Sprite]
+        // Not super elegant but gets us around having to define a protocol
+        if Util.randomInt(2) == 0 && false {
+            list = LinearWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
+        } else {
+            list = CircularWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
+        }
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyph > $1.glyph })
 
@@ -110,11 +116,8 @@ import ScreenSaver
             statistics.viewWillStartRenderingFrame()
 
             let now = CACurrentMediaTime() * (self.isPreview ? 1.5 : 1)
+            sprites.forEach({ $0.move(to: now) })
             
-            for s in sprites {
-                s.move(to: now)
-            }
-                        
             updateQuadPositions()
 
             let metalLayer = layer as! CAMetalLayer

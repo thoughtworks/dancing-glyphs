@@ -35,12 +35,12 @@ public class LinearWave
     
     static func move(sprite s: Sprite, to now: Double)
     {
-        var y = sin(now * (1 + s.r0)) * 0.12                      // sprite swinging up and down, speed based on r0
-        y *= s.r1 * (0.5 + s.r1/2)                                // dampening, amplitude based on r1
-        y += sin(now * -2 + Double(s.pos.x) * M_PI * 3) * 0.03    // large wave across sprites
-        y += 0.5                                                  // moving to middle
+        var y = sin(now * (0.2 + s.r0)) * 0.12                      // sprite swinging up and down, speed based on r0
+        y *= s.r1 * (0.5 + s.r1/2)                                  // dampening, amplitude based on r1
+        y += sin(now * -1.8 + Double(s.pos.x) * M_PI * 3) * 0.04    // large wave across sprites
+        y += 0.5                                                    // moving to middle
         s.pos.y = Float(y)
-        s.rotation = Float(sin(now * (s.r0-0.5)) * 2 * M_PI)      // rotation based on r0
+        s.rotation = Float(now * (s.r0 - 0.5) * 0.8)                // rotation based on r0
     }
     
 }

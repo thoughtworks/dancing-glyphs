@@ -87,6 +87,11 @@ extension Vector2
         return Vector2(lhs.x / rhs, lhs.y / rhs)
     }
     
+    public static func ==(lhs: Vector2, rhs: Vector2) -> Bool
+    {
+        return (lhs.x ~= rhs.x) && (lhs.y ~= rhs.y)
+    }
+    
     public var lengthSquared: Scalar
     {
         return x * x + y * y

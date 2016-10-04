@@ -21,14 +21,13 @@ class CircularWave
     func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
     {
         var list: [Sprite] = []
-        let step = 2 * M_PI / Double(numSprites)
+        let step = Float(2 * M_PI) / Float(numSprites)
         for i in 0..<numSprites {
             let size = Float(maximumSize * (0.7 + Util.randomDouble() * 0.3))
             let sprite = Sprite(glyph: Util.randomInt(glyphs.count), size: size,
                                                       r0: Util.randomDouble(), r1: Util.randomDouble(),
                                                       animation: CircularWave.move)
-            sprite.basePos.x = Float(sin(step * Double(i)))
-            sprite.basePos.y = Float(cos(step * Double(i)))
+            sprite.basePos = Vector2(sin(step * Float(i)), cos(step * Float(i)))
             list.append(sprite)
         }
         return list
@@ -39,13 +38,17 @@ class CircularWave
     {
         let ASPECT_RATIO = 16.0/9.0 // TODO: need to get real ratio to this place somehow
         
-        let now = nowIn * 0.5
-        var y = sin(now * (1 + s.r0)) * 0.06                         // sprite swinging up and down, speed based on r0
+        let now = nowIn * 0.5                                        // global slow-down
+        
+        var y = sin(now * (1 + s.r0)) * 0.12                         // sprite swinging up and down, speed based on r0
         y *= s.r1 * (0.5 + s.r1/2)                                   // dampening, amplitude based on r1
-        y += sin(now * 2.8 + Double(s.basePos.x) * M_PI * 1) * 0.02  // large wave across sprites
-        y *= 2
-        y += 0.28
-        s.pos = s.basePos.normalized() * Matrix2x2(rotation: Float(now * 0.2)) * Vector2(Float(y * 1/ASPECT_RATIO), Float(y)) + Vector2(0.5, 0.5)
+        y += sin(now * 2.8 + Double(s.basePos.x) * M_PI * 1) * 0.04  // large wave across sprites
+        y += 0.28                                                    // move up (transformed into move-out-of-centre below)
+        
+        s.pos = s.basePos * Matrix2x2(rotation: Float(now * 0.2))    // make movement orthogonal to circle
+        s.pos = s.pos * Vector2(Float(y * 1/ASPECT_RATIO), Float(y)) // apply screen aspect ratio
+        s.pos = s.pos + Vector2(0.5, 0.5)                            // move origin to middle of screen
+        
         s.rotation = Float(sin(now * (s.r0-0.5)) * 2 * M_PI)         // rotation based on r0
     }
 

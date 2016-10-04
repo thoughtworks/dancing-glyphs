@@ -119,7 +119,7 @@ class Configuration
         {
             let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath()][glyph.rawValue]
             let glyphColors = [NSColor.twGreen02, NSColor.twBrightPink, NSColor.twBlue02]
-            let sizeValue: Double = (Double(size.rawValue) + 1) * 0.18
+            let sizeValue: Double = (Double(size.rawValue) + 1) * 0.2
 
             return DancingGlyphsView.Settings(backgroundColor: NSColor.black, glyph: glyphPath, glyphColors: glyphColors, glyphSize: sizeValue)
         }
