@@ -17,16 +17,10 @@
 		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
 		03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
 		03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
-		03168EC31DA00E4700CAE093 /* GlyphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */; };
-		03168EC41DA00E4700CAE093 /* GlyphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */; };
-		03168EC51DA00E4700CAE093 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBC1DA00E4700CAE093 /* Glyphs.svg */; };
-		03168EC61DA00E4700CAE093 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBC1DA00E4700CAE093 /* Glyphs.svg */; };
 		03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
 		03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
 		03168EC91DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
 		03168ECA1DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
-		03168ECB1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */; };
-		03168ECC1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */; };
 		03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
 		03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
 		03168ED01DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
@@ -41,7 +35,6 @@
 		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
-		032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
 		0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
 		0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
@@ -50,6 +43,12 @@
 		0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
 		0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
 		0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
+		0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
+		0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
@@ -61,7 +60,6 @@
 		03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
 		03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
 		03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
-		03E1A26C1DA00C6600AE8DD3 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */; };
 		03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
 		03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
@@ -81,11 +79,8 @@
 		031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
 		03168EAD1DA00DEA00CAE093 /* GlyphWave.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlyphWave.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		03168EBA1DA00E4700CAE093 /* Glyph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glyph.swift; sourceTree = "<group>"; };
-		03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlyphFactory.swift; sourceTree = "<group>"; };
-		03168EBC1DA00E4700CAE093 /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
 		03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlyphWaveView.swift; sourceTree = "<group>"; };
 		03168EBE1DA00E4700CAE093 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathSVGExtensions.swift; sourceTree = "<group>"; };
 		03168EC01DA00E4700CAE093 /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		03168ECF1DA00ECF00CAE093 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		032604901D5FBC2A0030AA78 /* DancingGlyphs.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DancingGlyphs.saver; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,11 +89,12 @@
 		0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		032604A01D5FBC9B0030AA78 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
 		032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
-		032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
 		0372B3791DA2727400585DD8 /* CircularWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularWave.swift; sourceTree = "<group>"; };
 		0372B37C1DA2742500585DD8 /* LinearWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearWave.swift; sourceTree = "<group>"; };
 		0372B37F1DA28ED700585DD8 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
 		0372B3801DA28ED700585DD8 /* thumbnail@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@x2.png"; sourceTree = "<group>"; };
+		0372B3871DA40E1600585DD8 /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
+		0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathSVGExtensions.swift; sourceTree = "<group>"; };
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -142,9 +138,6 @@
 				0372B3791DA2727400585DD8 /* CircularWave.swift */,
 				03168EC01DA00E4700CAE093 /* Sprite.swift */,
 				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
-				03168EBB1DA00E4700CAE093 /* GlyphFactory.swift */,
-				03168EBF1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift */,
-				03168EBC1DA00E4700CAE093 /* Glyphs.svg */,
 				0372B37F1DA28ED700585DD8 /* thumbnail.png */,
 				0372B3801DA28ED700585DD8 /* thumbnail@x2.png */,
 				03168EBE1DA00E4700CAE093 /* Info.plist */,
@@ -183,7 +176,6 @@
 				031494851D67C291005F5EB5 /* Configuration.swift */,
 				031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */,
 				0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */,
-				032604BB1D5FCFC40030AA78 /* NSBezierPathExtensions.swift */,
 				032604A01D5FBC9B0030AA78 /* thumbnail.png */,
 				032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */,
 				032604971D5FBC2A0030AA78 /* Info.plist */,
@@ -198,9 +190,11 @@
 				03043E8A1D95E5AB009AF715 /* Renderer.swift */,
 				03BD66821D84642E0023012F /* Shaders.metal */,
 				03BD66851D85D97B0023012F /* Statistics.swift */,
-				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
 				03043E8D1D987E1A009AF715 /* VectorMath.swift */,
 				03168ECF1DA00ECF00CAE093 /* Util.swift */,
+				0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */,
+				0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */,
+				0372B3871DA40E1600585DD8 /* Glyphs.svg */,
 			);
 			path = Library;
 			sourceTree = SOURCE_ROOT;
@@ -339,9 +333,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */,
 				03168ECA1DA00E4700CAE093 /* Info.plist in Resources */,
 				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
-				03168EC61DA00E4700CAE093 /* Glyphs.svg in Resources */,
 				0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */,
 				031494811D67C044005F5EB5 /* LICENSE in Resources */,
 				032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */,
 				0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
@@ -367,7 +362,7 @@
 				0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
 				03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */,
 				03168EC91DA00E4700CAE093 /* Info.plist in Resources */,
-				03168EC51DA00E4700CAE093 /* Glyphs.svg in Resources */,
+				0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,9 +400,8 @@
 				03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */,
 				03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
 				03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */,
-				03168ECC1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */,
 				03168ED51DA00F4100CAE093 /* Statistics.swift in Sources */,
-				03168EC41DA00E4700CAE093 /* GlyphFactory.swift in Sources */,
+				0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,8 +417,8 @@
 				03BD66861D85D97B0023012F /* Statistics.swift in Sources */,
 				03BD66831D84642E0023012F /* Shaders.metal in Sources */,
 				03168ED81DA00F4400CAE093 /* Util.swift in Sources */,
-				032604BC1D5FCFC40030AA78 /* NSBezierPathExtensions.swift in Sources */,
 				03043E8B1D95E5AB009AF715 /* Renderer.swift in Sources */,
+				0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
 				032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */,
 				03043E8E1D987E1A009AF715 /* VectorMath.swift in Sources */,
 			);
@@ -437,17 +431,15 @@
 				03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */,
 				03168ED11DA00ECF00CAE093 /* Util.swift in Sources */,
 				03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
-				03E1A26C1DA00C6600AE8DD3 /* NSBezierPathExtensions.swift in Sources */,
 				03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */,
 				0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */,
-				03168EC31DA00E4700CAE093 /* GlyphFactory.swift in Sources */,
 				0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */,
 				03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */,
-				03168ECB1DA00E4700CAE093 /* NSBezierPathSVGExtensions.swift in Sources */,
 				03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */,
 				03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */,
 				03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */,
 				03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */,
+				0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
 				03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */,
 				03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */,
 				03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */,

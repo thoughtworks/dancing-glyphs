@@ -123,11 +123,13 @@ import ScreenSaver
         NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).set()
         framePath.stroke()
 #endif
+        let safety: CGFloat = 0.018
         let glyphPath = glyph.copy() as! NSBezierPath
-        var transform = AffineTransform.identity
-        transform.scale(x: imageSize, y: imageSize)
-        transform.translate(x: 0.5, y: 0.5)
-        glyphPath.transform(using: transform)
+        glyphPath.transform(using: AffineTransform(scaleByX: (1 - 2 * safety), byY: (1 - 2 * safety)))
+        glyphPath.transform(using: AffineTransform(translationByX: safety, byY: safety))
+        glyphPath.transform(using: AffineTransform(scaleByX: 1, byY: -1))
+        glyphPath.transform(using: AffineTransform(translationByX: 0, byY: 1))
+        glyphPath.transform(using: AffineTransform(scaleByX: imageSize, byY: imageSize))
         color.set()
         glyphPath.fill()
 

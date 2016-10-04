@@ -48,7 +48,7 @@ class Statistics
         }
     }
     
-    fileprivate func print()
+    private func print()
     {
         let text = String(format:"%d fps, render time (avg/max): %.2f/%.2f ms",
                 framesSinceCheckpoint,

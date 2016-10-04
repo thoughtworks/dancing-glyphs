@@ -33,7 +33,21 @@ class Util
         return array.count * MemoryLayout<T>.size
     }
 
-
+    class func enumForCode<E: RawRepresentable>(_ code :Int, defaultCase: E) -> E where E.RawValue == Int
+    {
+        let val: Int
+        if code == -1 {
+            var maxValue: Int = 0
+            while let _ = E(rawValue: maxValue) {
+                maxValue += 1
+            }
+            val = Util.randomInt(maxValue)
+        } else {
+            val = code
+        }
+        return E(rawValue: val) ?? defaultCase
+    }
+    
 }
 
 

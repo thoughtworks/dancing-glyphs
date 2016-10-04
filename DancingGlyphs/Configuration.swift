@@ -32,6 +32,7 @@ class Configuration
     
 
     var defaults: UserDefaults
+    let glyphPaths: [NSBezierPath]
     
     var glyph: Glyph = Glyph.square
     var size: Size = Size.medium
@@ -47,6 +48,10 @@ class Configuration
                 String(describing: Size.self): -1,
                 String(describing: Movement.self): -1
         ])
+        let url = Bundle(for: Configuration.self).url(forResource: "Glyphs", withExtension: "svg")!
+        glyphPaths = NSBezierPath.contentsOfSVG(url: url)!
+        glyphPaths.forEach { $0.normalized() }
+
         update()
     }
     
@@ -74,12 +79,12 @@ class Configuration
     {
         defaults.synchronize()
 
-        glyph = enumForCode(glyphCode, defaultCase: Glyph.square)
-        size = enumForCode(sizeCode, defaultCase: Size.medium)
-        movement = enumForCode(movementCode, defaultCase: Movement.normal)
+        glyph = Util.enumForCode(glyphCode, defaultCase: Glyph.square)
+        size = Util.enumForCode(sizeCode, defaultCase: Size.medium)
+        movement = Util.enumForCode(movementCode, defaultCase: Movement.normal)
 
         if sizeCode == -1 && movementCode == -1 {
-            switch(randomInt(7)) {
+            switch(Util.randomInt(7)) {
                 case 0: (size, movement) = (.small  , .normal)
                 case 1: (size, movement) = (.small  , .wild)
                 case 2: (size, movement) = (.medium , .tight)
@@ -92,32 +97,11 @@ class Configuration
         }
     }
 
-    private func enumForCode<E: RawRepresentable>(_ code :Int, defaultCase: E) -> E where E.RawValue == Int
-    {
-        let val: Int
-        if code == -1 {
-            var maxValue: Int = 0
-            while let _ = E(rawValue: maxValue) {
-                maxValue += 1
-            }
-            val = randomInt(maxValue)
-        } else {
-            val = code
-        }
-        return E(rawValue: val) ?? defaultCase
-    }
-    
-    private func randomInt(_ max: Int) -> Int
-    {
-        return Int(arc4random_uniform(UInt32(max)))
-    }
-    
-
     var viewSettings: DancingGlyphsView.Settings
     {
         get
         {
-            let glyphPath = [NSBezierPath.TWSquareGlyphPath(), NSBezierPath.TWCircleGlyphPath()][glyph.rawValue]
+            let glyphPath = (glyph == .square) ? glyphPaths[10] : glyphPaths[2]
             let glyphColors = [NSColor.twGreen02, NSColor.twBrightPink, NSColor.twBlue02]
             let sizeValue: Double = (Double(size.rawValue) + 1) * 0.2
 

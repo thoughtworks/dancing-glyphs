@@ -37,7 +37,7 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        glyphs = GlyphFactory().makeAllGlyphs()
+        glyphs = Glyph.makeAllGlyphs()
         sprites = nil
         renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: settings.numSprites)
         renderer.backgroundColor = settings.backgroundColor.toMTLClearColor()

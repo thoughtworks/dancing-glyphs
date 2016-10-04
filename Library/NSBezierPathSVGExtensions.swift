@@ -62,5 +62,25 @@ extension NSBezierPath
         let y = Double(string1)!
         return NSMakePoint(CGFloat(x), CGFloat(y))
     }
+    
+    
+    public func normalized()
+    {
+        let origin = bounds.origin
+        transform(using: AffineTransform(translationByX: -origin.x, byY: -origin.y))
+        
+        let w = bounds.size.width
+        let h = bounds.size.height
+        
+        if w > h {
+            transform(using: AffineTransform(translationByX: 0, byY: (w-h)/2))
+            transform(using: AffineTransform(scale: 1/w))
+            
+        } else {
+            transform(using: AffineTransform(translationByX: (h-w)/2, byY: 0))
+            transform(using: AffineTransform(scale: 1/h))
+        }
+    }
+
   
 }
