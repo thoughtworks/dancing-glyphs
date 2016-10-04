@@ -1,6 +1,6 @@
-# Dancing Glyphs Screen Saver
+# ThoughtWorks Glyph Screen Saver
 
-*This is work-in-progress. Not everything may work as expected.*
+*This is work-in-progress. Dancing Glyphs works as intended. Glyph Wave does not have settings yet and the circle animation has a hard-coded 16:9 aspect ratio.*
 
 
 ## Dancing Glyphs
@@ -17,3 +17,6 @@ A while ago, while reading Cixin Liu's excellent novel The Three-Body Problem, I
 At some point when implementing the Dancing Glyphs saver I switched to the Metal to get the best possible performance while using as little power as possible. I then realised that with Metal I could render hundreds of glyphs, and so I explored different animations. Glyph Wave is the result of this. There are actually two versions of the wave, the linear one shown above and a circular one. Currently, the saver selects one by random when it starts.
 
 
+## Technology
+
+The screen savers are written in Swift 3 and Metal using Xcode 8. They require El Capitan or Sierra to run. Older versions of OS X do not support Metal, unfortunately.
