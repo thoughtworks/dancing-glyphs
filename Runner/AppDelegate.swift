@@ -26,8 +26,11 @@ class AppDelegate: NSObject
 
     func setupAndStartAnimation()
     {
-        // change class below to select which saver to run
-        view = GlyphWaveView(frame: window.contentView!.frame, isPreview: false)
+        if UserDefaults.standard.string(forKey: "saver") == "GlyphWave" {
+            view = GlyphWaveView(frame: window.contentView!.frame, isPreview: false)
+        } else {
+            view = DancingGlyphsView(frame: window.contentView!.frame, isPreview: false)
+        }
         view.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
         window.contentView!.autoresizesSubviews = true
         window.contentView!.addSubview(view)
