@@ -15,16 +15,11 @@
 		031494891D691A62005F5EB5 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
 		0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
 		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
-		03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
 		03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
-		03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
 		03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
-		03168EC91DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
 		03168ECA1DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
-		03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
 		03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
 		03168ED01DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
-		03168ED11DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
 		03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
 		03168ED41DA00F4100CAE093 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
@@ -32,21 +27,16 @@
 		03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 		03168ED81DA00F4400CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
+		0322068E1DA51FA900307696 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 032604971D5FBC2A0030AA78 /* Info.plist */; };
 		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
 		0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
-		0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3791DA2727400585DD8 /* CircularWave.swift */; };
 		0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
-		0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B37C1DA2742500585DD8 /* LinearWave.swift */; };
 		0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
-		0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B37F1DA28ED700585DD8 /* thumbnail.png */; };
 		0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
-		0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3801DA28ED700585DD8 /* thumbnail@x2.png */; };
 		0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
-		0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
 		0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
-		0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
 		0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
 		0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
@@ -55,18 +45,24 @@
 		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
 		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
 		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
-		03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049E1D5FBC9B0030AA78 /* DancingGlyphsView.swift */; };
-		03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494881D691A62005F5EB5 /* Animation.swift */; };
-		03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494851D67C291005F5EB5 /* Configuration.swift */; };
-		03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
-		03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0314948E1D6F7A33005F5EB5 /* ConfigureSheet.xib */; };
-		03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
-		03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8A1D95E5AB009AF715 /* Renderer.swift */; };
-		03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
-		03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
-		03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
-		03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0322068F1DA5212500307696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 032604871D5FBC2A0030AA78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0326048F1D5FBC2A0030AA78;
+			remoteInfo = DancingGlyphs;
+		};
+		032206911DA5212500307696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 032604871D5FBC2A0030AA78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03168EAC1DA00DEA00CAE093;
+			remoteInfo = GlyphWave;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		03043E8A1D95E5AB009AF715 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
@@ -278,6 +274,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				032206901DA5212500307696 /* PBXTargetDependency */,
+				032206921DA5212500307696 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -346,6 +344,7 @@
 			files = (
 				0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */,
 				031494811D67C044005F5EB5 /* LICENSE in Resources */,
+				0322068E1DA51FA900307696 /* Info.plist in Resources */,
 				032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */,
 				0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
 				032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */,
@@ -358,11 +357,6 @@
 			files = (
 				03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */,
 				03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */,
-				0372B3821DA28ED700585DD8 /* thumbnail.png in Resources */,
-				0372B3841DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
-				03E1A26B1DA00C6600AE8DD3 /* ConfigureSheet.xib in Resources */,
-				03168EC91DA00E4700CAE093 /* Info.plist in Resources */,
-				0372B38A1DA40E1600585DD8 /* Glyphs.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,28 +422,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03E1A26E1DA00C6C00AE8DD3 /* Renderer.swift in Sources */,
-				03168ED11DA00ECF00CAE093 /* Util.swift in Sources */,
-				03168EC71DA00E4700CAE093 /* GlyphWaveView.swift in Sources */,
-				03E1A2671DA00C6600AE8DD3 /* DancingGlyphsView.swift in Sources */,
-				0372B37B1DA2727400585DD8 /* CircularWave.swift in Sources */,
-				0372B37E1DA2742500585DD8 /* LinearWave.swift in Sources */,
-				03E1A2711DA00C6C00AE8DD3 /* NSColorExtensions.swift in Sources */,
-				03E1A2721DA00C6C00AE8DD3 /* VectorMath.swift in Sources */,
-				03E1A2681DA00C6600AE8DD3 /* Animation.swift in Sources */,
-				03168EC11DA00E4700CAE093 /* Glyph.swift in Sources */,
-				03E1A26D1DA00C6C00AE8DD3 /* MetalScreenSaverView.swift in Sources */,
-				0372B38C1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */,
-				03168ECD1DA00E4700CAE093 /* Sprite.swift in Sources */,
-				03E1A2691DA00C6600AE8DD3 /* Configuration.swift in Sources */,
-				03E1A26F1DA00C6C00AE8DD3 /* Shaders.metal in Sources */,
 				03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */,
-				03E1A2701DA00C6C00AE8DD3 /* Statistics.swift in Sources */,
-				03E1A26A1DA00C6600AE8DD3 /* ConfigureSheetController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		032206901DA5212500307696 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0326048F1D5FBC2A0030AA78 /* DancingGlyphs */;
+			targetProxy = 0322068F1DA5212500307696 /* PBXContainerItemProxy */;
+		};
+		032206921DA5212500307696 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03168EAC1DA00DEA00CAE093 /* GlyphWave */;
+			targetProxy = 032206911DA5212500307696 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */ = {

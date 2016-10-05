@@ -26,17 +26,30 @@ class AppDelegate: NSObject
 
     func setupAndStartAnimation()
     {
-        if UserDefaults.standard.string(forKey: "saver") == "GlyphWave" {
-            view = GlyphWaveView(frame: window.contentView!.frame, isPreview: false)
-        } else {
-            view = DancingGlyphsView(frame: window.contentView!.frame, isPreview: false)
+        let saverName = UserDefaults.standard.string(forKey: "saver") ?? "DancingGlyphs"
+        guard let saverBundle = loadSaverBundle(saverName) else {
+            NSLog("Can't find or load bundle for saver named \(saverName).")
+            return
         }
+        let saverClass = saverBundle.principalClass! as! ScreenSaverView.Type
+        
+        view = saverClass.init(frame: window.contentView!.frame, isPreview: false)
         view.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
         window.contentView!.autoresizesSubviews = true
         window.contentView!.addSubview(view)
         window.title = view.className
-        window.backingType = MetalScreenSaverView.backingStoreType()
+        window.backingType = saverClass.backingStoreType()
+        
         view.startAnimation()
+    }
+    
+    private func loadSaverBundle(_ name: String) -> Bundle?
+    {
+        let myBundle = Bundle(for: AppDelegate.self)
+        let saverBundleURL = myBundle.bundleURL.deletingLastPathComponent().appendingPathComponent("\(name).saver", isDirectory: true)
+        let saverBundle = Bundle(url: saverBundleURL)
+        saverBundle?.load()
+        return saverBundle
     }
 
     @IBAction func showPreferences(_ sender: NSObject!)
