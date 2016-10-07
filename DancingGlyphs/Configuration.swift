@@ -50,7 +50,7 @@ class Configuration
         ])
         let url = Bundle(for: Configuration.self).url(forResource: "Glyphs", withExtension: "svg")!
         glyphPaths = NSBezierPath.contentsOfSVG(url: url)!
-        glyphPaths.forEach { $0.normalized() }
+        glyphPaths.forEach { $0.normalize() }
 
         update()
     }

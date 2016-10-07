@@ -64,7 +64,7 @@ extension NSBezierPath
     }
     
     
-    public func normalized()
+    public func normalize()
     {
         let origin = bounds.origin
         transform(using: AffineTransform(translationByX: -origin.x, byY: -origin.y))
