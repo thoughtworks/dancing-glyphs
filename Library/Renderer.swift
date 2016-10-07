@@ -17,6 +17,7 @@
 import Cocoa
 import Metal
 
+
 class Renderer
 {
     var numGlyphs = 0
@@ -30,7 +31,8 @@ class Renderer
 
     private var uniformsBuffer: MTLBuffer!
 
-    private let VERTEX_BUFFER_COUNT = 2
+    private let VERTEX_BUFFER_COUNT = 3
+    private var vertexBufferSemaphore: DispatchSemaphore!
     private var vertexBufferIndex = 0
     private var vertexBuffers: [MTLBuffer?]
 
@@ -79,6 +81,7 @@ class Renderer
 
     private func makeVertexBuffers()
     {
+        vertexBufferSemaphore = DispatchSemaphore(value: VERTEX_BUFFER_COUNT)
         for i in 0..<VERTEX_BUFFER_COUNT {
             vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numSprites, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
             vertexBuffers[i]!.label = "vertexBuffer\(i)"
@@ -148,6 +151,7 @@ class Renderer
 
     func beginUpdatingQuads()
     {
+        _ = vertexBufferSemaphore.wait(timeout: DispatchTime.distantFuture)
         vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
     }
 
@@ -184,7 +188,7 @@ class Renderer
         descriptor.colorAttachments[0].texture?.label = "drawable"
         descriptor.colorAttachments[0].loadAction = .clear
         descriptor.colorAttachments[0].clearColor = backgroundColor
-        descriptor.colorAttachments[0].storeAction = .store
+        descriptor.colorAttachments[0].storeAction = .dontCare
 
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
@@ -192,11 +196,11 @@ class Renderer
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
 
-        // when the quads' textureIds are collated, we can minimise draw calls
         var i = 0
         while i < numSprites {
             encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
             let s = i
+            // when the quads' textureIds are collated, we can minimise draw calls
             while (i < numSprites) && (textureIds[i]! == textureIds[s]!) {
                 i += 1
             }
@@ -205,9 +209,14 @@ class Renderer
 
         encoder.endEncoding()
 
+        commandBuffer.addCompletedHandler { (buffer) -> () in self.vertexBufferSemaphore.signal() }
+
         commandBuffer.present(drawable)
         commandBuffer.commit()
-//         commandBuffer.waitUntilCompleted() // only doing this to get accurate statistics
+#if false
+        // wait to get accurate statistics, can cause stutter when render time is close to 16ms
+        commandBuffer.waitUntilCompleted()
+#endif
     }
 
 

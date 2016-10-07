@@ -40,7 +40,7 @@ public class LinearWave
         y += sin(now * -1.8 + Double(s.pos.x) * M_PI * 3) * 0.04    // large wave across sprites
         y += 0.5                                                    // moving to middle
         s.pos.y = Float(y)
-        s.rotation = Float(now * (s.r0 - 0.5) * 0.8)                // rotation based on r0
+        s.rotation = Float(now * (s.r0 - 0.5) * 1.2)                // rotation based on r0
     }
     
 }
