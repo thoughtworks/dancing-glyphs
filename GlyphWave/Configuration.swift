@@ -20,6 +20,7 @@ class Configuration
 {
     static let numSprites = 600
     static let glyphSize = 0.1
+    static let backgroundColor = NSColor.black.toMTLClearColor()
 
     enum WaveType: Int {
         case linear, circular

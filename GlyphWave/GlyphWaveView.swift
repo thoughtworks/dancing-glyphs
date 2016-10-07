@@ -32,7 +32,7 @@ import ScreenSaver
         glyphs = Glyph.makeAllGlyphs()
         sprites = nil
         renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: Configuration.numSprites)
-        renderer.backgroundColor = NSColor.black.toMTLClearColor()
+        renderer.backgroundColor = Configuration.backgroundColor
     }
 
     required init?(coder aDecoder: NSCoder)
