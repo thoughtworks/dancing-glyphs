@@ -19,17 +19,9 @@ import ScreenSaver
 
 @objc(GlyphWaveView) class GlyphWaveView : MetalScreenSaverView
 {
-    struct Settings
-    {
-        var backgroundColor: NSColor
-        var numSprites: Int
-        var glyphSize: Double
-    }
-
     var glyphs: [Glyph]!
     var sprites: [Sprite]!
 
-    var settings: Settings = Settings(backgroundColor: NSColor.black, numSprites: 600, glyphSize: 0.1)
     var renderer: Renderer!
     var statistics: Statistics!
 
@@ -39,8 +31,8 @@ import ScreenSaver
         super.init(frame: frame, isPreview: isPreview)
         glyphs = Glyph.makeAllGlyphs()
         sprites = nil
-        renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: settings.numSprites)
-        renderer.backgroundColor = settings.backgroundColor.toMTLClearColor()
+        renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: Configuration.numSprites)
+        renderer.backgroundColor = NSColor.black.toMTLClearColor()
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -60,12 +52,14 @@ import ScreenSaver
 
     override func hasConfigureSheet() -> Bool
     {
-        return false
+        return true
     }
 
     override func configureSheet() -> NSWindow?
     {
-        return nil
+        let controller = ConfigureSheetController.sharedInstance
+        controller.loadConfiguration()
+        return controller.window
     }
 
 
@@ -73,13 +67,8 @@ import ScreenSaver
     {
         updateSizeAndTextures()
 
-        let list: [Sprite]
-        // Not super elegant but gets us around having to define a protocol
-        if Util.randomInt(2) == 0 {
-            list = LinearWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
-        } else {
-            list = CircularWave().makeSprites(settings.numSprites, glyphs: glyphs, size:settings.glyphSize)
-        }
+        let configuration = Configuration()
+        let list = configuration.wave.makeSprites(Configuration.numSprites, glyphs: glyphs, size: Configuration.glyphSize)
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyph > $1.glyph })
 
@@ -100,7 +89,7 @@ import ScreenSaver
     {
         renderer.setOutputSize(bounds.size)
 
-        let glyphSizeScreen = floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize))
+        let glyphSizeScreen = floor(min(bounds.width, bounds.height) * CGFloat(Configuration.glyphSize))
         let scale = (window?.backingScaleFactor)!
         let bitmapSize = NSMakeSize(glyphSizeScreen * scale, glyphSizeScreen * scale)
 

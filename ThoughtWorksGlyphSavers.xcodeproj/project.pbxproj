@@ -17,7 +17,6 @@
 		031494921D6F7A90005F5EB5 /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031494911D6F7A90005F5EB5 /* ConfigureSheetController.swift */; };
 		03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBA1DA00E4700CAE093 /* Glyph.swift */; };
 		03168EC81DA00E4700CAE093 /* GlyphWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */; };
-		03168ECA1DA00E4700CAE093 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03168EBE1DA00E4700CAE093 /* Info.plist */; };
 		03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168EC01DA00E4700CAE093 /* Sprite.swift */; };
 		03168ED01DA00ECF00CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
 		03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
@@ -27,7 +26,6 @@
 		03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03043E8D1D987E1A009AF715 /* VectorMath.swift */; };
 		03168ED81DA00F4400CAE093 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03168ECF1DA00ECF00CAE093 /* Util.swift */; };
-		0322068E1DA51FA900307696 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 032604971D5FBC2A0030AA78 /* Info.plist */; };
 		032604A41D5FBC9B0030AA78 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326049F1D5FBC9B0030AA78 /* NSColorExtensions.swift */; };
 		032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A01D5FBC9B0030AA78 /* thumbnail.png */; };
 		032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032604A11D5FBC9B0030AA78 /* thumbnail@2x.png */; };
@@ -42,6 +40,10 @@
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
+		03C7504B1DA84291007C6FAA /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C750481DA84291007C6FAA /* Configuration.swift */; };
+		03C7504C1DA84291007C6FAA /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03C750491DA84291007C6FAA /* ConfigureSheet.xib */; };
+		03C7504D1DA84291007C6FAA /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */; };
+		03C7504F1DA845C9007C6FAA /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504E1DA845C9007C6FAA /* Wave.swift */; };
 		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
 		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
 		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
@@ -94,6 +96,10 @@
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		03C750481DA84291007C6FAA /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		03C750491DA84291007C6FAA /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
+		03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
+		03C7504E1DA845C9007C6FAA /* Wave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
 		03E1A25A1DA00C1900AE8DD3 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,10 +136,14 @@
 			isa = PBXGroup;
 			children = (
 				03168EBD1DA00E4700CAE093 /* GlyphWaveView.swift */,
+				03C7504E1DA845C9007C6FAA /* Wave.swift */,
 				0372B37C1DA2742500585DD8 /* LinearWave.swift */,
 				0372B3791DA2727400585DD8 /* CircularWave.swift */,
 				03168EC01DA00E4700CAE093 /* Sprite.swift */,
 				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
+				03C750481DA84291007C6FAA /* Configuration.swift */,
+				03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */,
+				03C750491DA84291007C6FAA /* ConfigureSheet.xib */,
 				0372B37F1DA28ED700585DD8 /* thumbnail.png */,
 				0372B3801DA28ED700585DD8 /* thumbnail@x2.png */,
 				03168EBE1DA00E4700CAE093 /* Info.plist */,
@@ -332,9 +342,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */,
-				03168ECA1DA00E4700CAE093 /* Info.plist in Resources */,
 				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
 				0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */,
+				03C7504C1DA84291007C6FAA /* ConfigureSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +354,6 @@
 			files = (
 				0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */,
 				031494811D67C044005F5EB5 /* LICENSE in Resources */,
-				0322068E1DA51FA900307696 /* Info.plist in Resources */,
 				032604A51D5FBC9B0030AA78 /* thumbnail.png in Resources */,
 				0314948F1D6F7A33005F5EB5 /* ConfigureSheet.xib in Resources */,
 				032604A61D5FBC9B0030AA78 /* thumbnail@2x.png in Resources */,
@@ -385,10 +394,13 @@
 			files = (
 				03168ED31DA00F3D00CAE093 /* Renderer.swift in Sources */,
 				0372B37A1DA2727400585DD8 /* CircularWave.swift in Sources */,
+				03C7504B1DA84291007C6FAA /* Configuration.swift in Sources */,
 				03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */,
+				03C7504D1DA84291007C6FAA /* ConfigureSheetController.swift in Sources */,
 				03168ED01DA00ECF00CAE093 /* Util.swift in Sources */,
 				03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */,
 				03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */,
+				03C7504F1DA845C9007C6FAA /* Wave.swift in Sources */,
 				03168EC21DA00E4700CAE093 /* Glyph.swift in Sources */,
 				0372B37D1DA2742500585DD8 /* LinearWave.swift in Sources */,
 				03168ED21DA00F3700CAE093 /* MetalScreenSaverView.swift in Sources */,

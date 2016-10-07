@@ -16,7 +16,7 @@
 
 import Cocoa
 
-class CircularWave
+class CircularWave: Wave
 {
     func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
     {

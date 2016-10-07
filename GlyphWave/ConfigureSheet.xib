@@ -5,12 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ConfigureSheetController" customModule="DancingGlyphs" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ConfigureSheetController" customModule="GlyphWave">
             <connections>
-                <outlet property="glyphPopup" destination="dPV-yt-r4h" id="KXl-ch-MyK"/>
-                <outlet property="movementPopup" destination="RRk-gf-OoZ" id="h1z-OJ-AdC"/>
-                <outlet property="sizePopup" destination="XCI-mp-LvP" id="OY0-DL-e7f"/>
                 <outlet property="versionField" destination="3KO-u9-Cnz" id="t6l-M7-4vP"/>
+                <outlet property="waveTypePopUp" destination="dPV-yt-r4h" id="8Tb-5H-iBd"/>
                 <outlet property="window" destination="Z9z-nJ-foj" id="Uin-Zv-V7V"/>
             </connections>
         </customObject>
@@ -19,23 +17,23 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Z9z-nJ-foj" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="132" width="293" height="257"/>
+            <rect key="contentRect" x="196" y="132" width="293" height="196"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="6JH-Tx-Nik">
-                <rect key="frame" x="0.0" y="0.0" width="293" height="257"/>
+                <rect key="frame" x="0.0" y="0.0" width="293" height="196"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="Pv7-Me-fdY">
-                        <rect key="frame" x="39" y="214" width="214" height="24"/>
+                        <rect key="frame" x="39" y="153" width="214" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Dancing Glyphs" id="aDg-tU-Om5">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Glyph Wave" id="aDg-tU-Om5">
                             <font key="font" metaFont="systemBold" size="20"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KO-u9-Cnz">
-                        <rect key="frame" x="39" y="196" width="214" height="17"/>
+                        <rect key="frame" x="39" y="135" width="214" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="v1.0 (4EEF871)" id="BZ1-9r-fLI">
                             <font key="font" metaFont="smallSystem"/>
@@ -72,7 +70,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TiY-4j-Qy6">
-                        <rect key="frame" x="101" y="176" width="91" height="19"/>
+                        <rect key="frame" x="101" y="115" width="91" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="roundRect" title="Project Page..." bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="riV-QZ-cYc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -83,17 +81,17 @@ Gw
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dPV-yt-r4h">
-                        <rect key="frame" x="131" y="127" width="119" height="26"/>
+                        <rect key="frame" x="122" y="66" width="119" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Square" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="VZ7-Mn-6Pr" id="tvJ-ja-NjE">
+                        <popUpButtonCell key="cell" type="push" title="Linear" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="VZ7-Mn-6Pr" id="tvJ-ja-NjE">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="vd7-n9-FfO">
                                 <items>
-                                    <menuItem title="Square" state="on" id="VZ7-Mn-6Pr">
+                                    <menuItem title="Linear" state="on" id="VZ7-Mn-6Pr">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Circle" tag="1" id="k4d-p1-gzS"/>
+                                    <menuItem title="Circular" tag="1" id="k4d-p1-gzS"/>
                                     <menuItem isSeparatorItem="YES" id="r1Q-Sp-LmH"/>
                                     <menuItem title="Random" tag="-1" id="0ki-KV-W9e"/>
                                 </items>
@@ -101,63 +99,9 @@ Gw
                         </popUpButtonCell>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQi-z4-Nq9">
-                        <rect key="frame" x="61" y="133" width="66" height="17"/>
+                        <rect key="frame" x="52" y="72" width="66" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Glyph:" id="OIB-4f-Ypj">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XCI-mp-LvP">
-                        <rect key="frame" x="131" y="96" width="119" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Medium" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="jp3-ho-N0L" id="sp9-2G-BUo">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="KTG-B5-XT7">
-                                <items>
-                                    <menuItem title="Large" tag="2" id="XhU-36-4ue"/>
-                                    <menuItem title="Medium" state="on" tag="1" id="jp3-ho-N0L"/>
-                                    <menuItem title="Small" id="Zyg-aT-HDo">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem isSeparatorItem="YES" id="EUK-I0-ibO"/>
-                                    <menuItem title="Random" tag="-1" id="ZS7-iz-Mxi"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bf7-kS-oc3">
-                        <rect key="frame" x="93" y="102" width="34" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Size:" id="HZ7-eg-mbc">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RRk-gf-OoZ">
-                        <rect key="frame" x="131" y="65" width="119" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Random" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="-1" imageScaling="proportionallyDown" inset="2" selectedItem="4zf-Uz-TqN" id="NZg-4A-uKX">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="K61-ne-EEo">
-                                <items>
-                                    <menuItem title="Wild" tag="2" id="6PF-pU-Qam"/>
-                                    <menuItem title="Normal" tag="1" id="Ti4-AN-6w9"/>
-                                    <menuItem title="Tight" id="R2s-Bz-nXY"/>
-                                    <menuItem isSeparatorItem="YES" id="RTS-zL-am5"/>
-                                    <menuItem title="Random" state="on" tag="-1" id="4zf-Uz-TqN"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ht-U8-JCb">
-                        <rect key="frame" x="55" y="71" width="72" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Movement:" id="Kye-pL-UU7">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Wave:" id="OIB-4f-Ypj">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -165,7 +109,7 @@ Gw
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-6.5" y="41.5"/>
+            <point key="canvasLocation" x="-6.5" y="11"/>
         </window>
     </objects>
 </document>

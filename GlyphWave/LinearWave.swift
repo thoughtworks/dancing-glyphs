@@ -16,7 +16,7 @@
 
 import Cocoa
 
-public class LinearWave
+public class LinearWave: Wave
 {
     func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
     {
