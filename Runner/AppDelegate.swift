@@ -16,6 +16,7 @@
 
 import Cocoa
 import ScreenSaver
+import Metal
 
 @NSApplicationMain
 class AppDelegate: NSObject
@@ -35,14 +36,15 @@ class AppDelegate: NSObject
         
         view = saverClass.init(frame: window.contentView!.frame, isPreview: false)
         view.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
+
+        window.backingType = saverClass.backingStoreType()
+        window.title = view.className
         window.contentView!.autoresizesSubviews = true
         window.contentView!.addSubview(view)
-        window.title = view.className
-        window.backingType = saverClass.backingStoreType()
-        
+
         view.startAnimation()
     }
-    
+
     private func loadSaverBundle(_ name: String) -> Bundle?
     {
         let myBundle = Bundle(for: AppDelegate.self)
@@ -50,6 +52,12 @@ class AppDelegate: NSObject
         let saverBundle = Bundle(url: saverBundleURL)
         saverBundle?.load()
         return saverBundle
+    }
+
+    func restartAnimation()
+    {
+        view.stopAnimation()
+        view.startAnimation()
     }
 
     @IBAction func showPreferences(_ sender: NSObject!)
@@ -64,6 +72,7 @@ extension AppDelegate: NSApplicationDelegate
 {
     func applicationDidFinishLaunching(_ notification: Notification)
     {
+        MTLCopyAllDevices() // so that Xcode knows we're running a Metal app...
         setupAndStartAnimation()
     }
 }
@@ -82,7 +91,6 @@ extension AppDelegate: NSWindowDelegate
 
     func windowDidEndSheet(_ notification: Notification)
     {
-        view.stopAnimation()
-        view.startAnimation()
+        restartAnimation()
     }
 }
