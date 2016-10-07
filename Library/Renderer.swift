@@ -81,16 +81,19 @@ class Renderer
 
     private func makeVertexBuffers()
     {
-        vertexBufferSemaphore = DispatchSemaphore(value: VERTEX_BUFFER_COUNT)
+        let vertexBufferSize = numSprites * 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
         for i in 0..<VERTEX_BUFFER_COUNT {
-            vertexBuffers[i] = device.makeBuffer(length: MemoryLayout<Float>.size * 12 * numSprites, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+            vertexBuffers[i] = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
             vertexBuffers[i]!.label = "vertexBuffer\(i)"
         }
+        vertexBufferSemaphore = DispatchSemaphore(value: VERTEX_BUFFER_COUNT)
 
-        uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 16, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        let uniformsBufferSize = 4 * 4 /* 4x4 matrix */ * MemoryLayout<Float>.size
+        uniformsBuffer = device.makeBuffer(length: uniformsBufferSize, options:.storageModeManaged)
         uniformsBuffer.label = "uniformsBuffer"
 
-        textureCoordBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 12, options:.storageModeManaged) // TODO: fix hardcoded buffer size?
+        let textureCoordBufferSize = 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
+        textureCoordBuffer = device.makeBuffer(length: textureCoordBufferSize, options:.storageModeManaged)
         textureCoordBuffer.label = "textureCoordBuffer"
     }
 
@@ -199,8 +202,8 @@ class Renderer
         var i = 0
         while i < numSprites {
             encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
-            let s = i
             // when the quads' textureIds are collated, we can minimise draw calls
+            let s = i
             while (i < numSprites) && (textureIds[i]! == textureIds[s]!) {
                 i += 1
             }
