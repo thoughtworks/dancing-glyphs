@@ -16,7 +16,7 @@
 
 // see https://www.raywenderlich.com/77488/ios-8-metal-tutorial-swift-getting-started
 // see https://www.raywenderlich.com/90592/liquidfun-tutorial-2
-// see http://stackoverflow.com/questions/27967170/rendering-quads-performance-with-metal
+// see https://github.com/MetalKit/metal
 // see https://github.com/nickzman/rainingcubes
 
 import ScreenSaver
@@ -32,6 +32,7 @@ import ScreenSaver
         var glyphSize: Double
     }
 
+    var configuration: Configuration!
     var settings: Settings!
     var renderer: Renderer!
     var animation: Animation!
@@ -41,6 +42,7 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
+        configuration = Configuration.sharedInstance
         renderer = Renderer(device: device, numGlyphs: 3, numSprites: 3)
     }
 
@@ -73,7 +75,6 @@ import ScreenSaver
 
     override func startAnimation()
     {
-        let configuration = Configuration()
         settings = configuration.viewSettings
 
         renderer.backgroundColor = settings.backgroundColor.toMTLClearColor()

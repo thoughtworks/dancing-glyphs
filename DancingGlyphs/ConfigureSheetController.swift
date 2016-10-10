@@ -19,7 +19,9 @@ import ScreenSaver
 class ConfigureSheetController : NSObject
 {
     static var sharedInstance = ConfigureSheetController()
-    
+
+    var configuration: Configuration!
+
     @IBOutlet var window: NSWindow!
     @IBOutlet var versionField: NSTextField!
     @IBOutlet var glyphPopup: NSPopUpButton!
@@ -29,6 +31,8 @@ class ConfigureSheetController : NSObject
     override init()
     {
         super.init()
+
+        configuration = Configuration.sharedInstance
 
         let myBundle = Bundle(for: ConfigureSheetController.self)
         myBundle.loadNibNamed("ConfigureSheet", owner: self, topLevelObjects: nil)
@@ -55,18 +59,16 @@ class ConfigureSheetController : NSObject
 
     func loadConfiguration()
     {
-        let config = Configuration()
-        glyphPopup.selectItem(withTag: config.glyphCode)
-        sizePopup.selectItem(withTag: config.sizeCode)
-        movementPopup.selectItem(withTag: config.movementCode)
+        glyphPopup.selectItem(withTag: configuration.glyphCode)
+        sizePopup.selectItem(withTag: configuration.sizeCode)
+        movementPopup.selectItem(withTag: configuration.movementCode)
     }
 
     private func saveConfiguration()
     {
-        let config = Configuration()
-        config.glyphCode = glyphPopup.selectedTag()
-        config.sizeCode = sizePopup.selectedTag()
-        config.movementCode = movementPopup.selectedTag()
+        configuration.glyphCode = glyphPopup.selectedTag()
+        configuration.sizeCode = sizePopup.selectedTag()
+        configuration.movementCode = movementPopup.selectedTag()
     }
 
 }

@@ -30,6 +30,7 @@ class Configuration
         case tight, normal, wild
     }
     
+    static let sharedInstance = Configuration()
 
     var defaults: UserDefaults
     let glyphPaths: [NSBezierPath]
@@ -37,7 +38,7 @@ class Configuration
     var glyph: Glyph = Glyph.square
     var size: Size = Size.medium
     var movement: Movement = Movement.normal
-    
+
     
     init()
     {

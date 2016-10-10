@@ -22,6 +22,7 @@ import ScreenSaver
     var glyphs: [Glyph]!
     var sprites: [Sprite]!
 
+    var configuration: Configuration!
     var renderer: Renderer!
     var statistics: Statistics!
 
@@ -29,10 +30,11 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
+        configuration = Configuration.sharedInstance
         glyphs = Glyph.makeAllGlyphs()
         sprites = nil
-        renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: Configuration.numSprites)
-        renderer.backgroundColor = Configuration.backgroundColor
+        renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: configuration.numSprites)
+        renderer.backgroundColor = configuration.backgroundColor
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -67,8 +69,7 @@ import ScreenSaver
     {
         updateSizeAndTextures()
 
-        let configuration = Configuration()
-        let list = configuration.wave.makeSprites(Configuration.numSprites, glyphs: glyphs, size: Configuration.glyphSize)
+        let list = configuration.wave.makeSprites(configuration.numSprites, glyphs: glyphs, size: configuration.glyphSize)
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyph > $1.glyph })
 
@@ -89,7 +90,7 @@ import ScreenSaver
     {
         renderer.setOutputSize(bounds.size)
 
-        let glyphSizeScreen = floor(min(bounds.width, bounds.height) * CGFloat(Configuration.glyphSize))
+        let glyphSizeScreen = floor(min(bounds.width, bounds.height) * CGFloat(configuration.glyphSize))
         let scale = (window?.backingScaleFactor)!
         let bitmapSize = NSMakeSize(glyphSizeScreen * scale, glyphSizeScreen * scale)
 

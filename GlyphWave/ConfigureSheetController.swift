@@ -19,6 +19,8 @@ import ScreenSaver
 class ConfigureSheetController : NSObject
 {
     static var sharedInstance = ConfigureSheetController()
+
+    var configuration: Configuration!
     
     @IBOutlet var window: NSWindow!
     @IBOutlet var versionField: NSTextField!
@@ -27,6 +29,8 @@ class ConfigureSheetController : NSObject
     override init()
     {
         super.init()
+
+        configuration = Configuration.sharedInstance
 
         let myBundle = Bundle(for: ConfigureSheetController.self)
         myBundle.loadNibNamed("ConfigureSheet", owner: self, topLevelObjects: nil)
@@ -53,14 +57,12 @@ class ConfigureSheetController : NSObject
 
     func loadConfiguration()
     {
-        let config = Configuration()
-        waveTypePopUp.selectItem(withTag: config.waveTypeCode)
+        waveTypePopUp.selectItem(withTag: configuration.waveTypeCode)
     }
 
     private func saveConfiguration()
     {
-        let config = Configuration()
-        config.waveTypeCode = waveTypePopUp.selectedTag()
+        configuration.waveTypeCode = waveTypePopUp.selectedTag()
     }
 
 }

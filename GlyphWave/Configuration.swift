@@ -18,17 +18,20 @@ import ScreenSaver
 
 class Configuration
 {
-    static let numSprites = 600
-    static let glyphSize = 0.1
-    static let backgroundColor = NSColor.black.toMTLClearColor()
-
     enum WaveType: Int {
         case linear, circular
     }
 
+    static let sharedInstance = Configuration()
+
+    let numSprites = 600
+    let glyphSize = 0.1
+    let backgroundColor = NSColor.black.toMTLClearColor()
+
     var defaults: UserDefaults
     var waveType: WaveType = WaveType.linear
 
+    
     init()
     {
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
