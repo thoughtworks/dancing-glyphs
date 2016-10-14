@@ -148,7 +148,7 @@ import ScreenSaver
             animation.moveToTime(CACurrentMediaTime() * (self.isPreview ? 1.5 : 1))
 
             renderer.beginUpdatingQuads()
-            updateQuadPositions()
+            updateQuads()
             renderer.finishUpdatingQuads()
 
             let metalLayer = layer as! CAMetalLayer
@@ -160,7 +160,7 @@ import ScreenSaver
         }
     }
 
-    private func updateQuadPositions()
+    private func updateQuads()
     {
         let screenCenter = Vector2(Float(bounds.size.width/2), Float(bounds.size.height/2))
         let glyphSize = Float(floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize)))

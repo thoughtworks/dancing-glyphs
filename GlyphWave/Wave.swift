@@ -16,7 +16,19 @@
 
 import Cocoa
 
+
+enum ScaleMode: Int {
+    case        // the scene is rendered as a square
+        fit,    // scale so that the square fits in the screen rectangle
+        fill    // scale so that the square fills the entire screen rectangle
+}
+
 protocol Wave
 {
+    var scaleMode: ScaleMode
+    {
+        get
+    }
+
     func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
 }

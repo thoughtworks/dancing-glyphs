@@ -45,7 +45,6 @@ import ScreenSaver
 
     override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSuperviewSize)
-        renderer.setOutputSize(bounds.size)
         updateSizeAndTextures()
     }
 
@@ -69,7 +68,13 @@ import ScreenSaver
     {
         updateSizeAndTextures()
 
-        let list = configuration.wave.makeSprites(configuration.numSprites, glyphs: glyphs, size: configuration.glyphSize)
+        var maxSpriteSize = configuration.glyphSize
+        // size is given as fraction of smaller dimension; must compensate for scaling up that happens with fill scale mode
+        if configuration.wave.scaleMode == .fill {
+            maxSpriteSize *= Double(min(bounds.size.width, bounds.size.height) / max(bounds.size.width, bounds.size.height))
+        }
+
+        let list = configuration.wave.makeSprites(configuration.numSprites, glyphs: glyphs, size: maxSpriteSize)
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyph > $1.glyph })
 
@@ -88,11 +93,12 @@ import ScreenSaver
 
     private func updateSizeAndTextures()
     {
-        renderer.setOutputSize(bounds.size)
+        let factor = configuration.wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        renderer.setOutputSize(NSMakeSize(bounds.size.width / factor, bounds.size.height / factor))
 
-        let glyphSizeScreen = floor(min(bounds.width, bounds.height) * CGFloat(configuration.glyphSize))
+        let screenSize = floor(min(bounds.width, bounds.height) * CGFloat(configuration.glyphSize))
         let scale = (window?.backingScaleFactor)!
-        let bitmapSize = NSMakeSize(glyphSizeScreen * scale, glyphSizeScreen * scale)
+        let bitmapSize = NSMakeSize(screenSize * scale, screenSize * scale)
 
         for (i, g) in glyphs.enumerated() {
             let bitmap = g.makeBitmap(size: bitmapSize)
@@ -108,7 +114,7 @@ import ScreenSaver
             let now = CACurrentMediaTime() * (self.isPreview ? 1.5 : 1)
             sprites.forEach({ $0.move(to: now) })
             
-            updateQuadPositions()
+            updateQuadsForSprites()
 
             let metalLayer = layer as! CAMetalLayer
             if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
@@ -119,17 +125,22 @@ import ScreenSaver
         }
     }
     
-    private func updateQuadPositions()
+    private func updateQuadsForSprites()
     {
         renderer.beginUpdatingQuads()
-        let screenSize = Vector2(Float(bounds.size.width), Float(bounds.size.height))
+
+        let factor = configuration.wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let offset = Vector2(Float((bounds.size.width/factor - 1) / 2), Float((bounds.size.height/factor - 1) / 2))
+
         for (i, sprite) in sprites.enumerated() {
-            let (a, b, c, d) = sprite.corners(screenSize: screenSize)
-            renderer.updateQuad((a, b, c, d), textureId: sprite.glyph, at:i)
+            let (a, b, c, d) = sprite.corners
+            let corners = (a + offset, b + offset, c + offset, d + offset)
+            renderer.updateQuad(corners, textureId: sprite.glyph, at:i)
         }
+
         renderer.finishUpdatingQuads()
     }
-    
+
 }
 
 
