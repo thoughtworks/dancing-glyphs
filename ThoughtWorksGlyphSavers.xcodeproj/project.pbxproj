@@ -44,6 +44,7 @@
 		03C7504C1DA84291007C6FAA /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03C750491DA84291007C6FAA /* ConfigureSheet.xib */; };
 		03C7504D1DA84291007C6FAA /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */; };
 		03C7504F1DA845C9007C6FAA /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504E1DA845C9007C6FAA /* Wave.swift */; };
+		03DE5E4B1DB19D3A00D1CC3F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0314947F1D67C044005F5EB5 /* LICENSE */; };
 		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
 		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
 		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
@@ -244,6 +245,7 @@
 				03168EA91DA00DEA00CAE093 /* Frameworks */,
 				03168EAA1DA00DEA00CAE093 /* Headers */,
 				03168EAB1DA00DEA00CAE093 /* Resources */,
+				03DE5E4C1DB19D4200D1CC3F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -341,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03DE5E4B1DB19D3A00D1CC3F /* LICENSE in Resources */,
 				0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */,
 				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
 				0372B3811DA28ED700585DD8 /* thumbnail.png in Resources */,
@@ -384,6 +387,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "SHA=`git rev-parse --short HEAD | tr '[a-z]' '[A-Z]'`\nsed -i \"\" \"s/#gitsha#/$SHA/\" \"${BUILT_PRODUCTS_DIR}\"/DancingGlyphs.saver/Contents/Info.plist";
+		};
+		03DE5E4C1DB19D4200D1CC3F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SHA=`git rev-parse --short HEAD | tr '[a-z]' '[A-Z]'`\nsed -i \"\" \"s/#gitsha#/$SHA/\" \"${BUILT_PRODUCTS_DIR}\"/GlyphWave.saver/Contents/Info.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
