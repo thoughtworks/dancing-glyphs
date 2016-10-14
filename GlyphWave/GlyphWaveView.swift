@@ -33,7 +33,7 @@ import ScreenSaver
         configuration = Configuration.sharedInstance
         glyphs = Glyph.makeAllGlyphs()
         sprites = nil
-        renderer = Renderer(device: device, numGlyphs: glyphs.count, numSprites: configuration.numSprites)
+        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
         renderer.backgroundColor = configuration.backgroundColor
     }
 

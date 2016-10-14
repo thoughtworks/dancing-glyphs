@@ -20,8 +20,7 @@ import Metal
 
 class Renderer
 {
-    var numGlyphs = 0
-    var numSprites = 0
+    var numQuads = 0
     var textureIds: [Int?]
     var backgroundColor: MTLClearColor!
 
@@ -40,13 +39,12 @@ class Renderer
     private var textures: [MTLTexture?]
 
     
-    init(device: MTLDevice, numGlyphs: Int, numSprites: Int)
+    init(device: MTLDevice, numTextures: Int, numQuads: Int)
     {
-        self.numGlyphs = numGlyphs
-        self.numSprites = numSprites
-        self.textureIds = [Int!](repeating:nil, count:numSprites)
+        self.numQuads = numQuads
+        self.textureIds = [Int!](repeating:nil, count:numQuads)
         self.vertexBuffers = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
-        self.textures = [MTLTexture!](repeating: nil, count: numGlyphs)
+        self.textures = [MTLTexture!](repeating: nil, count: numTextures)
 
         self.device = device
         self.setUpMetal()
@@ -81,7 +79,7 @@ class Renderer
 
     private func makeVertexBuffers()
     {
-        let vertexBufferSize = numSprites * 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
+        let vertexBufferSize = numQuads * 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
         for i in 0..<VERTEX_BUFFER_COUNT {
             vertexBuffers[i] = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
             vertexBuffers[i]!.label = "vertexBuffer\(i)"
@@ -179,7 +177,7 @@ class Renderer
     func finishUpdatingQuads()
     {
         let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
-        currentVertextBuffer.didModifyRange(NSMakeRange(0, MemoryLayout<Float>.size * 12 * numSprites))
+        currentVertextBuffer.didModifyRange(NSMakeRange(0, MemoryLayout<Float>.size * 12 * numQuads))
     }
 
     func renderFrame(drawable: CAMetalDrawable)
@@ -200,11 +198,11 @@ class Renderer
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
 
         var i = 0
-        while i < numSprites {
+        while i < numQuads {
             encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
             // when the quads' textureIds are collated, we can minimise draw calls
             let s = i
-            while (i < numSprites) && (textureIds[i]! == textureIds[s]!) {
+            while (i < numQuads) && (textureIds[i]! == textureIds[s]!) {
                 i += 1
             }
             encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)

@@ -43,7 +43,7 @@ import ScreenSaver
     {
         super.init(frame: frame, isPreview: isPreview)
         configuration = Configuration.sharedInstance
-        renderer = Renderer(device: device, numGlyphs: 3, numSprites: 3)
+        renderer = Renderer(device: device, numTextures: 3, numQuads: 3)
     }
 
     required init?(coder aDecoder: NSCoder)
