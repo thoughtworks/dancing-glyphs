@@ -1,6 +1,6 @@
 # ThoughtWorks Glyph Screen Savers
 
-*This is work-in-progress. Dancing Glyphs works as intended. Glyph Wave has a hard-coded 16:9 aspect ratio.*
+*This is work-in-progress. On battery power the screen savers may stutter noticeably. *
 
 
 ## Dancing Glyphs
