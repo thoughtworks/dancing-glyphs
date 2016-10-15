@@ -21,10 +21,10 @@ import Metal
 class Renderer
 {
     var numQuads = 0
-    var textureIds: [Int?]
+    var textureIds: [Int]
     var backgroundColor: MTLClearColor!
 
-    private var device: MTLDevice!
+    private var device: MTLDevice
     private var commandQueue: MTLCommandQueue!
     private var pipelineState: MTLRenderPipelineState!
 
@@ -32,8 +32,12 @@ class Renderer
 
     private let VERTEX_BUFFER_COUNT = 3
     private var vertexBufferSemaphore: DispatchSemaphore!
+    private var vertexBufferArray: [MTLBuffer?]
     private var vertexBufferIndex = 0
-    private var vertexBuffers: [MTLBuffer?]
+    private var vertexBuffer: MTLBuffer!
+
+    private let VALUES_PER_QUAD = 12
+    private var vertexData: [Float]
 
     private var textureCoordBuffer: MTLBuffer!
     private var textures: [MTLTexture?]
@@ -41,22 +45,27 @@ class Renderer
     
     init(device: MTLDevice, numTextures: Int, numQuads: Int)
     {
+        self.device = device
         self.numQuads = numQuads
-        self.textureIds = [Int!](repeating:nil, count:numQuads)
-        self.vertexBuffers = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
+
+        self.textureIds = [Int](repeating:0, count:numQuads)
+        self.vertexBufferArray = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
+        self.vertexBuffer = device.makeBuffer(length: 0, options: .storageModeShared) // keep compiler happy
+        self.vertexData = [Float](repeating: 0, count: VALUES_PER_QUAD)
         self.textures = [MTLTexture!](repeating: nil, count: numTextures)
 
-        self.device = device
-        self.setUpMetal()
-        self.makeVertexBuffers()
-        self.setUpTextureCoordinateBuffer()
+        self.pipelineState = makePipelineState()
+        self.commandQueue = device.makeCommandQueue()
+
+        makeVertexBuffers()
+        setUpTextureCoordinateBuffer()
     }
 
 
-    private func setUpMetal()
+    private func makePipelineState() -> MTLRenderPipelineState
     {
         let libraryPath = Bundle(for: Renderer.self).path(forResource: "default", ofType: "metallib")!
-        let library = try! self.device.makeLibrary(filepath: libraryPath) // TODO: do something
+        let library = try! device.makeLibrary(filepath: libraryPath) // TODO: do something
 
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
         pipelineStateDescriptor.sampleCount = 1
@@ -71,18 +80,17 @@ class Renderer
         a.sourceAlphaBlendFactor = .zero
         a.destinationRGBBlendFactor = .oneMinusSourceColor
         a.destinationAlphaBlendFactor = .zero
-        pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
 
-        commandQueue = device.makeCommandQueue()
+        return try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
     }
 
 
     private func makeVertexBuffers()
     {
-        let vertexBufferSize = numQuads * 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
+        let vertexBufferSize = numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size
         for i in 0..<VERTEX_BUFFER_COUNT {
-            vertexBuffers[i] = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
-            vertexBuffers[i]!.label = "vertexBuffer\(i)"
+            vertexBufferArray[i] = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
+            vertexBufferArray[i]!.label = "vertexBuffer\(i)"
         }
         vertexBufferSemaphore = DispatchSemaphore(value: VERTEX_BUFFER_COUNT)
 
@@ -90,7 +98,7 @@ class Renderer
         uniformsBuffer = device.makeBuffer(length: uniformsBufferSize, options:.storageModeManaged)
         uniformsBuffer.label = "uniformsBuffer"
 
-        let textureCoordBufferSize = 6 /* vertices per quad */ * 2 /* points per vertex */ * MemoryLayout<Float>.size
+        let textureCoordBufferSize = VALUES_PER_QUAD * MemoryLayout<Float>.size
         textureCoordBuffer = device.makeBuffer(length: textureCoordBufferSize, options:.storageModeManaged)
         textureCoordBuffer.label = "textureCoordBuffer"
     }
@@ -154,31 +162,30 @@ class Renderer
     {
         _ = vertexBufferSemaphore.wait(timeout: DispatchTime.distantFuture)
         vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
+        vertexBuffer = vertexBufferArray[vertexBufferIndex]!
     }
 
     func updateQuad(_ corners: (Vector2, Vector2, Vector2, Vector2), textureId: Int, at index: Int)
     {
         let (a, b, c, d) = corners
-        let vertexData: [Float] = [
-            a.x, a.y, //a
-            b.x, b.y, //b
-            c.x, c.y, //c
-            a.x, a.y, //a
-            c.x, c.y, //c
-            d.x, d.y  //d
-        ]
-        let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
-        let arraySize = Util.sizeofArray(vertexData)
-        let bufferPointer = currentVertextBuffer.contents() + arraySize * index
+        vertexData[ 0] = a.x; vertexData[ 1] = a.y;
+        vertexData[ 2] = b.x; vertexData[ 3] = b.y;
+        vertexData[ 4] = c.x; vertexData[ 5] = c.y;
+        vertexData[ 6] = a.x; vertexData[ 7] = a.y;
+        vertexData[ 8] = c.x; vertexData[ 9] = c.y;
+        vertexData[10] = d.x; vertexData[11] = d.y;
+
+        let arraySize = VALUES_PER_QUAD * MemoryLayout<Float>.size
+        let bufferPointer = vertexBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
         textureIds[index] = textureId
     }
 
     func finishUpdatingQuads()
     {
-        let currentVertextBuffer = vertexBuffers[vertexBufferIndex]!
-        currentVertextBuffer.didModifyRange(NSMakeRange(0, MemoryLayout<Float>.size * 12 * numQuads))
+        vertexBuffer.didModifyRange(NSMakeRange(0, numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size))
     }
+
 
     func renderFrame(drawable: CAMetalDrawable)
     {
@@ -193,16 +200,16 @@ class Renderer
 
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
-        encoder.setVertexBuffer(vertexBuffers[vertexBufferIndex], offset: 0, at: 0)
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
 
         var i = 0
         while i < numQuads {
-            encoder.setFragmentTexture(textures[textureIds[i]!], at: 0)
+            encoder.setFragmentTexture(textures[textureIds[i]], at: 0)
             // when the quads' textureIds are collated, we can minimise draw calls
             let s = i
-            while (i < numQuads) && (textureIds[i]! == textureIds[s]!) {
+            while (i < numQuads) && (textureIds[i] == textureIds[s]) {
                 i += 1
             }
             encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)

@@ -33,7 +33,7 @@ class CircularWave: Wave
         for i in 0..<numSprites {
             let pos = Vector2(sin(step * Float(i)), cos(step * Float(i)))
             let size = Float(maximumSize * (0.7 + Util.randomDouble() * 0.3))
-            let sprite = Sprite(glyph: Util.randomInt(glyphs.count), anchor: pos, size: size, animation: CircularWave.move)
+            let sprite = Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, animation: CircularWave.move)
             list.append(sprite)
         }
         return list
@@ -44,12 +44,12 @@ class CircularWave: Wave
     {
         let now = nowIn * 0.5                                        // global slow-down
         
-        var y = sin(now * (1 + s.r0)) * 0.12                         // sprite swinging up and down, speed based on r0
-        y *= s.r1 * (0.5 + s.r1/2)                                   // dampening, amplitude based on r1
-        y += sin(now * 2.8 + Double(s.anchor.x) * M_PI * 1) * 0.04  //  large wave across sprites
+        var y = sin(now * (0.6 + s.r0)) * 0.11                         // sprite swinging up and down, speed based on r0
+        y *= s.r1 * (0.7 + s.r1 * 0.3)                                 // dampening, amplitude based on r1
+        y += sin(now * 1.5 + Double(s.anchor.x) * M_PI * 1) * 0.04  //  large wave across sprites
         y += 0.28                                                    // move up (transformed into move-out-of-centre below)
         
-        s.pos = s.anchor * Matrix2x2(rotation: Float(now * 0.2))     // move around centre point
+        s.pos = s.anchor * Matrix2x2(rotation: Float(now * 0.15))     // move around centre point
         s.pos = s.pos * Vector2(Float(y), Float(y))                  // make movement orthogonal to circle
         s.pos = s.pos + Vector2(0.5, 0.5)                            // move origin to middle of screen
         

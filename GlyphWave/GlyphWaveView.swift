@@ -20,9 +20,10 @@ import ScreenSaver
 @objc(GlyphWaveView) class GlyphWaveView : MetalScreenSaverView
 {
     var glyphs: [Glyph]!
+
+    var wave: Wave!
     var sprites: [Sprite]!
 
-    var configuration: Configuration!
     var renderer: Renderer!
     var statistics: Statistics!
 
@@ -30,11 +31,8 @@ import ScreenSaver
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        configuration = Configuration.sharedInstance
         glyphs = Glyph.makeAllGlyphs()
         sprites = nil
-        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
-        renderer.backgroundColor = configuration.backgroundColor
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -45,7 +43,7 @@ import ScreenSaver
 
     override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSuperviewSize)
-        updateSizeAndTextures()
+        updateSizeAndTextures(glyphSize: Configuration.sharedInstance.glyphSize)
     }
 
 
@@ -66,7 +64,14 @@ import ScreenSaver
 
     override func startAnimation()
     {
-        updateSizeAndTextures()
+        let configuration = Configuration.sharedInstance
+
+        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
+        renderer.backgroundColor = configuration.backgroundColor
+
+        wave = configuration.wave
+
+        updateSizeAndTextures(glyphSize: configuration.glyphSize)
 
         var maxSpriteSize = configuration.glyphSize
         // size is given as fraction of smaller dimension; must compensate for scaling up that happens with fill scale mode
@@ -76,7 +81,7 @@ import ScreenSaver
 
         let list = configuration.wave.makeSprites(configuration.numSprites, glyphs: glyphs, size: maxSpriteSize)
         // the list should be sorted by glyph to help the renderer optimise draw calls
-        sprites = list.sorted(by: { $0.glyph > $1.glyph })
+        sprites = list.sorted(by: { $0.glyphId > $1.glyphId })
 
         statistics = Statistics()
 
@@ -87,16 +92,18 @@ import ScreenSaver
     {
         super.stopAnimation()
 
+        renderer = nil
+        wave = nil
         sprites = nil
         statistics = nil
     }
 
-    private func updateSizeAndTextures()
+    private func updateSizeAndTextures(glyphSize: Double)
     {
-        let factor = configuration.wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let factor = wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / factor, bounds.size.height / factor))
 
-        let screenSize = floor(min(bounds.width, bounds.height) * CGFloat(configuration.glyphSize))
+        let screenSize = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
         let scale = (window?.backingScaleFactor)!
         let bitmapSize = NSMakeSize(screenSize * scale, screenSize * scale)
 
@@ -112,8 +119,10 @@ import ScreenSaver
             statistics.viewWillStartRenderingFrame()
 
             let now = CACurrentMediaTime() * (self.isPreview ? 1.5 : 1)
-            sprites.forEach({ $0.move(to: now) })
-            
+            for i in 0..<sprites.count { // using a plain loop for performance reasons
+                sprites[i].move(to: now)
+            }
+
             updateQuadsForSprites()
 
             let metalLayer = layer as! CAMetalLayer
@@ -129,13 +138,12 @@ import ScreenSaver
     {
         renderer.beginUpdatingQuads()
 
-        let factor = configuration.wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let factor = wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
         let offset = Vector2(Float((bounds.size.width/factor - 1) / 2), Float((bounds.size.height/factor - 1) / 2))
 
-        for (i, sprite) in sprites.enumerated() {
-            let (a, b, c, d) = sprite.corners
-            let corners = (a + offset, b + offset, c + offset, d + offset)
-            renderer.updateQuad(corners, textureId: sprite.glyph, at:i)
+        for i in 0..<sprites.count {
+            let (a, b, c, d) = sprites[i].corners
+            renderer.updateQuad((a + offset, b + offset, c + offset, d + offset), textureId: sprites[i].glyphId, at:i)
         }
 
         renderer.finishUpdatingQuads()

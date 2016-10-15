@@ -33,7 +33,7 @@ public class LinearWave: Wave
         for i in 0..<numSprites {
             let pos = Vector2(Float(xstep * Double(i)), 0)
             let size = Float(maximumSize * (0.7 + Util.randomDouble() * 0.3))
-            let sprite = Sprite(glyph: Util.randomInt(glyphs.count), anchor: pos, size: size, animation: LinearWave.move)
+            let sprite = Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, animation: LinearWave.move)
             list.append(sprite)
         }
         return list
@@ -41,9 +41,9 @@ public class LinearWave: Wave
     
     static func move(sprite s: Sprite, to now: Double)
     {
-        var y = sin(now * (0.2 + s.r0)) * 0.08                         // sprite swinging up and down, speed based on r0
+        var y = sin(now * (0.1 + s.r0)) * 0.08                         // sprite swinging up and down, speed based on r0
         y *= s.r1 * (0.4 + s.r1/2)                                     // dampening, amplitude based on r1
-        y += sin(now * -1.8 + Double(s.anchor.x) * M_PI * 3) * 0.025   // large wave across sprites
+        y += sin(now * -1.2 + Double(s.anchor.x) * M_PI * 3) * 0.025   // large wave across sprites
         y += 0.5                                                       // moving to middle
         s.pos = Vector2(s.anchor.x, Float(y))
         s.rotation = Float(now * (s.r0 - 0.5) * 1.2)                   // rotation based on r0

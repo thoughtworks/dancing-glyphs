@@ -14,8 +14,6 @@
  *  under the License.
  */
 
-// see http://stackoverflow.com/questions/11598043/get-slightly-lighter-and-darker-color-from-uicolor
-
 import Cocoa
 import Metal
 
@@ -41,28 +39,6 @@ extension NSColor
         var blue:  Double = 0; Scanner(string: "0x"+webcolor.substring(with: NSMakeRange(5, 2))).scanHexDouble(&blue)
         self.init(red: CGFloat(red/256), green: CGFloat(green/256), blue: CGFloat(blue/256), alpha: 1)
     }
-
-
-    func lighter(_ amount :CGFloat = 0.25) -> NSColor
-    {
-        return hueColorWithBrightnessAmount(1 + amount)
-    }
-    
-    func darker(_ amount :CGFloat = 0.25) -> NSColor
-    {
-        return hueColorWithBrightnessAmount(1 - amount)
-    }
-    
-    fileprivate func hueColorWithBrightnessAmount(_ amount: CGFloat) -> NSColor
-    {
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        return NSColor(hue: hue, saturation: saturation, brightness: brightness*amount, alpha: alpha)
-    }
-    
     
     func toMTLClearColor() -> MTLClearColor
     {

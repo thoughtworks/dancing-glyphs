@@ -18,7 +18,7 @@ import Cocoa
 
 class Sprite
 {
-    let glyph: Int
+    let glyphId: Int
     let anchor: Vector2
     let size: Float
     let r0: Double
@@ -29,9 +29,9 @@ class Sprite
     
     var animation: (Sprite, Double) -> ()
     
-    init(glyph: Int, anchor: Vector2, size: Float, animation: @escaping (Sprite, Double) -> ())
+    init(glyphId: Int, anchor: Vector2, size: Float, animation: @escaping (Sprite, Double) -> ())
     {
-        self.glyph = glyph
+        self.glyphId = glyphId
         self.size = size
         self.r0 = Util.randomDouble()
         self.r1 = Util.randomDouble()
