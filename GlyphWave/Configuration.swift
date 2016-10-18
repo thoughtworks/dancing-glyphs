@@ -26,7 +26,7 @@ class Configuration
 
     let numSprites = 600
     let glyphSize = 0.1
-    let backgroundColor = NSColor.black.toMTLClearColor()
+    let backgroundColor = NSColor.black
 
     var defaults: UserDefaults
     var waveType: WaveType = WaveType.linear

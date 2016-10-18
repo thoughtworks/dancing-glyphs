@@ -24,10 +24,10 @@ class Sprite
     let r0: Double
     let r1: Double
     
+    let animation: (Sprite, Double) -> ()
+
     var pos: Vector2
     var rotation: Float
-    
-    var animation: (Sprite, Double) -> ()
     
     init(glyphId: Int, anchor: Vector2, size: Float, animation: @escaping (Sprite, Double) -> ())
     {

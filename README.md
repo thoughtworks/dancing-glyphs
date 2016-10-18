@@ -1,6 +1,6 @@
 # ThoughtWorks Glyph Screen Savers
 
-*This is work-in-progress. On battery power the screen savers may stutter noticeably. *
+Two screen savers that show animations based on the ThoughtWorks glyphs. See below for installation instructions.
 
 
 ## Dancing Glyphs
@@ -20,3 +20,11 @@ At some point when implementing the Dancing Glyphs saver I switched to the Metal
 ## Technology
 
 The screen savers are written in Swift 3 and Metal using Xcode 8. They require El Capitan or Sierra to run. Older versions of OS X do not support Metal, unfortunately.
+
+
+## Download and Installation
+
+Head to the [releases page](https://github.com/thoughtworks/dancing-glyphs/releases) and download the `ThoughtWorksGlyphSavers.dmg` file. If your web browser doesn't do it automatically, open the file you just downloaded. Then double-click on the `DancingGlyphs.saver` and `GlyphWave.saver` files to install the respective screen saver. After they are installed you can select the savers in System Preferences. 
+
+The screen savers currently do no check whether updates are available. So, you might want to go back to the releases page every couple of months.
+

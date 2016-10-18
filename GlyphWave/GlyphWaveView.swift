@@ -67,14 +67,14 @@ import ScreenSaver
         let configuration = Configuration.sharedInstance
 
         renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
-        renderer.backgroundColor = configuration.backgroundColor
+        renderer.backgroundColor = configuration.backgroundColor.toMTLClearColor()
 
         wave = configuration.wave
 
         updateSizeAndTextures(glyphSize: configuration.glyphSize)
 
         var maxSpriteSize = configuration.glyphSize
-        // size is given as fraction of smaller dimension; must compensate for scaling up that happens with fill scale mode
+        // size is given as fraction of smaller screen dimension; must compensate for scaling up that happens with fill scale mode
         if configuration.wave.scaleMode == .fill {
             maxSpriteSize *= Double(min(bounds.size.width, bounds.size.height) / max(bounds.size.width, bounds.size.height))
         }

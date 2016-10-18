@@ -44,12 +44,12 @@ class CircularWave: Wave
     {
         let now = nowIn * 0.5                                        // global slow-down
         
-        var y = sin(now * (0.6 + s.r0)) * 0.11                         // sprite swinging up and down, speed based on r0
-        y *= s.r1 * (0.7 + s.r1 * 0.3)                                 // dampening, amplitude based on r1
-        y += sin(now * 1.5 + Double(s.anchor.x) * M_PI * 1) * 0.04  //  large wave across sprites
+        var y = sin(now * (0.6 + s.r0)) * 0.11                       // sprite swinging up and down, speed based on r0
+        y *= s.r1 * (0.7 + s.r1 * 0.3)                               // dampening, amplitude based on r1
+        y += sin(now * 1.5 + Double(s.anchor.x) * M_PI * 1) * 0.04   //  large wave across sprites
         y += 0.28                                                    // move up (transformed into move-out-of-centre below)
         
-        s.pos = s.anchor * Matrix2x2(rotation: Float(now * 0.15))     // move around centre point
+        s.pos = s.anchor * Matrix2x2(rotation: Float(now * 0.15))    // move around centre point
         s.pos = s.pos * Vector2(Float(y), Float(y))                  // make movement orthogonal to circle
         s.pos = s.pos + Vector2(0.5, 0.5)                            // move origin to middle of screen
         
