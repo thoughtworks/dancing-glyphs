@@ -28,19 +28,14 @@ class Renderer
     private var commandQueue: MTLCommandQueue!
     private var pipelineState: MTLRenderPipelineState!
 
-    private var uniformsBuffer: MTLBuffer!
-
-    private let VERTEX_BUFFER_COUNT = 3
-    private var vertexBufferSemaphore: DispatchSemaphore!
-    private var vertexBufferArray: [MTLBuffer?]
-    private var vertexBufferIndex = 0
-    private var vertexBuffer: MTLBuffer!
+    private var textures: [MTLTexture?]
 
     private let VALUES_PER_QUAD = 12
     private var vertexData: [Float]
 
+    private var vertexBuffer: MTLBuffer!
+    private var uniformsBuffer: MTLBuffer!
     private var textureCoordBuffer: MTLBuffer!
-    private var textures: [MTLTexture?]
 
     
     init(device: MTLDevice, numTextures: Int, numQuads: Int)
@@ -49,8 +44,6 @@ class Renderer
         self.numQuads = numQuads
 
         self.textureIds = [Int](repeating:0, count:numQuads)
-        self.vertexBufferArray = [MTLBuffer!](repeating: nil, count: VERTEX_BUFFER_COUNT)
-        self.vertexBuffer = device.makeBuffer(length: 0, options: .storageModeShared) // keep compiler happy
         self.vertexData = [Float](repeating: 0, count: VALUES_PER_QUAD)
         self.textures = [MTLTexture!](repeating: nil, count: numTextures)
 
@@ -88,11 +81,8 @@ class Renderer
     private func makeVertexBuffers()
     {
         let vertexBufferSize = numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size
-        for i in 0..<VERTEX_BUFFER_COUNT {
-            vertexBufferArray[i] = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
-            vertexBufferArray[i]!.label = "vertexBuffer\(i)"
-        }
-        vertexBufferSemaphore = DispatchSemaphore(value: VERTEX_BUFFER_COUNT)
+        vertexBuffer = device.makeBuffer(length: vertexBufferSize, options:.storageModeManaged)
+        vertexBuffer.label = "vertexBuffer"
 
         let uniformsBufferSize = 4 * 4 /* 4x4 matrix */ * MemoryLayout<Float>.size
         uniformsBuffer = device.makeBuffer(length: uniformsBufferSize, options:.storageModeManaged)
@@ -160,9 +150,6 @@ class Renderer
 
     func beginUpdatingQuads()
     {
-        _ = vertexBufferSemaphore.wait(timeout: DispatchTime.distantFuture)
-        vertexBufferIndex = (vertexBufferIndex + 1) % VERTEX_BUFFER_COUNT
-        vertexBuffer = vertexBufferArray[vertexBufferIndex]!
     }
 
     func updateQuad(_ corners: (Vector2, Vector2, Vector2, Vector2), textureId: Int, at index: Int)
@@ -216,8 +203,6 @@ class Renderer
         }
 
         encoder.endEncoding()
-
-        commandBuffer.addCompletedHandler { (buffer) -> () in self.vertexBufferSemaphore.signal() }
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
