@@ -118,9 +118,8 @@ import ScreenSaver
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
 
-            let now = CACurrentMediaTime() * (self.isPreview ? 1.5 : 1)
             for i in 0..<sprites.count { // using a plain loop for performance reasons
-                sprites[i].move(to: now)
+                sprites[i].move(to: outputTime)
             }
 
             updateQuadsForSprites()

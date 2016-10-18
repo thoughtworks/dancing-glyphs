@@ -22,6 +22,8 @@ class MetalScreenSaverView : ScreenSaverView
     var device: MTLDevice!
     var displayLink: CVDisplayLink!
 
+    var outputTime: Double = 0
+
 
     // init and deinit
 
@@ -88,8 +90,11 @@ class MetalScreenSaverView : ScreenSaverView
 
     private func makeDisplayLink(window: NSWindow) -> CVDisplayLink
     {
-        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
-            unsafeBitCast(displayLinkContext, to: MetalScreenSaverView.self).animateOneFrame()
+        func displayLinkOutputCallback(_ displayLink: CVDisplayLink, _ nowPtr: UnsafePointer<CVTimeStamp>, _ outputTimePtr: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn {
+            let _self: MetalScreenSaverView = unsafeBitCast(displayLinkContext, to: MetalScreenSaverView.self)
+            let outputTime = outputTimePtr.pointee
+            _self.outputTime = Double(outputTime.videoTime) / Double(outputTime.videoTimeScale)
+            _self.animateOneFrame()
             return kCVReturnSuccess
         }
 

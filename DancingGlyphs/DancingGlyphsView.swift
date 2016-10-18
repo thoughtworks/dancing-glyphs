@@ -145,7 +145,7 @@ import ScreenSaver
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
 
-            animation.moveToTime(CACurrentMediaTime() * (self.isPreview ? 1.5 : 1))
+            animation.moveToTime(outputTime)
 
             renderer.beginUpdatingQuads()
             updateQuads()
