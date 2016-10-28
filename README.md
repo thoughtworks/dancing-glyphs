@@ -1,13 +1,13 @@
 # ThoughtWorks Glyph Screen Savers
 
-Two screen savers that show animations based on the ThoughtWorks glyphs. See below for installation instructions.
+Two screen savers that show ThoughtWorks glyphs dancing around. See below for installation instructions.
 
 
 ## Dancing Glyphs
 
 ![dancing-glyphs-sample](https://cloud.githubusercontent.com/assets/954026/17986355/81cb49ce-6b1a-11e6-9ca7-14204b725a2c.gif)
 
-A while ago, while reading Cixin Liu's excellent novel The Three-Body Problem, I saw a shape in our brand asset library that had three of the typical ThoughtWorks glyphs superimposed, and somehow I thought, what if those three glyphs were dancing around each other like the suns in the novel? Wouldn't that make a great screen saver? 
+A while ago, while reading Cixin Liu's novel The Three-Body Problem, I saw a shape in our brand asset library that had three of the typical ThoughtWorks glyphs superimposed, and somehow I thought, what if those three glyphs were dancing around each other like the suns in the novel? Wouldn't that make a great screen saver? 
 
 
 ## Glyph Wave
