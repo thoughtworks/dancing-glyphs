@@ -144,7 +144,7 @@ class Renderer
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
         texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
 
-        textures[index] = texture // TODO: does this orphan the existing texture on the device?
+        textures[index] = texture
     }
 
 

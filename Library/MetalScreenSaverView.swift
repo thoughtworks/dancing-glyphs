@@ -124,6 +124,14 @@ class MetalScreenSaverView : ScreenSaverView
         // we're not calling super because we didn't do it in startAnimation()
         CVDisplayLinkStop(displayLink!)
     }
+    
+    override var isAnimating: Bool
+    {
+        get
+        {
+            return CVDisplayLinkIsRunning(displayLink!)
+        }
+    }
 
 
 }

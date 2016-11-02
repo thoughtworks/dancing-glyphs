@@ -56,7 +56,9 @@ class AppDelegate: NSObject
 
     func restartAnimation()
     {
-        view.stopAnimation()
+        if view.isAnimating {
+            view.stopAnimation()
+        }
         view.startAnimation()
     }
 
