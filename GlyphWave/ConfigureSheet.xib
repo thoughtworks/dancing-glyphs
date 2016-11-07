@@ -109,6 +109,9 @@ Gw
                     </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="dPV-yt-r4h" id="dai-X6-aME"/>
+            </connections>
             <point key="canvasLocation" x="-6.5" y="11"/>
         </window>
     </objects>
