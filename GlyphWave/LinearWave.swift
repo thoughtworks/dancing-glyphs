@@ -39,8 +39,10 @@ public class LinearWave: Wave
         return list
     }
     
-    static func move(sprite s: Sprite, to now: Double)
+    static func move(sprite s: Sprite, to nowIn: Double)
     {
+        let now = nowIn * 0.5                                        // global slow-down
+
         var y = sin(now * (0.1 + s.r0)) * 0.08                         // sprite swinging up and down, speed based on r0
         y *= s.r1 * (0.4 + s.r1/2)                                     // dampening, amplitude based on r1
         y += sin(now * -1.2 + Double(s.anchor.x) * M_PI * 3) * 0.025   // large wave across sprites
