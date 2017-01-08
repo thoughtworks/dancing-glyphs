@@ -20,6 +20,7 @@ import ScreenSaver
 @objc(GlyphWaveView) class GlyphWaveView : MetalScreenSaverView
 {
     var glyphs: [Glyph]!
+    var logo: Logo!
 
     var wave: Wave!
     var sprites: [Sprite]!
@@ -66,12 +67,10 @@ import ScreenSaver
     {
         let configuration = Configuration.sharedInstance
 
-        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
+        renderer = Renderer(device: device, numTextures: glyphs.count + 1, numQuads: configuration.numSprites + 1)
         renderer.backgroundColor = configuration.backgroundColor.toMTLClearColor()
 
         wave = configuration.wave
-
-        updateSizeAndTextures(glyphSize: configuration.glyphSize)
 
         var maxSpriteSize = configuration.glyphSize
         // size is given as fraction of smaller screen dimension; must compensate for scaling up that happens with fill scale mode
@@ -83,6 +82,9 @@ import ScreenSaver
         // the list should be sorted by glyph to help the renderer optimise draw calls
         sprites = list.sorted(by: { $0.glyphId > $1.glyphId })
 
+        logo = Logo()
+        updateSizeAndTextures(glyphSize: configuration.glyphSize)
+        
         statistics = Statistics()
 
         super.startAnimation()
@@ -95,6 +97,7 @@ import ScreenSaver
         renderer = nil
         wave = nil
         sprites = nil
+        logo = nil
         statistics = nil
     }
 
@@ -102,16 +105,28 @@ import ScreenSaver
     {
         let factor = wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / factor, bounds.size.height / factor))
-
-        let screenSize = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
         let scale = (window?.backingScaleFactor)!
-        let bitmapSize = NSMakeSize(screenSize * scale, screenSize * scale)
+
+        let glyphScreenSize = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
+        let glyphBitmapSize = NSMakeSize(glyphScreenSize * scale, glyphScreenSize * scale)
 
         for (i, g) in glyphs.enumerated() {
-            let bitmap = g.makeBitmap(size: bitmapSize)
+            let bitmap = g.makeBitmap(size: glyphBitmapSize)
             renderer.setTexture(image: bitmap, at: i)
         }
+
+        let logoWidth = CGFloat(0.2)
+        let logoBitmapWidth = bounds.width * scale * logoWidth
+        let bitmap = logo.makeBitmap(width: logoBitmapWidth)
+        renderer.setTexture(image: bitmap, at: glyphs.count)
+
+        let w = Float(logoWidth)
+        let h = Float(logoWidth * bitmap.size.height / bitmap.size.width)
+        let pos = Vector2(0.5, 0.03)
+        let corners = (pos + Vector2(-w/2, +h/2), pos + Vector2(-w/2, -h/2), pos + Vector2(+w/2, -h/2), pos + Vector2(+w/2, +h/2))
+        renderer.updateQuad(corners, textureId: glyphs.count, at: sprites.count)
     }
+
 
     override func animateOneFrame()
     {

@@ -37,6 +37,7 @@
 		0372B38B1DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
 		0372B38D1DA40E2F00585DD8 /* NSBezierPathSVGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */; };
 		0372B38E1DA40E3200585DD8 /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0372B3871DA40E1600585DD8 /* Glyphs.svg */; };
+		038C75B01E22C2F000DB52A3 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 038C75AF1E22C2F000DB52A3 /* Logo.png */; };
 		03AB2ABF1D9F11B800361F1B /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */; };
 		03BD66831D84642E0023012F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66821D84642E0023012F /* Shaders.metal */; };
 		03BD66861D85D97B0023012F /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BD66851D85D97B0023012F /* Statistics.swift */; };
@@ -45,6 +46,7 @@
 		03C7504D1DA84291007C6FAA /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */; };
 		03C7504F1DA845C9007C6FAA /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7504E1DA845C9007C6FAA /* Wave.swift */; };
 		03DE5E4B1DB19D3A00D1CC3F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0314947F1D67C044005F5EB5 /* LICENSE */; };
+		03DFBB921DF0D81700655559 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DFBB8F1DF0D81700655559 /* Logo.swift */; };
 		03E1A25D1DA00C1900AE8DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */; };
 		03E1A25F1DA00C1900AE8DD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */; };
 		03E1A2621DA00C1900AE8DD3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E1A2601DA00C1900AE8DD3 /* MainMenu.xib */; };
@@ -94,6 +96,7 @@
 		0372B3801DA28ED700585DD8 /* thumbnail@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@x2.png"; sourceTree = "<group>"; };
 		0372B3871DA40E1600585DD8 /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
 		0372B3881DA40E1600585DD8 /* NSBezierPathSVGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathSVGExtensions.swift; sourceTree = "<group>"; };
+		038C75AF1E22C2F000DB52A3 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		03AB2ABE1D9F11B800361F1B /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03BD66821D84642E0023012F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03BD66851D85D97B0023012F /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 		03C750491DA84291007C6FAA /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
 		03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
 		03C7504E1DA845C9007C6FAA /* Wave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
+		03DFBB8F1DF0D81700655559 /* Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		03E1A25A1DA00C1900AE8DD3 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E1A25C1DA00C1900AE8DD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03E1A25E1DA00C1900AE8DD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 				0372B3791DA2727400585DD8 /* CircularWave.swift */,
 				03168EC01DA00E4700CAE093 /* Sprite.swift */,
 				03168EBA1DA00E4700CAE093 /* Glyph.swift */,
+				03DFBB8F1DF0D81700655559 /* Logo.swift */,
+				038C75AF1E22C2F000DB52A3 /* Logo.png */,
 				03C750481DA84291007C6FAA /* Configuration.swift */,
 				03C7504A1DA84291007C6FAA /* ConfigureSheetController.swift */,
 				03C750491DA84291007C6FAA /* ConfigureSheet.xib */,
@@ -344,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				038C75B01E22C2F000DB52A3 /* Logo.png in Resources */,
 				03DE5E4B1DB19D3A00D1CC3F /* LICENSE in Resources */,
 				0372B3891DA40E1600585DD8 /* Glyphs.svg in Resources */,
 				0372B3831DA28ED700585DD8 /* thumbnail@x2.png in Resources */,
@@ -414,6 +421,7 @@
 				03C7504B1DA84291007C6FAA /* Configuration.swift in Sources */,
 				03168ECE1DA00E4700CAE093 /* Sprite.swift in Sources */,
 				03C7504D1DA84291007C6FAA /* ConfigureSheetController.swift in Sources */,
+				03DFBB921DF0D81700655559 /* Logo.swift in Sources */,
 				03168ED01DA00ECF00CAE093 /* Util.swift in Sources */,
 				03168ED61DA00F4100CAE093 /* NSColorExtensions.swift in Sources */,
 				03168ED71DA00F4100CAE093 /* VectorMath.swift in Sources */,
