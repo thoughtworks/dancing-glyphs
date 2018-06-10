@@ -49,12 +49,12 @@ import ScreenSaver
 
     // screen saver api
 
-    override func hasConfigureSheet() -> Bool
+    override var hasConfigureSheet: Bool
     {
         return true
     }
 
-    override func configureSheet() -> NSWindow?
+    override var configureSheet: NSWindow?
     {
         let controller = ConfigureSheetController.sharedInstance
         controller.loadConfiguration()

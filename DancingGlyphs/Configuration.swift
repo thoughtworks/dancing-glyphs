@@ -43,7 +43,7 @@ class Configuration
     init()
     {
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
-        defaults = ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults!
+        defaults = (ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults?)!
         defaults.register(defaults: [
                 String(describing: Glyph.self): -1,
                 String(describing: Size.self): -1,
@@ -115,47 +115,48 @@ class Configuration
     {
         get
         {
+            let tau = 2.0 * .pi
             let animationSettings: Animation.Settings
             switch(movement)
             {
                 case .wild:
                     animationSettings = Animation.Settings(
-                        GRTSPEED: 2*M_PI * 3/60,
+                        GRTSPEED: tau * 3/60,
                         MVMID:    0.22,
                         MVAMP:    0.16,
-                        MVSPEED:  2*M_PI * 11/60,
+                        MVSPEED:  tau * 11/60,
                         CRRAD:    0.20,
-                        CRSPEED:  2*M_PI * 10/60,
-                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 8/360,
-                        RTSPEED1: 2*M_PI * 8/60,
-                        RTSPEED2: 2*M_PI * -7/60,
-                        RTSPEED3: 2*M_PI * 6/60
+                        CRSPEED:  tau * 10/60,
+                        RTMAX:    (self.glyph == .circle) ? -1 : tau * 8/360,
+                        RTSPEED1: tau * 8/60,
+                        RTSPEED2: tau * -7/60,
+                        RTSPEED3: tau * 6/60
                         )
                 case .normal:
                     animationSettings = Animation.Settings(
-                        GRTSPEED: 2*M_PI * 1/60,
+                        GRTSPEED: tau * 1/60,
                         MVMID:    0.08,
                         MVAMP:    0.06,
-                        MVSPEED:  2*M_PI * 11/60,
+                        MVSPEED:  tau * 11/60,
                         CRRAD:    0.04,
-                        CRSPEED:  2*M_PI * 17/60,
-                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 8/360,
-                        RTSPEED1: 2*M_PI * 8/60,
-                        RTSPEED2: 2*M_PI * -7/60,
-                        RTSPEED3: 2*M_PI * 6/60
+                        CRSPEED:  tau * 17/60,
+                        RTMAX:    (self.glyph == .circle) ? -1 : 2 * .pi * 8/360,
+                        RTSPEED1: tau * 8/60,
+                        RTSPEED2: tau * -7/60,
+                        RTSPEED3: tau * 6/60
                         )
                 case .tight:
                     animationSettings = Animation.Settings(
-                        GRTSPEED: 2*M_PI * 4/60,
+                        GRTSPEED: tau * 4/60,
                         MVMID:    0.020,
                         MVAMP:    0.006,
-                        MVSPEED:  2*M_PI * 33/60,
+                        MVSPEED:  tau * 33/60,
                         CRRAD:    0.006,
-                        CRSPEED:  2*M_PI * 37/60,
-                        RTMAX:    (self.glyph == .circle) ? -1 : 2*M_PI * 4/360,
-                        RTSPEED1: 2*M_PI * 4/60,
-                        RTSPEED2: 2*M_PI * -3/60,
-                        RTSPEED3: 2*M_PI * 2/60
+                        CRSPEED:  tau * 37/60,
+                        RTMAX:    (self.glyph == .circle) ? -1 : tau * 4/360,
+                        RTSPEED1: tau * 4/60,
+                        RTSPEED2: tau * -3/60,
+                        RTSPEED3: tau * 2/60
                     )
             }
             return animationSettings

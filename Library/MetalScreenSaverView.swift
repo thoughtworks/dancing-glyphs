@@ -99,7 +99,8 @@ class MetalScreenSaverView : ScreenSaverView
         }
 
         var link: CVDisplayLink?
-        let screensID = UInt32(window.screen!.deviceDescription["NSScreenNumber"] as! Int)
+        let screenDecription: NSDictionary = window.screen!.deviceDescription as NSDictionary
+        let screensID = UInt32(screenDecription.object(forKey: "NSScreenNumber") as! Int)
         CVDisplayLinkCreateWithCGDisplay(screensID, &link)
         CVDisplayLinkSetOutputCallback(link!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
         return link!
@@ -108,9 +109,9 @@ class MetalScreenSaverView : ScreenSaverView
     
     // screen saver api
 
-    override class func backingStoreType() -> NSBackingStoreType
+    override class func backingStoreType() -> NSWindow.BackingStoreType
     {
-        return NSBackingStoreType.nonretained
+        return NSWindow.BackingStoreType.nonretained
     }
 
     override func startAnimation()

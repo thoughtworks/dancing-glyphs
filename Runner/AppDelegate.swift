@@ -35,7 +35,7 @@ class AppDelegate: NSObject
         let saverClass = saverBundle.principalClass! as! ScreenSaverView.Type
         
         view = saverClass.init(frame: window.contentView!.frame, isPreview: false)
-        view.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
+        view.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
 
         window.backingType = saverClass.backingStoreType()
         window.title = view.className
@@ -64,7 +64,7 @@ class AppDelegate: NSObject
 
     @IBAction func showPreferences(_ sender: NSObject!)
     {
-        window.beginSheet(view.configureSheet()!, completionHandler: nil)
+        window.beginSheet(view.configureSheet!, completionHandler: nil)
     }
 
 }
@@ -84,7 +84,7 @@ extension AppDelegate: NSWindowDelegate
 {
     func windowWillClose(_ notification: Notification)
     {
-        NSApplication.shared().terminate(window)
+        NSApplication.shared.terminate(window)
     }
 
     func windowDidResize(_ notification: Notification)

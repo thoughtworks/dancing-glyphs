@@ -60,12 +60,12 @@ import ScreenSaver
     
     // screen saver api
     
-    override func hasConfigureSheet() -> Bool
+    override var hasConfigureSheet: Bool
     {
         return true
     }
     
-    override func configureSheet() -> NSWindow?
+    override var configureSheet: NSWindow?
     {
         let controller = ConfigureSheetController.sharedInstance
         controller.loadConfiguration()
@@ -112,10 +112,10 @@ import ScreenSaver
         let glyphSize = floor(min(bounds.width, bounds.height) * CGFloat(settings.glyphSize))
         let imageSize = glyphSize * imageScale
 
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imageSize), pixelsHigh: Int(imageSize), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bytesPerRow: Int(imageSize)*4, bitsPerPixel:32)!
 
         NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
 #if false
         let framePath = NSBezierPath()

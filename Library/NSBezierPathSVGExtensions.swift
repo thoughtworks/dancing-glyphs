@@ -21,7 +21,7 @@ extension NSBezierPath
     class func contentsOfSVG(url: URL) -> [NSBezierPath]?
     {
         var pathList: [NSBezierPath] = []
-        let doc = try! XMLDocument(contentsOf: url, options: 0)
+        let doc = try! XMLDocument(contentsOf: url, options: XMLNode.Options(rawValue: 0))
         for node in try! doc.nodes(forXPath: "//path") {
             let commands = (node as! XMLElement).attribute(forName:"d")!.stringValue!
             let path = NSBezierPath(svgCommands: commands)

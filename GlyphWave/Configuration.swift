@@ -35,7 +35,7 @@ class Configuration
     init()
     {
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
-        defaults = ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults!
+        defaults = (ScreenSaverDefaults(forModuleWithName: identifier) as UserDefaults?)!
         defaults.register(defaults: [
                 String(describing: Wave.self): -1,
         ])

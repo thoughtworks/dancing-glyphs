@@ -64,12 +64,12 @@ class Animation
     func moveToTime(_ time: Double)
     {
         currentState = State(
-            p0: position(time, phaseOffset: 4/3*M_PI),
-            p1: position(time, phaseOffset: 0/3*M_PI),
-            p2: position(time, phaseOffset: 2/3*M_PI),
-            r0: rotation(time, glyphRotationSpeed: settings.RTSPEED1, phaseOffset: -1/2*M_PI),
-            r1: rotation(time, glyphRotationSpeed: settings.RTSPEED2, phaseOffset: +1/2*M_PI),
-            r2: rotation(time, glyphRotationSpeed: settings.RTSPEED3, phaseOffset:  0/2*M_PI)
+            p0: position(time, phaseOffset: 4/3 * .pi),
+            p1: position(time, phaseOffset: 0/3 * .pi),
+            p2: position(time, phaseOffset: 2/3 * .pi),
+            r0: rotation(time, glyphRotationSpeed: settings.RTSPEED1, phaseOffset: -1/2 * .pi),
+            r1: rotation(time, glyphRotationSpeed: settings.RTSPEED2, phaseOffset: +1/2 * .pi),
+            r2: rotation(time, glyphRotationSpeed: settings.RTSPEED3, phaseOffset:  0/2 * .pi)
         )
     }
 

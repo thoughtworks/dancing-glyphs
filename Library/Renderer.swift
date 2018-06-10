@@ -45,7 +45,7 @@ class Renderer
 
         self.textureIds = [Int](repeating:0, count:numQuads)
         self.vertexData = [Float](repeating: 0, count: VALUES_PER_QUAD)
-        self.textures = [MTLTexture!](repeating: nil, count: numTextures)
+        self.textures = [MTLTexture?](repeating: nil, count: numTextures)
 
         self.pipelineState = makePipelineState()
         self.commandQueue = device.makeCommandQueue()
@@ -106,7 +106,7 @@ class Renderer
         let arraySize = Util.sizeofArray(textureCoordData)
         let bufferPointer = textureCoordBuffer.contents()
         memcpy(bufferPointer, textureCoordData, arraySize)
-        textureCoordBuffer.didModifyRange(NSMakeRange(0, arraySize))
+        textureCoordBuffer.didModifyRange(0..<arraySize)
     }
 
 
@@ -129,7 +129,7 @@ class Renderer
         let arraySize = Util.sizeofArray(ndcMatrix)
         let bufferPointer = uniformsBuffer.contents()
         memcpy(bufferPointer, ndcMatrix, arraySize)
-        uniformsBuffer.didModifyRange(NSMakeRange(0, arraySize))
+        uniformsBuffer.didModifyRange(0..<arraySize)
     }
 
 
@@ -139,10 +139,10 @@ class Renderer
         descriptor.usage = MTLTextureUsage.shaderRead
         descriptor.storageMode = MTLStorageMode.managed
         let texture = device.makeTexture(descriptor: descriptor)
-        texture.label = "glyph\(index)"
+        texture?.label = "glyph\(index)"
 
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
-        texture.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
+        texture?.replace(region: region, mipmapLevel: 0, slice: 0, withBytes: image.bitmapData!, bytesPerRow: image.bytesPerRow, bytesPerImage: image.bytesPerRow * Int(image.size.height))
 
         textures[index] = texture
     }
@@ -170,7 +170,7 @@ class Renderer
 
     func finishUpdatingQuads()
     {
-        vertexBuffer.didModifyRange(NSMakeRange(0, numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size))
+        vertexBuffer.didModifyRange(0..<(numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size))
     }
 
 
@@ -185,27 +185,27 @@ class Renderer
         descriptor.colorAttachments[0].clearColor = backgroundColor
         descriptor.colorAttachments[0].storeAction = .dontCare
 
-        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
-        encoder.setRenderPipelineState(pipelineState)
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
-        encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
-        encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
+        let encoder = commandBuffer?.makeRenderCommandEncoder(descriptor: descriptor)
+        encoder?.setRenderPipelineState(pipelineState)
+        encoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        encoder?.setVertexBuffer(textureCoordBuffer, offset: 0, index: 1)
+        encoder?.setVertexBuffer(uniformsBuffer, offset: 0, index: 2)
 
         var i = 0
         while i < numQuads {
-            encoder.setFragmentTexture(textures[textureIds[i]], at: 0)
+            encoder?.setFragmentTexture(textures[textureIds[i]], index: 0)
             // when the quads' textureIds are collated, we can minimise draw calls
             let s = i
             while (i < numQuads) && (textureIds[i] == textureIds[s]) {
                 i += 1
             }
-            encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)
+            encoder?.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)
         }
 
-        encoder.endEncoding()
+        encoder?.endEncoding()
 
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
+        commandBuffer?.present(drawable)
+        commandBuffer?.commit()
 #if false
         // wait to get accurate statistics, can cause stutter when render time is close to 16ms
         commandBuffer.waitUntilCompleted()

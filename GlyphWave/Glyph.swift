@@ -48,10 +48,10 @@ class Glyph
     
     func makeBitmap(size: NSSize) -> NSBitmapImageRep
     {
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
 
         NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.setCurrent(NSGraphicsContext(bitmapImageRep: imageRep))
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
         let safety: CGFloat = 0.06
         let scaledPath = path.copy() as! NSBezierPath
