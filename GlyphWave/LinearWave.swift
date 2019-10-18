@@ -43,7 +43,7 @@ public class LinearWave: Wave
     {
         var y = sin(now * (0.1 + s.r0)) * 0.08                         // sprite swinging up and down, speed based on r0
         y *= s.r1 * (0.4 + s.r1/2)                                     // dampening, amplitude based on r1
-        y += sin(now * -1.2 + Double(s.anchor.x) * M_PI * 3) * 0.025   // large wave across sprites
+        y += sin(now * -1.2 + Double(s.anchor.x) * Double.pi * 3) * 0.025   // large wave across sprites
         y += 0.5                                                       // moving to middle
         s.pos = Vector2(s.anchor.x, Float(y))
         s.rotation = Float(now * (s.r0 - 0.5) * 1.2)                   // rotation based on r0

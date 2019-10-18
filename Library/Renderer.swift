@@ -45,7 +45,7 @@ class Renderer
 
         self.textureIds = [Int](repeating:0, count:numQuads)
         self.vertexData = [Float](repeating: 0, count: VALUES_PER_QUAD)
-        self.textures = [MTLTexture!](repeating: nil, count: numTextures)
+        self.textures = [MTLTexture?](repeating: nil, count: numTextures)
 
         self.pipelineState = makePipelineState()
         self.commandQueue = device.makeCommandQueue()
@@ -106,7 +106,7 @@ class Renderer
         let arraySize = Util.sizeofArray(textureCoordData)
         let bufferPointer = textureCoordBuffer.contents()
         memcpy(bufferPointer, textureCoordData, arraySize)
-        textureCoordBuffer.didModifyRange(NSMakeRange(0, arraySize))
+        textureCoordBuffer.didModifyRange(0..<arraySize)
     }
 
 
@@ -129,7 +129,7 @@ class Renderer
         let arraySize = Util.sizeofArray(ndcMatrix)
         let bufferPointer = uniformsBuffer.contents()
         memcpy(bufferPointer, ndcMatrix, arraySize)
-        uniformsBuffer.didModifyRange(NSMakeRange(0, arraySize))
+        uniformsBuffer.didModifyRange(0..<arraySize)
     }
 
 
@@ -138,7 +138,7 @@ class Renderer
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: Int(image.size.width), height: Int(image.size.height), mipmapped: false)
         descriptor.usage = MTLTextureUsage.shaderRead
         descriptor.storageMode = MTLStorageMode.managed
-        let texture = device.makeTexture(descriptor: descriptor)
+        let texture = device.makeTexture(descriptor: descriptor)!
         texture.label = "glyph\(index)"
 
         let region = MTLRegionMake2D(0, 0, Int(image.size.width), Int(image.size.height))
@@ -170,13 +170,13 @@ class Renderer
 
     func finishUpdatingQuads()
     {
-        vertexBuffer.didModifyRange(NSMakeRange(0, numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size))
+        vertexBuffer.didModifyRange(0..<(numQuads * VALUES_PER_QUAD * MemoryLayout<Float>.size))
     }
 
 
     func renderFrame(drawable: CAMetalDrawable)
     {
-        let commandBuffer = commandQueue.makeCommandBuffer()
+        let commandBuffer = commandQueue.makeCommandBuffer()!
 
         let descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].texture = drawable.texture
@@ -185,7 +185,7 @@ class Renderer
         descriptor.colorAttachments[0].clearColor = backgroundColor
         descriptor.colorAttachments[0].storeAction = .dontCare
 
-        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         encoder.setRenderPipelineState(pipelineState)
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, index: 1)

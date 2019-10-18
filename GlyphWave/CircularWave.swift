@@ -29,7 +29,7 @@ class CircularWave: Wave
     func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
     {
         var list: [Sprite] = []
-        let step = Float(2 * M_PI) / Float(numSprites)
+        let step = Float(2 * Double.pi) / Float(numSprites)
         for i in 0..<numSprites {
             let pos = Vector2(sin(step * Float(i)), cos(step * Float(i)))
             let size = Float(maximumSize * (0.7 + Util.randomDouble() * 0.3))
@@ -46,14 +46,14 @@ class CircularWave: Wave
         
         var y = sin(now * (0.6 + s.r0)) * 0.11                       // sprite swinging up and down, speed based on r0
         y *= s.r1 * (0.7 + s.r1 * 0.3)                               // dampening, amplitude based on r1
-        y += sin(now * 1.5 + Double(s.anchor.x) * M_PI * 1) * 0.04   //  large wave across sprites
+        y += sin(now * 1.5 + Double(s.anchor.x) * Double.pi * 1) * 0.04   //  large wave across sprites
         y += 0.28                                                    // move up (transformed into move-out-of-centre below)
         
         s.pos = s.anchor * Matrix2x2(rotation: Float(now * 0.15))    // move around centre point
         s.pos = s.pos * Vector2(Float(y), Float(y))                  // make movement orthogonal to circle
         s.pos = s.pos + Vector2(0.5, 0.5)                            // move origin to middle of screen
         
-        s.rotation = Float(sin(now * (s.r0-0.5)) * 2 * M_PI)         // rotation based on r0
+        s.rotation = Float(sin(now * (s.r0-0.5)) * 2 * Double.pi)         // rotation based on r0
     }
 
     

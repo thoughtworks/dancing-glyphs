@@ -64,12 +64,12 @@ class Animation
     func moveToTime(_ time: Double)
     {
         currentState = State(
-            p0: position(time, phaseOffset: 4/3*M_PI),
-            p1: position(time, phaseOffset: 0/3*M_PI),
-            p2: position(time, phaseOffset: 2/3*M_PI),
-            r0: rotation(time, glyphRotationSpeed: settings.RTSPEED1, phaseOffset: -1/2*M_PI),
-            r1: rotation(time, glyphRotationSpeed: settings.RTSPEED2, phaseOffset: +1/2*M_PI),
-            r2: rotation(time, glyphRotationSpeed: settings.RTSPEED3, phaseOffset:  0/2*M_PI)
+            p0: position(time, phaseOffset: 4/3*Double.pi),
+            p1: position(time, phaseOffset: 0/3*Double.pi),
+            p2: position(time, phaseOffset: 2/3*Double.pi),
+            r0: rotation(time, glyphRotationSpeed: settings.RTSPEED1, phaseOffset: -1/2*Double.pi),
+            r1: rotation(time, glyphRotationSpeed: settings.RTSPEED2, phaseOffset: +1/2*Double.pi),
+            r2: rotation(time, glyphRotationSpeed: settings.RTSPEED3, phaseOffset:  0/2*Double.pi)
         )
     }
 
@@ -80,7 +80,7 @@ class Animation
         let xpos = dist * cos(now*settings.GRTSPEED + phaseOffset) + (sin(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
         let ypos = dist * sin(now*settings.GRTSPEED + phaseOffset) + (cos(now*settings.CRSPEED + phaseOffset) * settings.CRRAD)
 #else
-        let xpos = 0.0 + (phaseOffset - 2/3*M_PI) / 3
+        let xpos = 0.0 + (phaseOffset - 2/3*Double.pi) / 3
         let ypos = 0.0
 #endif
         return (xpos, ypos)
