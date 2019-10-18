@@ -99,7 +99,7 @@ class MetalScreenSaverView : ScreenSaverView
         }
 
         var link: CVDisplayLink?
-        let screensID = UInt32(window.screen!.deviceDescription["NSScreenNumber"] as! Int)
+        let screensID = UInt32(convertFromNSDeviceDescriptionKeyDictionary(window.screen!.deviceDescription)["NSScreenNumber"] as! Int)
         CVDisplayLinkCreateWithCGDisplay(screensID, &link)
         CVDisplayLinkSetOutputCallback(link!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
         return link!
@@ -108,9 +108,9 @@ class MetalScreenSaverView : ScreenSaverView
     
     // screen saver api
 
-    override class func backingStoreType() -> NSBackingStoreType
+    override class func backingStoreType() -> NSWindow.BackingStoreType
     {
-        return NSBackingStoreType.nonretained
+        return NSWindow.BackingStoreType.nonretained
     }
 
     override func startAnimation()
@@ -134,4 +134,9 @@ class MetalScreenSaverView : ScreenSaverView
     }
 
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSDeviceDescriptionKeyDictionary(_ input: [NSDeviceDescriptionKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

@@ -21,7 +21,7 @@ extension NSBezierPath
     class func contentsOfSVG(url: URL) -> [NSBezierPath]?
     {
         var pathList: [NSBezierPath] = []
-        let doc = try! XMLDocument(contentsOf: url, options: 0)
+        let doc = try! XMLDocument(contentsOf: url, options: convertToXMLNodeOptions(0))
         for node in try! doc.nodes(forXPath: "//path") {
             let commands = (node as! XMLElement).attribute(forName:"d")!.stringValue!
             let path = NSBezierPath(svgCommands: commands)
@@ -83,4 +83,9 @@ extension NSBezierPath
     }
 
   
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToXMLNodeOptions(_ input: Int) -> XMLNode.Options {
+	return XMLNode.Options(rawValue: UInt(input))
 }

@@ -45,7 +45,7 @@ class ConfigureSheetController : NSObject
 
     @IBAction func openProjectPage(_ sender: AnyObject)
     {
-        NSWorkspace.shared().open(URL(string: "http://github.com/thoughtworks/dancing-glyphs")!);
+        NSWorkspace.shared.open(URL(string: "http://github.com/thoughtworks/dancing-glyphs")!);
     }
 
     @IBAction func closeConfigureSheet(_ sender: NSButton)
@@ -53,7 +53,7 @@ class ConfigureSheetController : NSObject
         if sender.tag == 1 {
             saveConfiguration()
         }
-        window.sheetParent!.endSheet(window, returnCode: (sender.tag == 1) ? NSModalResponseOK : NSModalResponseCancel)
+        window.sheetParent!.endSheet(window, returnCode: (sender.tag == 1) ? NSApplication.ModalResponse.OK : NSApplication.ModalResponse.cancel)
     }
 
 

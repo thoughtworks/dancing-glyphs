@@ -187,13 +187,13 @@ class Renderer
 
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         encoder.setRenderPipelineState(pipelineState)
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, at: 0)
-        encoder.setVertexBuffer(textureCoordBuffer, offset: 0, at: 1)
-        encoder.setVertexBuffer(uniformsBuffer, offset: 0, at: 2)
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(textureCoordBuffer, offset: 0, index: 1)
+        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 2)
 
         var i = 0
         while i < numQuads {
-            encoder.setFragmentTexture(textures[textureIds[i]], at: 0)
+            encoder.setFragmentTexture(textures[textureIds[i]], index: 0)
             // when the quads' textureIds are collated, we can minimise draw calls
             let s = i
             while (i < numQuads) && (textureIds[i] == textureIds[s]) {
