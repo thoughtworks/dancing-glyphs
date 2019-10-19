@@ -19,7 +19,7 @@ At some point when implementing the Dancing Glyphs saver I switched to the Metal
 
 ## Technology
 
-The screen savers are written in Swift 3 and Metal using Xcode 8. They require El Capitan or Sierra to run. Older versions of OS X do not support Metal, unfortunately.
+The screen savers were originally written in Swift 3 and Metal using Xcode 8. They require El Capitan or newer to run. In 2019 I updated the code to Swift 5 so that it can be compiled with newer versions of Xcode.
 
 
 ## Download and Installation
