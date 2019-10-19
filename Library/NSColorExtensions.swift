@@ -46,7 +46,7 @@ extension NSColor
         var green: CGFloat = 0
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
-        let deviceColor = self.usingColorSpaceName(convertToNSColorSpaceName("NSDeviceRGBColorSpace")) 
+        let deviceColor = self.usingColorSpaceName(NSColorSpaceName(rawValue: "NSDeviceRGBColorSpace"))
         deviceColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return MTLClearColor(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
     }
@@ -54,7 +54,3 @@ extension NSColor
     
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToNSColorSpaceName(_ input: String) -> NSColorSpaceName {
-	return NSColorSpaceName(rawValue: input)
-}

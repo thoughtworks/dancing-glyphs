@@ -99,7 +99,8 @@ class MetalScreenSaverView : ScreenSaverView
         }
 
         var link: CVDisplayLink?
-        let screensID = UInt32(convertFromNSDeviceDescriptionKeyDictionary(window.screen!.deviceDescription)["NSScreenNumber"] as! Int)
+        let ddDictionary = Dictionary(uniqueKeysWithValues: window.screen!.deviceDescription.map {key, value in (key.rawValue, value)})
+        let screensID = UInt32(ddDictionary["NSScreenNumber"] as! Int)
         CVDisplayLinkCreateWithCGDisplay(screensID, &link)
         CVDisplayLinkSetOutputCallback(link!, displayLinkOutputCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
         return link!
@@ -136,7 +137,3 @@ class MetalScreenSaverView : ScreenSaverView
 
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSDeviceDescriptionKeyDictionary(_ input: [NSDeviceDescriptionKey: Any]) -> [String: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
-}
