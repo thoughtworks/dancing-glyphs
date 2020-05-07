@@ -306,13 +306,13 @@
 				TargetAttributes = {
 					03168EAC1DA00DEA00CAE093 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 28U2VZ7DF8;
+						DevelopmentTeam = LL62P32G5C;
 						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 					0326048F1D5FBC2A0030AA78 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 28U2VZ7DF8;
+						DevelopmentTeam = LL62P32G5C;
 						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
@@ -497,9 +497,9 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				DEVELOPMENT_TEAM = LL62P32G5C;
 				INFOPLIST_FILE = GlyphWave/Info.plist;
-				INSTALL_PATH = "";
+				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,9 +520,9 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				DEVELOPMENT_TEAM = LL62P32G5C;
 				INFOPLIST_FILE = GlyphWave/Info.plist;
-				INSTALL_PATH = "";
+				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.GlyphWave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -638,12 +638,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				DEVELOPMENT_TEAM = LL62P32G5C;
 				INFOPLIST_FILE = DancingGlyphs/Info.plist;
-				INSTALL_PATH = "";
+				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -659,12 +659,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				DEVELOPMENT_TEAM = LL62P32G5C;
 				INFOPLIST_FILE = DancingGlyphs/Info.plist;
-				INSTALL_PATH = "";
+				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thoughtworks.DancingGlyphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
